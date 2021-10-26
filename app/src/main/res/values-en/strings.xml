@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">qiyeweixinhelper</string>
+    <string name="alert_title">attention</string>
+    <string name="cancel">cancel</string>
+    <string name="sure">sure</string>
+    <string name="sdcard_warning">You must agree to the storage permission, otherwise the app will not run</string>
+    <string name="sms_warning">You must agree to the storage permission, otherwise the app will not run</string>
+    <string name="location_warning">You must agree to the location permission, otherwise the app will not run</string>
+    <string name="homepage">homepage</string>
+    <string name="history">history</string>
+    <string name="mine">mine</string>
+    <string name="input_hint">company location(default current)</string>
+    <string name="input_button_str">search</string>
+    <string name="not_install_app_content">&#160;&#160;&#160;&#160;You have not installed the enterprise wechat app, please go to the application market to download it first</string>
+    <string name="not_install_install_now">Install now</string>
+    <string name="not_install_install_later">Install later</string>
+    <string name="set_company_location_content">&#160;&#160;&#160;&#160;
+You have not confirmed the company location, please set the company location first</string>
+    <string name="set_company_location_now">Set it up now</string>
+    <string name="set_company_location_later">Set it up later</string>
+    <string name="need_input_search_value">please input search location</string>
+    <string name="need_replace_search_value">please repalce search location</string>
+    <string name="pre_ensure_company_location">Are you sure to set \n</string>
+    <string name="post_ensure_company_location">\n as your company address?</string>
+    <string name="information_setting">message setting</string>
+    <string name="login_setting">login setting</string>
+    <string name="phonenum_login">login by user phonenumber(recommend login method)</string>
+    <string name="wx_login">login by wx account</string>
+    <string name="check_in_setting">check in setting</string>
+    <string name="simulate_test">simulate test</string>
+    <string name="submit_feedback">submit feedback</string>
+    <string name="about_us">about us</string>
+    <string name="set_login_phonenum">set login phonenum</string>
+    <string name="set_def_phonenum">please input your phonenum</string>
+    <string name="input_right_phonenum">please input right phonenum</string>
+    <string name="ensure_setting_phonenum">Are you sure to setting \n</string>
+    <string name="as_your_account">\n as your login account</string>
+    <string name="work_cycle_1">965\n(am:9 pm:6 work 6day per week)</string>
+    <string name="work_cycle_2">966\n(am:9 pm:6 work 5/6day per week)</string>
+    <string name="work_cycle_3">996\n(am:9 pm:9 work 6day per week)</string>
+    <string name="work_cycle_4">customize\n(decide your work cycle by yourself)</string>
+    <string name="set_def_wxaccount">please input you wx account</string>
+    <string name="set_def_wxpassword">please input you wx password</string>
+    <string name="remember_password">Remeber Password</string>
+    <string name="register">Register</string>
+    <string name="user_policy">I have read and agreed to meituan user agreement and privacy policy, and authorize meituan to use the meituan account information (such as nickname, avatar and receiving address) for unified management</string>
+    <string name="re_rend_message">re send message(x)</string>
+    <string name="second">s</string>
+</resources>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="SearchDialogBean"
+            type="com.xwq.companyvxwhelper.bean.SearchDialogBean"/>
+
+        <variable
+            name="SearchLocation"
+            type="com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.SearchLocationDialog" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dialog_search_location_top_cstl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin4"
+            android:layout_marginRight="@dimen/margin4"
+            android:background="@drawable/dialog_search_loaction_top_search_style"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin7">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/dialog_search_location_aciv_back"
+                android:layout_width="@dimen/margin6"
+                android:layout_height="match_parent"
+                android:onClick="@{(view) -> SearchLocation.onViewClick(view)}"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/back"
+                android:layout_marginLeft="@dimen/margin1"
+                android:paddingTop="@dimen/margin3"
+                android:paddingBottom="@dimen/margin3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/dialog_search_location_acet_search"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/dialog_search_location_acet_search"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin3"
+                android:paddingBottom="@dimen/margin3"
+                app:layout_constraintLeft_toRightOf="@+id/dialog_search_location_aciv_back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/dialog_search_location_actv_input"
+                android:layout_marginLeft="@dimen/margin3"
+                android:textSize="@dimen/large_size"
+                android:textColor="@color/searchColor"
+                android:text="@{SearchDialogBean.searchInput}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:maxLines="1"
+                android:background="@null"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dialog_search_location_actv_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin3"
+                android:paddingBottom="@dimen/margin3"
+                app:layout_constraintLeft_toRightOf="@+id/dialog_search_location_acet_search"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/large_size"
+                android:text="@string/input_button_str"
+                android:textColor="@color/search_blue"
+                android:layout_marginRight="@dimen/margin3"
+                android:gravity="center"
+                android:onClick="@{(view) -> SearchLocation.onViewClick(view)}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dialog_search_location_rcy"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_search_location_top_cstl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/search_location_rcy_margin"
+            android:layout_marginTop="@dimen/search_location_rcy_margin"
+            android:layout_marginLeft="@dimen/margin4"
+            android:layout_marginRight="@dimen/margin4"
+            android:paddingTop="@dimen/margin1"
+            android:background="@drawable/dialog_search_loaction_bottom_rcy_style">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

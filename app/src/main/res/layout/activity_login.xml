@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="LoginActivityBean"
+            type="com.xwq.companyvxwhelper.bean.LoginActivityBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/activity_login_aciv_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@{LoginActivityBean.iconDrawable}"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintDimensionRatio="h, 1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin11"/>
+
+        <com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
+            android:id="@+id/activity_login_utpvev_phonenum"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.8"
+            android:layout_height="@dimen/margin10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_aciv_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin11"
+            app:tInputStyle="usertelephone"
+            app:tHintText="@={LoginActivityBean.userTelBean.hintText}"
+            app:tInputText="@={LoginActivityBean.userTelBean.inputText}"
+            app:tShowClear="@={LoginActivityBean.userTelBean.showClear}"
+            />
+
+        <com.xwq.companyvxwhelper.widget.UserInputVerifyCodeEditView
+            android:id="@+id/activity_login_utvcev_phonenum"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.8"
+            android:layout_height="@dimen/margin10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_utpvev_phonenum"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin4"
+            app:iHintText="@{LoginActivityBean.userVerifyCodeBean.hintText}"
+            app:iInputText="@{LoginActivityBean.userVerifyCodeBean.inputText}"
+            app:iClickText="@{LoginActivityBean.userVerifyCodeBean.clickText}"
+            app:iClickAble="@{LoginActivityBean.userVerifyCodeBean.clickAble}"
+            />
+
+        <com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
+            android:id="@+id/activity_login_utpvev_password"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.8"
+            android:layout_height="@dimen/margin10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_utvcev_phonenum"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin4"
+            app:tHintText="@={LoginActivityBean.userPassBean.hintText}"
+            app:tInputText="@={LoginActivityBean.userPassBean.inputText}"
+            app:tShowClear="@={LoginActivityBean.userPassBean.showClear}"/>
+
+        <com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
+            android:id="@+id/activity_login_utpvev_reinput_password"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.8"
+            android:layout_height="@dimen/margin10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_utpvev_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin4"
+            app:tHintText="@={LoginActivityBean.userRePassBean.hintText}"
+            app:tInputText="@={LoginActivityBean.userRePassBean.inputText}"
+            app:tShowClear="@={LoginActivityBean.userRePassBean.showClear}"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/activity_login_accb_remember_password"
+            android:layout_width="@dimen/margin6"
+            android:layout_height="@dimen/margin6"
+            app:layout_constraintStart_toStartOf="@+id/activity_login_utpvev_reinput_password"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_utpvev_reinput_password"
+            android:layout_marginTop="@dimen/margin3"
+            android:button="@drawable/style_user_input_telorpass"
+            android:checked="@={LoginActivityBean.hasCheckRePass}"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remember_password"
+            app:layout_constraintStart_toEndOf="@+id/activity_login_accb_remember_password"
+            app:layout_constraintTop_toTopOf="@+id/activity_login_accb_remember_password"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_login_accb_remember_password"
+            android:layout_marginLeft="@dimen/margin3"
+            android:textSize="@dimen/large_size"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/activity_login_accb_tips"
+            android:layout_width="@dimen/margin6"
+            android:layout_height="@dimen/margin6"
+            app:layout_constraintStart_toStartOf="@+id/activity_login_accb_remember_password"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_accb_remember_password"
+            android:button="@drawable/style_user_input_telorpass"
+            android:layout_marginTop="@dimen/margin3"
+            android:checked="@={LoginActivityBean.hasEnsureAuth}"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/activity_login_actv_policy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin3"
+            android:text="@string/user_policy"
+            app:layout_constraintEnd_toEndOf="@+id/activity_login_utpvev_reinput_password"
+            app:layout_constraintStart_toEndOf="@+id/activity_login_accb_tips"
+            app:layout_constraintTop_toTopOf="@+id/activity_login_accb_tips" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/activity_login_acbt_register"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
+            android:layout_height="@dimen/margin11"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/style_login_button"
+            android:text="@string/register"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/bigger_size"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_actv_policy"
+            android:layout_marginTop="@dimen/margin9"
+            android:elevation="@dimen/stroke_width1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

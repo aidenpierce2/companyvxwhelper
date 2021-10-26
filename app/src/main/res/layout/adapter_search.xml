@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="item"
+            type="com.xwq.companyvxwhelper.bean.SearchDialogItemBean" />
+    </data>
+    
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/adapter_search_aciv_local"
+            android:layout_width="@dimen/margin4"
+            android:layout_height="@dimen/margin4"
+            android:src="@{item.posIcon}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/margin4"
+            android:layout_marginTop="@dimen/margin4" />
+        
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/adapter_search_actv_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@+id/adapter_search_aciv_local"
+            app:layout_constraintTop_toTopOf="@+id/adapter_search_aciv_local"
+            app:layout_constraintRight_toLeftOf="@+id/adapter_search_aciv_distance"
+            app:layout_constraintBottom_toBottomOf="@+id/adapter_search_aciv_local"
+            android:layout_marginLeft="@dimen/margin3"
+            android:layout_marginRight="@dimen/margin3"
+            android:text="@{item.nickName}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/middle_size"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/adapter_search_actv_detailname"
+            android:layout_width="0dp"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/adapter_search_actv_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/adapter_search_actv_nickname"
+            app:layout_constraintRight_toRightOf="@+id/adapter_search_actv_nickname"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/margin4"
+            android:text="@{item.detailAddress}"
+            android:layout_marginTop="@dimen/margin2"
+            android:layout_marginRight="@dimen/margin5"
+            android:maxLines="2"
+            android:textColor="@color/input"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/adapter_search_aciv_distance"
+            android:layout_width="@dimen/margin5"
+            android:layout_height="@dimen/margin5"
+            android:src="@{item.locIcon}"
+            app:layout_constraintLeft_toRightOf="@+id/adapter_search_actv_nickname"
+            app:layout_constraintTop_toTopOf="@+id/adapter_search_aciv_local"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/adapter_search_aciv_local"
+            android:layout_marginRight="@dimen/margin6"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/adapter_search_actv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/adapter_search_aciv_distance"
+            app:layout_constraintTop_toTopOf="@+id/adapter_search_actv_detailname"
+            app:layout_constraintBottom_toBottomOf="@+id/adapter_search_actv_detailname"
+            app:layout_constraintRight_toRightOf="@+id/adapter_search_aciv_distance"
+            android:text="@{item.distance}"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</layout>

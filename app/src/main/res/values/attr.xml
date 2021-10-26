@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="RedDotRadioButton">
+        <attr name="showDots" format="boolean"></attr>
+    </declare-styleable>
+    <declare-styleable name="HomeInputEditText">
+        //左侧imageview 图片
+        <attr name="leftImage" format="reference"></attr>
+        //中间editext hint
+        <attr name="centerHint" format="string"></attr>
+        //中间edittext hint color
+        <attr name="centerHintColor" format="reference"></attr>
+        //中间edittext 正常文字
+        <attr name="centerText" format="string"></attr>
+        //中间edittext 正常文字 color
+        <attr name="centerTextColor" format="reference"></attr>
+        //右边button 文字
+        <attr name="rightText" format="string"></attr>
+        //右边button 文字颜色
+        <attr name="rightTextColor" format="reference"></attr>
+    </declare-styleable>
+    <declare-styleable name="RadiusCardView">
+        // 左上
+        <attr name="rcTopLeftRadius" format="dimension"></attr>
+        // 右上
+        <attr name="rcTopRightRadius" format="dimension"></attr>
+        // 左下
+        <attr name="rcBottomLeftRadius" format="dimension"></attr>
+        // 右下
+        <attr name="rcBottomRightRadius" format="dimension"></attr>
+    </declare-styleable>
+    <declare-styleable name="MineLocationPullView">
+        // 顶部图片高度
+        <attr name="topPicHeight" format="dimension"></attr>
+        // 顶部图片宽度
+        <attr name="topPicWidth" format="dimension"></attr>
+        // 主背景占屏幕高度比
+        <attr name="mainBgDefaultRate" format="float"></attr>
+        // 主背景默认切割比
+        <attr name="mainBgDefaultCuteRate" format="float"></attr>
+        // card的图片地址
+        <attr name="cardPicAddress" format="string"></attr>
+        // card的昵称
+        <attr name="cardNickName" format="string"></attr>
+        // card的电话号码
+        <attr name="cardPhoneNumber" format="string"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="SwitchButton" tools:ignore="ResourceName">
+        <attr name="kswThumbDrawable" format="reference"/>
+        <attr name="kswThumbColor" format="color|reference"/>
+        <attr name="kswThumbMargin" format="dimension|reference"/>
+        <attr name="kswThumbMarginTop" format="dimension|reference"/>
+        <attr name="kswThumbMarginBottom" format="dimension|reference"/>
+        <attr name="kswThumbMarginLeft" format="dimension|reference"/>
+        <attr name="kswThumbMarginRight" format="dimension|reference"/>
+        <attr name="kswThumbWidth" format="dimension|reference"/>
+        <attr name="kswThumbHeight" format="dimension|reference"/>
+        <attr name="kswThumbRadius" format="dimension|reference"/>
+        <attr name="kswBackRadius" format="dimension|reference"/>
+        <attr name="kswBackDrawable" format="reference"/>
+        <attr name="kswBackColor" format="color|reference"/>
+        <attr name="kswFadeBack" format="boolean"/>
+        <attr name="kswThumbRangeRatio" format="float"/>
+        <attr name="kswAnimationDuration" format="integer"/>
+        <attr name="kswTintColor" format="color|reference"/>
+        <attr name="kswTextOn" format="string"/>
+        <attr name="kswTextOff" format="string"/>
+        <attr name="kswTextThumbInset" format="dimension"/>
+        <attr name="kswTextExtra" format="dimension"/>
+        <attr name="kswTextAdjust" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="webImageUrl" format="string"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="UserTelOrPassView">
+        <attr name="tInputStyle">
+            <enum name="usertelephone" value="0"></enum>
+            <enum name="uerpassword" value="1"></enum>
+        </attr>
+        <attr name="tHintText" format="string"></attr>
+        <attr name="tInputText" format="string"></attr>
+        <attr name="tShowClear" format="boolean"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="UserInputVertifyView">
+        <attr name="iHintText" format="string"></attr>
+        <attr name="iInputText" format="string"></attr>
+        <attr name="iClickText" format="string"></attr>
+        <attr name="iClickAble" format="boolean"></attr>
+    </declare-styleable>
+</resources>

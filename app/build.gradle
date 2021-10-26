@@ -1,0 +1,147 @@
+plugins {
+    id 'com.android.application'
+    id 'org.greenrobot.greendao'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+    id 'com.chaquo.python'
+}
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "com.xwq.companyvxwhelper"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            // 指定abi，如需在模拟器调试，增加"x86"，否则指定"armeabi-v7a"即可
+            abiFilters "armeabi-v7a", "x86"
+        }
+        python {
+            // 指定python路径
+            buildPython "C:/Users/XWQ/AppData/Local/Programs/Python/Python38/python.exe"
+
+            pip {
+                install "setuptools==57.2.0"
+                install "progress==1.3"
+                install "lxml"
+                install "uiautomator2"
+            }
+        }
+    }
+
+    buildTypes {
+        all {
+            buildConfigField "String", "USER_AGENT", "\"android\""
+            buildConfigField "String", "DB_NAME", "\"user.db\""
+        }
+
+        debug {
+            // 关闭混淆
+            minifyEnabled false
+            shrinkResources false
+        }
+
+        release {
+            // 开启混淆
+            minifyEnabled true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        switch (variant.flavorName) {
+            case "companyvxwhelper":
+                switch (variant.buildType.getName()) {
+                    case "release":
+                        variant.buildConfigField "String", "APIURL", "\"xxxxxxxx\""
+                        variant.buildConfigField "String", "AliURL", "\"http://api.m.taobao.com/\""
+                        variant.buildConfigField "String", "H5NETURL", "\"xxxxxxxx\""
+                        break
+                    case "debug":
+                        variant.buildConfigField "String", "APIURL", "\"http://127.0.0.1:10000/\""
+                        variant.buildConfigField "String", "AliURL", "\"http://api.m.taobao.com/\""
+                        variant.buildConfigField "String", "H5NETURL", "\"xxxxxxxx\""
+                        break
+                }
+                break
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    flavorDimensions 'companyvxwhelper'
+    productFlavors {
+        companyvxwhelper {
+            dimension 'companyvxwhelper'
+        }
+    }
+}
+
+greendao {
+    schemaVersion 1 //当前数据库版本
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.3.0+'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //RxJava2
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.amitshekhar.android:rx2-android-networking:1.0.0'
+    //Retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.alibaba:fastjson:1.2.58'
+    //OkHttp3
+    //高德地图
+    implementation 'com.amap.api:location:4.6.0'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    // 协程
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+    //RxLifecycle 生命周期管理
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.2'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.2'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.2.0'
+    //沉浸式体验
+    implementation 'com.github.niorgai:StatusBarCompat:2.3.3'
+    // greenDao存贮
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'org.greenrobot:greendao-generator:3.2.2'
+    //recyclerview
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    // leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+    //Glide 图片加载框架
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+
+
+}

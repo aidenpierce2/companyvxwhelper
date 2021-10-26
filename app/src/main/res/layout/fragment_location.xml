@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="location"
+            type="com.xwq.companyvxwhelper.bean.LocationFragmentBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_location_cstl_01"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/location_top_bg_shape">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/fragment_location_aciv_location"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@mipmap/wm_page_main_ic_location_black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="50dp"
+                android:scaleType="fitCenter"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragment_location_actv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{location.locationNickName}"
+                app:layout_constraintStart_toEndOf="@+id/fragment_location_aciv_location"
+                app:layout_constraintTop_toTopOf="@+id/fragment_location_aciv_location"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_location_aciv_location"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:ellipsize="end"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toEndOf="@+id/fragment_location_actv_location"
+                app:layout_constraintTop_toTopOf="@+id/fragment_location_actv_location"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_location_actv_location"
+                android:src="@mipmap/wm_page_main_arrow_black"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/wm_sc_home_message_center"
+                app:layout_constraintTop_toTopOf="@+id/fragment_location_aciv_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_location_aciv_location"
+                android:layout_marginRight="15dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="90dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/location_second_bg_shape"
+            android:elevation="@dimen/margin0"
+            >
+
+            <com.xwq.companyvxwhelper.widget.HomeInputEditText
+                android:id="@+id/fragment_location_hiet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/margin7"
+                android:layout_marginLeft="@dimen/homeinput_margin"
+                android:layout_marginRight="@dimen/homeinput_margin"
+                app:leftImage="@mipmap/wm_page_main_ic_search_a"
+                app:centerText="@{location.searchText}"
+                app:centerHintColor="@color/inputHint"
+                app:rightTextColor="@color/white"
+                app:rightText="@string/input_button_str"
+                app:centerHint="@string/input_hint"
+                android:elevation="@dimen/margin1"/>
+
+            <com.xwq.companyvxwhelper.widget.RadiusCardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardElevation="@dimen/stroke_width1"
+                app:rcTopLeftRadius="@dimen/location_second_bg_radius"
+                app:rcTopRightRadius="@dimen/location_second_bg_radius"
+                android:background="@color/black">
+
+                <com.xwq.companyvxwhelper.widget.MainMapView
+                    android:id="@+id/fragment_location_mv_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+            </com.xwq.companyvxwhelper.widget.RadiusCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginRight="@dimen/margin3"
+            android:layout_marginBottom="@dimen/margin3"
+            android:elevation="@dimen/margin1"
+            android:background="@drawable/style_location_main_bottom">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragment_location_actv_company_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/fragment_location_actv_user_icon"
+                android:textColor="@color/input"
+                android:drawablePadding="@dimen/margin1"
+                android:text="公司位置"
+                android:paddingLeft="@dimen/margin3"
+                android:paddingTop="@dimen/margin2"
+                android:paddingRight="@dimen/margin3"
+                android:drawableLeft="@mipmap/company"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragment_location_actv_user_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_location_actv_company_icon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/input"
+                android:text="您的位置"
+                android:drawablePadding="@dimen/margin1"
+                android:drawableLeft="@mipmap/userlocation"
+                android:paddingTop="@dimen/margin2"
+                android:paddingBottom="@dimen/margin2"
+                android:paddingLeft="@dimen/margin3"
+                android:paddingRight="@dimen/margin3"
+                android:gravity="center"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

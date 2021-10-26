@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/home_input_search_height"
+    android:background="@drawable/style_home_input"
+    android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/widget_home_input_aciv_search"
+            android:layout_width="@dimen/margin7"
+            android:layout_height="@dimen/margin7"
+            android:padding="@dimen/margin1"
+            android:layout_marginLeft="@dimen/margin2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@mipmap/wm_page_main_ic_search_a">
+        </androidx.appcompat.widget.AppCompatImageView>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/widget_home_input_aciv_input"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin2"
+            app:layout_constraintStart_toEndOf="@+id/widget_home_input_aciv_search"
+            app:layout_constraintEnd_toStartOf="@+id/widget_home_input_acbt_input"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@null" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/widget_home_input_acbt_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin2"
+            app:layout_constraintStart_toEndOf="@+id/widget_home_input_aciv_input"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/style_home_input_search"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

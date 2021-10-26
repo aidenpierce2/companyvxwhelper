@@ -1,0 +1,20 @@
+package com.xwq.companyvxwhelper.api
+
+class Urls {
+    companion object {
+        const val ALI_TIME_STAMP = "http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp"
+
+        //本地服务
+        const val SEND_SMS = "/api/sendsms"
+        // 判断token是否有效
+        const val CHECK_TOKEN_VALID = "/api/token/checkvalid"
+        //首页获取最新广告图
+        const val GET_LATEST_ADV = "/api/advertisement/getlatest"
+        //获取短信
+        const val GET_ATTESTATION_MSG = "/api/message/getattestation"
+        //提交注册
+        const val SUB_USER_REGISTER = "/api/user/register"
+        //提交登录
+        const val SUB_USER_LOGIN = "/api/user/login"
+    }
+}

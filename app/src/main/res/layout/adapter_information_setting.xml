@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="informationitem"
+            type="com.xwq.companyvxwhelper.bean.InformationSettingItemBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginLeft="@dimen/margin4"
+        android:layout_marginRight="@dimen/margin4"
+        android:background="@drawable/style_adapter_information"
+        android:elevation="@dimen/stroke_width1">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/adapter_information_setting_aciv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@{informationitem.imageSrc}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingLeft="@dimen/margin3"
+            android:layout_marginLeft="@dimen/margin3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/adapter_information_setting_aciv_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@{informationitem.contentSequence}"
+            android:textStyle="bold"
+            android:textSize="@dimen/large_size"
+            android:layout_marginLeft="@dimen/margin4"
+            android:textColor="@color/contentColor"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="WorkCycleItemBean"
+            type="com.xwq.companyvxwhelper.bean.WorkCycleItemBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/widget_focus_image_aciv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
+            android:src="@{WorkCycleItemBean.headerImgRes}"/>
+
+        <com.xwq.companyvxwhelper.widget.SwitchButton
+            android:id="@+id/widget_focus_image_sb_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:kswTintColor="@color/white"
+            app:kswBackColor="@color/selector_switch"
+            android:layout_marginTop="@dimen/margin1"
+            android:layout_marginRight="@dimen/margin1"
+            android:visibility="@{WorkCycleItemBean.needSwitchButton ? View.VISIBLE : View.GONE}"
+            android:checked="@{WorkCycleItemBean.switchChecked}"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/widget_focus_image_actv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/widget_focus_image_aciv_header"
+            app:layout_constraintTop_toBottomOf="@+id/widget_focus_image_aciv_header"
+            app:layout_constraintEnd_toEndOf="@+id/widget_focus_image_aciv_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:text="@{WorkCycleItemBean.contextStr}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

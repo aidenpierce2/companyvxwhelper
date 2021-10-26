@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="LoadingDataBindBean"
+            type="com.xwq.companyvxwhelper.databindbean.LoadingDataBindBean" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="1000dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/dialog_loading_aciv_01"
+                android:layout_width="@dimen/loading_width"
+                android:layout_height="@dimen/loading_height"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/dialog_loading_animation"
+                android:scaleType="fitCenter"
+                android:padding="@dimen/margin3"
+                android:background="@drawable/dialog_loading_bg_style"
+                />
+        <!--                android:src="@{LoadingDataBindBean.imgaeResourceId}"-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </layout>
