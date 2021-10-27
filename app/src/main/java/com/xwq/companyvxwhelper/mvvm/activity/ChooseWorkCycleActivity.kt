@@ -18,7 +18,7 @@ import com.xwq.companyvxwhelper.utils.TimeStampUtils
 import com.xwq.companyvxwhelper.widget.SwitchButton
 import kotlinx.android.synthetic.main.activity_base_setting.*
 
-class ChooseWorkCycleActivity : BaseActivity<ChooseWorkCycleView, ChooseWorkCycleModel>() {
+class ChooseWorkCycleActivity : BaseActivity<ChooseWorkCycleView, ChooseWorkCycleModel>(), ChooseWorkCycleView {
 
     lateinit var mainRCY : RecyclerView
     var dataList : ArrayList<WorkCycleItemBean> = arrayListOf()
@@ -206,5 +206,21 @@ class ChooseWorkCycleActivity : BaseActivity<ChooseWorkCycleView, ChooseWorkCycl
 
     override fun needEventBus(): Boolean {
         return false
+    }
+
+    override fun getSelfModel(): ChooseWorkCycleModel {
+        return ChooseWorkCycleModel(this@ChooseWorkCycleActivity)
+    }
+
+    override fun showToast(value: String) {
+
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
     }
 }

@@ -1,15 +1,20 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Handler
+import android.text.TextUtils
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.RequestBean.SendSmsReqBean
+import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.mvvm.model.activity.SplashModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.SplashView
+import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
+import com.xwq.companyvxwhelper.utils.ToastUtil
 
 
-class SplashActivity : BaseActivity<SplashView, SplashModel>() {
+class SplashActivity : BaseActivity<SplashView, SplashModel>(), SplashView{
 
     override fun setContentViewId(): Int {
         return R.layout.activity_splash
@@ -32,12 +37,18 @@ class SplashActivity : BaseActivity<SplashView, SplashModel>() {
     }
 
     override fun initData() {
+        var token = SharePreferenceUtil.instance.getData(Const.USER_TOKEN)
+        if (TextUtils.isEmpty(token)) {
+            startActivity(Intent().setClass(this@SplashActivity, LoginActivity::class.java))
+        } else {
+            getModel().checkTokenValid(token)
+        }
         Handler().postDelayed(Runnable {
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             this@SplashActivity.finish()
         }, 1000)
 
-        SendSmsReqBean("dsad", "dsa")
+
     }
 
     override fun initListener() {
@@ -55,4 +66,32 @@ class SplashActivity : BaseActivity<SplashView, SplashModel>() {
     override fun needEventBus(): Boolean {
         return false
     }
+
+    override fun getTokenValidSucc() {
+        startActivity(Intent().setClass(this@SplashActivity, MainActivity::class.java))
+        finish()
+    }
+
+    override fun getTokenValidFail() {
+        ToastUtil.showToast(resources.getString(R.string.web_err))
+        startActivity(Intent().setClass(this@SplashActivity, LoginActivity::class.java))
+        finish()
+    }
+
+    override fun showToast(value: String) {
+
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
+    }
+
+    override fun getSelfModel(): SplashModel {
+        return SplashModel(this@SplashActivity)
+    }
+
 }

@@ -1,11 +1,15 @@
 package com.xwq.companyvxwhelper.api
 
+import android.text.TextUtils
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
+import com.google.gson.Gson
 import com.xwq.companyvxwhelper.BuildConfig
 import com.xwq.companyvxwhelper.api.converter.CustomerGsonConverterFactory
 import com.xwq.companyvxwhelper.api.interceptor.GzipRequestInterceptor
 import okhttp3.Interceptor
+import okhttp3.MediaType
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.security.KeyManagementException
@@ -93,6 +97,19 @@ class Api {
                 .baseUrl(baseUrl)
                 .build()
             return mRetrofit
+        }
+
+        /*
+        * 创建requestbody
+         */
+        fun createRequestBody(requestBodyStr : String) : RequestBody{
+            var requestBodyStr : String = ""
+            var CONTENT_TYPE: MediaType? = MediaType.parse("application/json")
+            if (!TextUtils.isEmpty(requestBodyStr)) {
+                var reqStr = Gson().toJson(requestBodyStr)
+                return RequestBody.create(CONTENT_TYPE, reqStr)
+            }
+            return RequestBody.create(CONTENT_TYPE, requestBodyStr)
         }
     }
 }

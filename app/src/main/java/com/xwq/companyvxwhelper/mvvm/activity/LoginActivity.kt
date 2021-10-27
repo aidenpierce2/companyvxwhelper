@@ -8,7 +8,7 @@ import com.xwq.companyvxwhelper.bean.LoginActivityBean
 import com.xwq.companyvxwhelper.mvvm.model.activity.MainModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.MainView
 
-class LoginActivity  : BaseActivity<MainView, MainModel>() {
+class LoginActivity  : BaseActivity<MainView, MainModel>(),MainView {
 
     lateinit var loginActivityBean : com.xwq.companyvxwhelper.bean.LoginActivityBean
 
@@ -59,5 +59,21 @@ class LoginActivity  : BaseActivity<MainView, MainModel>() {
 
     override fun needEventBus(): Boolean {
         return false
+    }
+
+    override fun getSelfModel(): MainModel {
+        return MainModel(this@LoginActivity)
+    }
+
+    override fun showToast(value: String) {
+
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
     }
 }

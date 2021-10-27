@@ -45,4 +45,7 @@
     <string name="user_policy">我已阅读并同意《美团用户协议》、《隐私政策》,并授权美团使用该美团账号信息(如昵称、头像、收货地址)进行统一管理</string>
     <string name="re_rend_message">重发短信(x)</string>
     <string name="second">秒</string>
+
+    //网络
+    <string name="web_err">网络异常,请稍后再试!</string>
 </resources>

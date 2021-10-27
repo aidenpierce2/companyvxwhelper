@@ -1,6 +1,7 @@
 package com.xwq.companyvxwhelper.api.Transform
 
-import com.xwq.companyvxwhelper.mvvm.model.broadcast.SendSmsBroadCastModel
+import com.xwq.companyvxwhelper.base.BaseModel
+import com.xwq.companyvxwhelper.base.IBaseView
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -12,11 +13,11 @@ object RxTransformer {
      * @param <T> 泛型
      * @return 返回Observable
     </T> */
-    fun <T> switchSchedulers(baseModel: SendSmsBroadCastModel): ObservableTransformer<T, T> {
+    open fun <T, V : IBaseView,M : BaseModel<V>> switchSchedulers(baseModel: M): ObservableTransformer<T?, T?>? {
         return ObservableTransformer { upstream ->
             upstream
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe { disposable -> baseModel!!.mDisposable.add(disposable!!) }
+                .doOnSubscribe { disposable -> baseModel.mDisposable.add(disposable) }
                 .observeOn(AndroidSchedulers.mainThread())
         }
     }

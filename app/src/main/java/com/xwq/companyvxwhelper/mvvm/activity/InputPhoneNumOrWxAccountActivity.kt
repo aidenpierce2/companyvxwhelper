@@ -31,7 +31,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-class InputPhoneNumOrWxAccountActivity : BaseActivity<InputPhoneNumView, InputPhoneNumModel>() {
+class InputPhoneNumOrWxAccountActivity : BaseActivity<InputPhoneNumView, InputPhoneNumModel>(),InputPhoneNumView {
 
     lateinit var backACIV : AppCompatImageView
     lateinit var titleACTV : AppCompatTextView
@@ -261,6 +261,22 @@ class InputPhoneNumOrWxAccountActivity : BaseActivity<InputPhoneNumView, InputPh
 
     override fun needEventBus(): Boolean {
         return false
+    }
+
+    override fun getSelfModel(): InputPhoneNumModel {
+        return InputPhoneNumModel(this@InputPhoneNumOrWxAccountActivity)
+    }
+
+    override fun showToast(value: String) {
+
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
     }
 
 }

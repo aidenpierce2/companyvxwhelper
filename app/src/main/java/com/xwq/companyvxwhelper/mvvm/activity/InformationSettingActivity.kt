@@ -19,7 +19,7 @@ import com.xwq.companyvxwhelper.mvvm.model.activity.InfomationSettingModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.InformationSettingView
 import kotlinx.android.synthetic.main.activity_base_setting.*
 
-class InformationSettingActivity : BaseActivity<InformationSettingView, InfomationSettingModel>() {
+class InformationSettingActivity : BaseActivity<InformationSettingView, InfomationSettingModel>(),InformationSettingView {
 
     lateinit var backACIV : AppCompatImageView
     lateinit var titleACTV : AppCompatTextView
@@ -98,5 +98,21 @@ class InformationSettingActivity : BaseActivity<InformationSettingView, Infomati
 
     override fun needEventBus(): Boolean {
         return false
+    }
+
+    override fun getSelfModel(): InfomationSettingModel {
+        return InfomationSettingModel(this@InformationSettingActivity)
+    }
+
+    override fun showToast(value: String) {
+
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
     }
 }

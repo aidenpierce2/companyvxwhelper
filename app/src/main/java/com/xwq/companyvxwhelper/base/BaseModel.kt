@@ -2,7 +2,9 @@ package com.xwq.companyvxwhelper.base
 
 import com.xwq.companyvxwhelper.api.Api
 import com.xwq.companyvxwhelper.api.interfaceRequest.RequestService
+import io.reactivex.ObservableTransformer
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Function
 import java.lang.RuntimeException
 
 abstract class BaseModel<T : IBaseView>(value : IBaseView?) {
@@ -28,6 +30,10 @@ abstract class BaseModel<T : IBaseView>(value : IBaseView?) {
             mDisposable.dispose()
             mDisposable.clear()
         }
+    }
+
+    open fun <T> handleResult(): ObservableTransformer<BaseNetworkResponse<T>?, T>? {
+        return ObservableTransformer { upstream -> upstream.map(BaseNetworkResponse<T>().data as Function<BaseNetworkResponse<T>?, T>) }
     }
 
 

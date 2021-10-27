@@ -43,6 +43,7 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
     // 需不需要实例化 看界面本身
     lateinit var locationObserver : iLocationObserver
     lateinit var locationObservable : MyApplication.LocationObservable
+    lateinit private var curModel : M
 
    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +61,7 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
        if (needEventBus()) {
            eventBus?.register(this)
        }
+       curModel = getSelfModel()
         initBaseData()
         initView()
         initData()
@@ -135,6 +137,10 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
      * 需不需要开启eventbus
      */
     abstract fun needEventBus() : Boolean
+    /**
+     * 设置model
+     */
+    abstract fun getSelfModel() : M
     /**
      * base 方法本身的初始化
      */
@@ -310,6 +316,10 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
     @Subscribe
     public fun defaultEventBusSub() {
 
+    }
+
+    protected fun getModel() : M {
+        return curModel
     }
 
     // 清空回退栈 到登录界面

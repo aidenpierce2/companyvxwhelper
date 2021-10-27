@@ -21,7 +21,7 @@ import com.xwq.companyvxwhelper.mvvm.view.activity.MainView
 import com.xwq.companyvxwhelper.widget.RedDotRadioButton
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<MainView, MainModel>(){
+class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
 
     var radioButtons : RadioButtonBean? = null
     val fragmentManager : FragmentManager by lazy {
@@ -215,6 +215,22 @@ class MainActivity : BaseActivity<MainView, MainModel>(){
 
     override fun needEventBus(): Boolean {
         return false
+    }
+
+    override fun getSelfModel(): MainModel {
+        return MainModel(this@MainActivity)
+    }
+
+    override fun showToast(value: String) {
+
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
     }
 
 }

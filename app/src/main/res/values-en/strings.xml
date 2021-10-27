@@ -47,4 +47,7 @@ You have not confirmed the company location, please set the company location fir
     <string name="user_policy">I have read and agreed to meituan user agreement and privacy policy, and authorize meituan to use the meituan account information (such as nickname, avatar and receiving address) for unified management</string>
     <string name="re_rend_message">re send message(x)</string>
     <string name="second">s</string>
+
+    //web
+    <string name="web_err">Network exception, please try again later!</string>
 </resources>

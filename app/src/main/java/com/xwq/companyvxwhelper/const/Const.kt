@@ -31,7 +31,7 @@ object Const : BaseEntity() {
     const val CHECKOUT_PM1 : String = "18:00"
     // 默认下午打卡时间2
     const val CHECKOUT_PM2 : String = "21:00"
-
-    //注册短信倒计时间
+    // token
+    const val USER_TOKEN : String = ""
 
 }
