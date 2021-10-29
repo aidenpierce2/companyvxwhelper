@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.trello.rxlifecycle2.components.support.RxFragment
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
@@ -23,8 +24,9 @@ class LoadingDialog : BaseDialog() {
 
     // 最大网络加载时间10秒钟
     private val MAX_LOADING_TIME : Long = 10000
-    var loadingACIV : AppCompatImageView? = null
-    var timer : Timer? = Timer()
+    private var loadingACIV : AppCompatImageView? = null
+    private var timer : Timer? = Timer()
+    private var allowShow : Boolean = true
 
     companion object {
         // 不允许同时出现两个加载框
@@ -84,12 +86,9 @@ class LoadingDialog : BaseDialog() {
     }
 
     override fun destroy() {
-//        var drawable : AnimationDrawable = loadingACIV!!.drawable as AnimationDrawable
-//        if (loadingACIV != null && drawable.isRunning) {
-//            drawable.stop()
-//        }
         loadingACIV!!.setImageDrawable(null);
         loadingACIV = null;
+
 
         if (timer != null) {
             timer!!.cancel()
@@ -105,19 +104,22 @@ class LoadingDialog : BaseDialog() {
         return false
     }
 
-    @Synchronized fun build(fragment: Fragment, allowStateLose: Boolean) {
-        if (fragment == null) {
+    @Synchronized fun build(fragmentManager: FragmentManager, allowStateLose: Boolean) {
+        if (fragmentManager == null) {
             return
         }
-
+        instance?.allowShow = true
         if (instance != null && instance!!.dialog != null && instance!!.dialog!!.isShowing) {
             // 还有个dialog正在运行
             return
         }
+        if (instance!!.allowShow) {
+            instance!!.allowShow = false
+        }
         if (allowStateLose) {
-            showAllowStateLoss(fragment.childFragmentManager)
+            showAllowStateLoss(fragmentManager)
         } else {
-            showNotAllowStateLoss(fragment.childFragmentManager)
+            showNotAllowStateLoss(fragmentManager)
         }
     }
 }

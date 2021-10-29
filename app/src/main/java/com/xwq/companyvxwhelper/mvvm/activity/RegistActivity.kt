@@ -70,10 +70,10 @@ class LoginActivity  : BaseActivity<MainView, MainModel>(),MainView {
     }
 
     override fun showLoading() {
-
+        super.showLoading()
     }
 
     override fun hideLoading() {
-
+        super.hideLoading()
     }
 }

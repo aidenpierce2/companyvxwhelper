@@ -25,7 +25,9 @@ import com.xwq.companyvxwhelper.base.Enum.PermissionMode
 import com.xwq.companyvxwhelper.callbackListener.RetryListener
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.mvvm.dialog.IosAlertDialog
+import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.LoadingDialog
 import com.xwq.companyvxwhelper.permission.PermissionManager
+import com.xwq.companyvxwhelper.utils.ToastUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -33,7 +35,7 @@ import kotlin.system.exitProcess
 
 
 abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivity(),
-    NoDoubleClickListener, RetryListener{
+    NoDoubleClickListener, IBaseView, RetryListener{
 
     val TAG : String = this::class.java.simpleName.toString()
 
@@ -290,6 +292,18 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
      */
     fun hideDefaultLoading() {
 
+    }
+
+    override fun showLoading() {
+        LoadingDialog.getSingleton().build(this.supportFragmentManager, true)
+    }
+
+    override fun hideLoading() {
+        LoadingDialog.getSingleton().disMiss()
+    }
+
+    override fun showToast(value: String) {
+        ToastUtil.showToast(value)
     }
 
     fun setAndroidNativeLightStatusBar(activity: Activity, dark: Boolean) {

@@ -213,14 +213,14 @@ class ChooseWorkCycleActivity : BaseActivity<ChooseWorkCycleView, ChooseWorkCycl
     }
 
     override fun showToast(value: String) {
-
+        super.showToast(value)
     }
 
     override fun showLoading() {
-
+        super.showLoading()
     }
 
     override fun hideLoading() {
-
+        super.hideLoading()
     }
 }
