@@ -9,9 +9,11 @@ import java.lang.RuntimeException
 
 abstract class BaseModel<T : IBaseView>(value : IBaseView?) {
     open var curView : T? = null
+    open var curContext : BaseActivity<IBaseView, BaseModel<IBaseView>>? = null
 
     init {
         curView = value as T?
+        curContext = value as BaseActivity<IBaseView, BaseModel<IBaseView>>
     }
 
     var mDisposable : CompositeDisposable = CompositeDisposable()

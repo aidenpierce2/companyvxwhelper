@@ -1,4 +1,4 @@
-package com.xwq.companyvxwhelper.databindbean
+package com.xwq.companyvxwhelper.bean.dataBindingBean
 
 import com.xwq.companyvxwhelper.base.BaseEntity
 

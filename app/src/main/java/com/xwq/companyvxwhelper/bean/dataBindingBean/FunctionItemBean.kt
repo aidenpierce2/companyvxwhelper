@@ -1,4 +1,4 @@
-package com.xwq.companyvxwhelper.bean
+package com.xwq.companyvxwhelper.bean.dataBindingBean
 
 import android.graphics.drawable.Drawable
 import com.xwq.companyvxwhelper.base.BaseEntity

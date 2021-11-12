@@ -1,4 +1,10 @@
 package com.xwq.companyvxwhelper.mvvm.view.activity
 
-class RegisterView {
+import com.xwq.companyvxwhelper.base.IBaseView
+import com.xwq.companyvxwhelper.bean.ResponseBean.RegisterResBean
+
+interface RegisterView : IBaseView{
+
+    fun registSucc(data : RegisterResBean)
+    fun registFail()
 }

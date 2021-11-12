@@ -1,14 +1,7 @@
 package com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment
 
 import android.app.Dialog
-import android.content.res.Resources
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,15 +10,13 @@ import com.amap.api.services.core.PoiItem
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
 import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
-import com.trello.rxlifecycle2.components.support.RxFragment
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseDialog
-import com.xwq.companyvxwhelper.bean.SearchDialogBean
-import com.xwq.companyvxwhelper.bean.SearchDialogItemBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogItemBean
 import com.xwq.companyvxwhelper.mvvm.adapter.SearchAdapter
 import com.xwq.companyvxwhelper.mvvm.adapter.decoration.RevenueSummaryItemDecoration
-import com.xwq.companyvxwhelper.mvvm.fragment.LocationFragment
 import com.xwq.companyvxwhelper.utils.DistanceUtils
 import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.ToastUtil
@@ -77,7 +68,7 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
 
         LogUtil.log(TAG, "ready to show LoadingDialog")
         LoadingDialog.getSingleton()
-            .build(singleInstance!!, true)
+            .build(mContextWeakRef.get()!!.supportFragmentManager, true)
 
         searchContent = defSearchContent
         searchLocation(searchContent)
@@ -94,10 +85,6 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
     }
 
     override fun dialogCancelAble(): Boolean {
-        return false
-    }
-
-    override fun needEventBus(): Boolean {
         return false
     }
 

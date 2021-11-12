@@ -6,7 +6,7 @@
     <data>
         <variable
             name="LoadingDataBindBean"
-            type="com.xwq.companyvxwhelper.databindbean.LoadingDataBindBean" />
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.LoadingDataBindBean" />
     </data>
 
 

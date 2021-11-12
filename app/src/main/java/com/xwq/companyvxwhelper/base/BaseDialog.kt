@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.utils.LogUtil
-import org.greenrobot.eventbus.EventBus
 import java.lang.ref.WeakReference
 import java.lang.reflect.Field
 
@@ -30,7 +29,6 @@ abstract class BaseDialog : DialogFragment(), NoDoubleClickListener{
     lateinit var mContainerRef : WeakReference<View>
     protected var window : Window? = null
     lateinit protected var inflater : LayoutInflater
-    var eventBus : EventBus? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         LogUtil.log(TAG, "onCreateView")
@@ -52,10 +50,6 @@ abstract class BaseDialog : DialogFragment(), NoDoubleClickListener{
         this.dialog!!.setCancelable(dialogCancelAble())
         this.dialog!!.setCanceledOnTouchOutside(dialogCancelAble())
 
-        eventBus = EventBus.getDefault()
-        if (needEventBus()) {
-            eventBus?.register(this)
-        }
         initView()
         initData()
         initListener()
@@ -84,8 +78,6 @@ abstract class BaseDialog : DialogFragment(), NoDoubleClickListener{
     override fun onDestroy() {
         LogUtil.log(TAG, "onDestroy")
         super.onDestroy()
-        //disMiss()
-        eventBus?.unregister(this)
     }
 
     // 设置动画效果 可以要 可以不要
@@ -108,8 +100,6 @@ abstract class BaseDialog : DialogFragment(), NoDoubleClickListener{
     protected fun getDialogWindow() : Window{
         return mContextWeakRef.get()!!.window
     }
-
-    abstract fun needEventBus() : Boolean
 
     fun showNotAllowStateLoss(manager: FragmentManager) {
         var fragmentTag = manager.findFragmentByTag(TAG)

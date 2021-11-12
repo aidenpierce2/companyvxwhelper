@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="LoginActivityBean"
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.LoginActivityBean" />
+
+        <variable
+            name="LoginActivity"
+            type="com.xwq.companyvxwhelper.mvvm.activity.LoginActivity" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/activity_login_aciv_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@{LoginActivityBean.iconDrawable}"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintDimensionRatio="h, 1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin11"/>
+
+        <com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
+            android:id="@+id/activity_login_utpvev_phonenum"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.85"
+            android:layout_height="@dimen/margin10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_aciv_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin11"
+            app:tInputStyle="usertelephone"
+            app:tHintText="@{LoginActivityBean.userTelBean.hintText}"
+            app:tInputText="@={LoginActivityBean.userTelBean.inputText}"
+            app:tShowClear="@={LoginActivityBean.userTelBean.showClear}"
+            />
+
+        <com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
+            android:id="@+id/activity_login_utvcev_phonenum"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.85"
+            android:layout_height="@dimen/margin10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_utpvev_phonenum"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin6"
+            app:tInputStyle="uerpassword"
+            app:tHintText="@{LoginActivityBean.userPassBean.hintText}"
+            app:tInputText="@={LoginActivityBean.userPassBean.inputText}"
+            app:tShowClear="@={LoginActivityBean.userPassBean.showClear}"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/activity_login_actv_remember_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/activity_login_utpvev_phonenum"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_utvcev_phonenum"
+            android:drawableLeft="@{LoginActivityBean.checkDrawable}"
+            android:text="@{LoginActivityBean.checkStatusStr}"
+            android:onClick="@{() -> LoginActivity.switchStatus()}"
+            android:drawablePadding="@dimen/margin1"
+            android:textSize="@dimen/large_size"
+            android:layout_marginTop="@dimen/margin4"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/activity_login_acbt_login"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin11"
+            android:background="@drawable/style_login_button"
+            android:elevation="@dimen/stroke_width1"
+            android:text="@{LoginActivityBean.loginStr}"
+            android:onClick="@{() -> LoginActivity.requestLogin()}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/bigger_size"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/margin10"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_actv_remember_pass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.65" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/activity_login_actv_versioncode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="@dimen/large_size"
+            android:layout_marginBottom="@dimen/margin7"
+            android:text="@{LoginActivityBean.versionStr}"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/activity_login_actv_regist_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/activity_login_acbt_login"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_acbt_login"
+            android:text="@{LoginActivityBean.registStr}"
+            android:textColor="@color/titleColor"
+            android:padding="@dimen/margin3"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/margin6"
+            android:textSize="@dimen/large_size"
+            android:onClick="@{() -> LoginActivity.registNow()}"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/activity_login_actv_forpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_acbt_login"
+            app:layout_constraintEnd_toEndOf="@+id/activity_login_acbt_login"
+            android:text="@{LoginActivityBean.forgetStr}"
+            android:textColor="@color/titleColor"
+            android:padding="@dimen/margin3"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/margin6"
+            android:textSize="@dimen/large_size"
+            android:onClick="@{() -> LoginActivity.forgetPassword()}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

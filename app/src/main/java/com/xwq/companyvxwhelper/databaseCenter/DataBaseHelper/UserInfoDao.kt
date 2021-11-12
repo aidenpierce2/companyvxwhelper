@@ -37,7 +37,7 @@ class UserInfoDao(context: Context) : BaseDataBaseHelper(context) {
 
     // 根据号码获取对象
     fun getUserClockInByPhoneNum(telephoneNum : String) : UserClockInDBBean?{
-        if (TextUtils.isEmpty(telephoneNum)) {
+        if (telephoneNum.isNullOrEmpty()) {
             return null
         }
 

@@ -44,10 +44,27 @@ You have not confirmed the company location, please set the company location fir
     <string name="set_def_wxpassword">please input you wx password</string>
     <string name="remember_password">Remeber Password</string>
     <string name="register">Register</string>
-    <string name="user_policy">I have read and agreed to meituan user agreement and privacy policy, and authorize meituan to use the meituan account information (such as nickname, avatar and receiving address) for unified management</string>
+    <string name="user_policy">I have read and agreed to 《qywxhelper user agreement》 and 《privacy policy》, and authorize qywxhelper to use the qywxhelper account information (such as nickname, avatar and receiving address) for unified management</string>
     <string name="re_rend_message">re send message(x)</string>
     <string name="second">s</string>
-
+    <string name="login">Login</string>
+    <string name="input_correct_phonenum">please input correct phonenumber</string>
+    <string name="input_phonenum">please input phonenumber</string>
+    <string name="input_verify_code">please input verify_code</string>
+    <string name="input_correct_verify_code">please input correct verify_code</string>
+    <string name="input_password">please input password</string>
+    <string name="re_input_password">please ensure password</string>
+    <string name="re_ensure_password">Please confirm whether the two passwords are consistent</string>
+    <string name="password_length_err">pleasr input 8~16 password</string>
+    <string name="password_no_character_err">please input 1 character at least</string>
+    <string name="password_no_number_err">please input 2 number at least</string>
+    <string name="version_name">version code: </string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="register_now">Regist now</string>
+    <string name="no_running">Not Running</string>
+    <string name="running">Running</string>
     //web
+    <string name="get_sms_succ">get sms success,please pay attention to ckeck</string>
     <string name="web_err">Network exception, please try again later!</string>
 </resources>

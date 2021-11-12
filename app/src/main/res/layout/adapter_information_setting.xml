@@ -4,7 +4,7 @@
     <data>
         <variable
             name="informationitem"
-            type="com.xwq.companyvxwhelper.bean.InformationSettingItemBean" />
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.InformationSettingItemBean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

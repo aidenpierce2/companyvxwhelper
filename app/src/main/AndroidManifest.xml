@@ -46,6 +46,8 @@
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
+        <activity android:name=".mvvm.activity.RegistActivity" />
+        <activity android:name=".mvvm.activity.ForgetPassWordActivity"/>
         <activity android:name="com.xwq.companyvxwhelper.mvvm.activity.MainActivity"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

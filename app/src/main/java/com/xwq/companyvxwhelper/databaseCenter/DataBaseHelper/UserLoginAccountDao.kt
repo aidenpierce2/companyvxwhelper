@@ -33,7 +33,7 @@ class UserLoginAccountDao(context : Context) : BaseDataBaseHelper(context) {
     }
 
     fun getUserLoginAccountByUUid(uuidStr : String) : UserLoginAccountDBBean? {
-        if (TextUtils.isEmpty(uuidStr)) {
+        if (uuidStr.isNullOrEmpty()) {
             return null
         }
         return mSelfDao!!.queryBuilder().where(UserLoginAccountDBBeanDao.Properties.UserUUid.eq(uuidStr)).build().unique() as UserLoginAccountDBBean

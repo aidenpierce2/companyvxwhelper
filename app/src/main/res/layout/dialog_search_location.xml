@@ -5,7 +5,7 @@
     <data>
         <variable
             name="SearchDialogBean"
-            type="com.xwq.companyvxwhelper.bean.SearchDialogBean"/>
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogBean"/>
 
         <variable
             name="SearchLocation"

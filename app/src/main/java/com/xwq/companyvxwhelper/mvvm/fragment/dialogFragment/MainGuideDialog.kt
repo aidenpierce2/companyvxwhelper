@@ -5,11 +5,10 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseDialog
-import com.xwq.companyvxwhelper.bean.DialogMainGuideBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.DialogMainGuideBean
 import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.WindowScreenUtil
 import kotlinx.android.synthetic.main.dialog_main_guide.*
@@ -26,6 +25,7 @@ class MainGuideDialog : BaseDialog() {
     private var bean : DialogMainGuideBean = DialogMainGuideBean()
     lateinit var iClickInterface : IClickInterface
     var cancelAble: Boolean = true
+    var allowShow : Boolean = true
 
     companion object {
         private var instance : MainGuideDialog? = null
@@ -83,16 +83,13 @@ class MainGuideDialog : BaseDialog() {
     }
 
     override fun destroy() {
-        MainGuideDialog.instance = null
+        instance?.allowShow = true
     }
 
     override fun dialogCancelAble(): Boolean {
         return false
     }
 
-    override fun needEventBus(): Boolean {
-        return false
-    }
 
     fun onViewClick(view : View) {
         if (!this@MainGuideDialog::iClickInterface.isInitialized) {
@@ -128,6 +125,10 @@ class MainGuideDialog : BaseDialog() {
             LogUtil.log(TAG, "show function not execute!")
             return
         }
+        if (!instance!!.allowShow) {
+            return
+        }
+        instance?.allowShow = false
         if (allowStateLose) {
             showAllowStateLoss(manager)
         } else {

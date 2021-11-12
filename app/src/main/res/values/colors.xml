@@ -27,4 +27,7 @@
     <color name="switchDefColor">#CCCCCC</color>
     <color name="separatorColor">#F5F5F5</color>
     <color name="switchColor">#EF314C</color>
+    <color name="rougeColor">#f05b72</color>
+    <color name="todaysColor">#f15b6c</color>
+    <color name="darkblueColor">#3eede7</color>
 </resources>

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="DialogMainGuideBean"
-            type="com.xwq.companyvxwhelper.bean.DialogMainGuideBean" />
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.DialogMainGuideBean" />
 
         <variable
             name="MainGuideDialog"

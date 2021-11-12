@@ -2,7 +2,7 @@ package com.xwq.companyvxwhelper.base
 
 import android.content.BroadcastReceiver
 
-abstract class BaseBroadCastReceiver<V : IBASBaseView, M : BASBaseModel<V>>: BroadcastReceiver() {
+abstract class BaseBroadCastReceiver<V : IBroadCastBaseView, M : BroadCastBaseModel<V>>: BroadcastReceiver() {
 
     /**
      * 获取baseview receiver本身

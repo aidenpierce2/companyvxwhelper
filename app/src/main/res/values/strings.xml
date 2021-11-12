@@ -42,10 +42,27 @@
     <string name="set_def_wxpassword">请输入您的微信密码</string>
     <string name="remember_password">记住密码</string>
     <string name="register">注册</string>
-    <string name="user_policy">我已阅读并同意《美团用户协议》、《隐私政策》,并授权美团使用该美团账号信息(如昵称、头像、收货地址)进行统一管理</string>
+    <string name="user_policy">我已阅读并同意《企业微信助手用户协议》、《隐私政策》,并授权企业微信助手使用该企业微信助手账号信息(如昵称、头像、收货地址)进行统一管理</string>
     <string name="re_rend_message">重发短信(x)</string>
     <string name="second">秒</string>
-
+    <string name="login">登录</string>
+    <string name="input_correct_phonenum">请输入正确的手机号码</string>
+    <string name="input_phonenum">请输入手机号</string>
+    <string name="input_correct_verify_code">请输入正确的验证码</string>
+    <string name="input_verify_code">请输入六位验证码</string>
+    <string name="input_password">请输入密码</string>
+    <string name="re_input_password">请确认密码</string>
+    <string name="re_ensure_password">请确认两次输入密码是否一致</string>
+    <string name="password_length_err">请输入8~16位密码</string>
+    <string name="password_no_character_err">请输入至少一个英文字符</string>
+    <string name="password_no_number_err">请输入至少两个数字</string>
+    <string name="version_name">版本号: </string>
+    <string name="reset_password">重置密码</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="register_now">立即注册</string>
+    <string name="no_running">未运行</string>
+    <string name="running">运行</string>
     //网络
+    <string name="get_sms_succ">短信下发成功,请注意查收</string>
     <string name="web_err">网络异常,请稍后再试!</string>
 </resources>

@@ -28,8 +28,6 @@ import com.xwq.companyvxwhelper.mvvm.dialog.IosAlertDialog
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.LoadingDialog
 import com.xwq.companyvxwhelper.permission.PermissionManager
 import com.xwq.companyvxwhelper.utils.ToastUtil
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -39,7 +37,6 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
 
     val TAG : String = this::class.java.simpleName.toString()
 
-    protected var eventBus : EventBus? = null
     private var binding : ViewDataBinding? = null
     var permissionManager : PermissionManager? = null
     // 需不需要实例化 看界面本身
@@ -59,10 +56,6 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
             }
         }
 
-       eventBus = EventBus.getDefault()
-       if (needEventBus()) {
-           eventBus?.register(this)
-       }
        curModel = getSelfModel()
         initBaseData()
         initView()
@@ -73,7 +66,6 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
 
     override fun onDestroy() {
         super.onDestroy()
-        eventBus?.unregister(this)
         if (needLocation()) {
             if (locationObservable != null) {
                 locationObservable.removeImpl(TAG)
@@ -135,10 +127,6 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
      * 需不需要获取当前定位
      */
     abstract fun needLocation() : Boolean
-    /**
-     * 需不需要开启eventbus
-     */
-    abstract fun needEventBus() : Boolean
     /**
      * 设置model
      */
@@ -324,11 +312,6 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
         override fun update(o: Observable?, arg: Any?) {
 
         }
-
-    }
-
-    @Subscribe
-    public fun defaultEventBusSub() {
 
     }
 

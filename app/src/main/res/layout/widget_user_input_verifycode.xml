@@ -3,21 +3,32 @@
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-android:background="@drawable/style_user_input_telorpass"
-android:layout_marginLeft="@dimen/margin4"
-android:layout_marginRight="@dimen/margin4">
+android:background="@drawable/style_user_input_telorpass">
 
 <androidx.appcompat.widget.AppCompatEditText
     android:id="@+id/widget_input_verify_acet_input"
     android:layout_width="0dp"
-    android:layout_height="@dimen/margin11"
+    android:layout_height="@dimen/margin13"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/widget_user_telorpass_actv_input"
+    app:layout_constraintBottom_toBottomOf="@+id/widget_user_telorpass_actv_input"
     app:layout_constraintEnd_toStartOf="@+id/widget_user_telorpass_actv_input"
     android:background="@null"
+    android:textSize="@dimen/large_size"
     android:paddingLeft="@dimen/margin3"
     android:paddingRight="@dimen/margin3" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="@dimen/linear_width"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/widget_input_verify_acet_input"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/widget_user_telorpass_actv_input"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/black"
+        android:layout_marginTop="@dimen/margin3"
+        android:layout_marginBottom="@dimen/margin3"/>
 
 <androidx.appcompat.widget.AppCompatTextView
     android:id="@+id/widget_user_telorpass_actv_input"

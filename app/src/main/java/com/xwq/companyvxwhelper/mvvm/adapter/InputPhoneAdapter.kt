@@ -19,8 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.bean.Enum.MultiAdapterEnum
-import com.xwq.companyvxwhelper.bean.InputPhoneNumItemBean
-import com.xwq.companyvxwhelper.bean.SettingAdapterBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.SettingAdapterBean
 
 class InputPhoneAdapter(mContext : AppCompatActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

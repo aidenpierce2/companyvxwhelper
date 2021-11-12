@@ -1,19 +1,16 @@
 package com.xwq.companyvxwhelper.base
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.components.support.RxFragment
 import com.xwq.companyvxwhelper.MyApplication
-import com.xwq.companyvxwhelper.bean.LocationBean
-import com.xwq.companyvxwhelper.bean.LocationFragmentBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.LocationBean
 import com.xwq.companyvxwhelper.callbackListener.RetryListener
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.utils.LogUtil

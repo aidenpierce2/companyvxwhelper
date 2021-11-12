@@ -5,7 +5,7 @@
     <data>
         <variable
             name="item"
-            type="com.xwq.companyvxwhelper.bean.SearchDialogItemBean" />
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogItemBean" />
     </data>
     
     

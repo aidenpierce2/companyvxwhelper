@@ -15,8 +15,8 @@ import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseFragment
-import com.xwq.companyvxwhelper.bean.FunctionItemBean
-import com.xwq.companyvxwhelper.bean.MyFragmentBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.FunctionItemBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.MyFragmentBean
 import com.xwq.companyvxwhelper.mvvm.activity.InformationSettingActivity
 import com.xwq.companyvxwhelper.mvvm.adapter.FunctionAdapter
 import com.xwq.companyvxwhelper.mvvm.adapter.decoration.RevenueSummaryItemDecoration
@@ -41,7 +41,7 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
     lateinit private var functionRCY : RecyclerView
 
     companion object {
-        @BindingAdapter("bind:webImageUrl")
+        @BindingAdapter("webImageUrl")
         @JvmStatic
         fun loadWebImage(roundImageView: RoundImageView, imageUrl : String) {
             Glide.with(MyApplication.app).load(imageUrl).into(roundImageView)
@@ -99,7 +99,7 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
     }
 
     override fun init() {
-        myFragmentBean = MyFragmentBean()
+        myFragmentBean = MyFragmentBean("", "", "", arrayOf<FunctionItemBean>())
         // 测试图片地址
         myFragmentBean.headImgUrl = "https://img2.baidu.com/it/u=4001462169,2041869795&fm=26&fmt=auto&gp=0.jpg"
         myFragmentBean.nickName = "喜洋洋2021"

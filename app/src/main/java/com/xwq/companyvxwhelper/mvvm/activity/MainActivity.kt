@@ -12,7 +12,7 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.base.Enum.PermissionArray
 import com.xwq.companyvxwhelper.base.Enum.PermissionMode
-import com.xwq.companyvxwhelper.bean.RadioButtonBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.RadioButtonBean
 import com.xwq.companyvxwhelper.mvvm.fragment.HistoryFragment
 import com.xwq.companyvxwhelper.mvvm.fragment.LocationFragment
 import com.xwq.companyvxwhelper.mvvm.fragment.MyFragment
@@ -123,7 +123,8 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
             LocationFragment().let {
                 locationFragment = it
                 this.add(R.id.activity_main_fl_container, locationFragment!!,it.TAG)
-                (radioButtons!!.items as ArrayList).add(RadioButtonBean.RadioButtonItem(resources.getString(R.string.homepage),
+                (radioButtons!!.items as ArrayList).add(
+                    RadioButtonBean.RadioButtonItem(resources.getString(R.string.homepage),
                     it.TAG,
                     resources.getDrawable(R.mipmap.location_un_choosed),
                     ""
@@ -132,7 +133,8 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
             HistoryFragment().let {
                 historyFragment = it
                 this.add(R.id.activity_main_fl_container, historyFragment!!,it.TAG)
-                (radioButtons!!.items as ArrayList).add(RadioButtonBean.RadioButtonItem(resources.getString(R.string.history),
+                (radioButtons!!.items as ArrayList).add(
+                    RadioButtonBean.RadioButtonItem(resources.getString(R.string.history),
                     it.TAG,
                     resources.getDrawable(R.mipmap.history_un_choose),
                     ""
@@ -141,7 +143,8 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
             MyFragment().let {
                 myFragment = it
                 this.add(R.id.activity_main_fl_container, myFragment!!,it.TAG)
-                (radioButtons!!.items as ArrayList).add(RadioButtonBean.RadioButtonItem(resources.getString(R.string.mine),
+                (radioButtons!!.items as ArrayList).add(
+                    RadioButtonBean.RadioButtonItem(resources.getString(R.string.mine),
                     it.TAG,
                     resources.getDrawable(R.mipmap.mine_un_checked),
                     ""
@@ -210,10 +213,6 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
     }
 
     override fun needLocation(): Boolean {
-        return false
-    }
-
-    override fun needEventBus(): Boolean {
         return false
     }
 

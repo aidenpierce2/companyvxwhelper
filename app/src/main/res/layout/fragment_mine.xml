@@ -5,7 +5,7 @@
     <data>
         <variable
             name="my"
-            type="com.xwq.companyvxwhelper.bean.MyFragmentBean" />
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.MyFragmentBean" />
     </data>
 
     <androidx.core.widget.NestedScrollView

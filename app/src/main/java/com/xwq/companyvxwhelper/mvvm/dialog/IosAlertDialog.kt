@@ -83,7 +83,7 @@ class IosAlertDialog: DialogFragment() {
 
     fun initData () {
         titleACTV!!.text = titleData
-        if (TextUtils.isEmpty(contentData)) {
+        if (contentData.isNullOrEmpty()) {
             contentACTV!!.text = spannableString
         } else {
             contentACTV!!.text = contentData

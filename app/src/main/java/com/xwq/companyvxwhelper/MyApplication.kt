@@ -2,23 +2,16 @@ package com.xwq.companyvxwhelper
 
 import android.app.Activity
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
-import com.xwq.companyvxwhelper.base.BaseActivity
-import com.xwq.companyvxwhelper.base.BaseModel
-import com.xwq.companyvxwhelper.base.IBaseView
-import com.xwq.companyvxwhelper.bean.LocationBean
-import leakcanary.LeakCanary
+import com.xwq.companyvxwhelper.bean.dataBindingBean.LocationBean
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.text.DecimalFormat
 import java.util.*
-import java.util.Map
-import java.util.Set
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
@@ -272,7 +265,7 @@ class MyApplication : MultiDexApplication() {
         fun addImpl (tag : String, observer : Observer) {
             init()
 
-            if (TextUtils.isEmpty(tag) || observer == null) {
+            if (tag.isNullOrEmpty() || observer == null) {
                 return
             }
 
@@ -282,7 +275,7 @@ class MyApplication : MultiDexApplication() {
         fun removeImpl (tag : String) {
             init()
 
-            if ( TextUtils.isEmpty(tag) ){
+            if ( tag.isNullOrEmpty() ){
                 return
             }
 

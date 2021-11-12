@@ -35,7 +35,7 @@ class GsonResponseBodyConverter<T> internal constructor(
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        if (!TextUtils.isEmpty(s)) {
+        if (!s.isNullOrEmpty()) {
             s = formatStringForPHP(s)
         }
         val jsonReader = gson.newJsonReader(getReader(s))

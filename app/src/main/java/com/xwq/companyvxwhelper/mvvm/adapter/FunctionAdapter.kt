@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
-import com.xwq.companyvxwhelper.bean.FunctionItemBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.FunctionItemBean
 
 class FunctionAdapter(mContext : AppCompatActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

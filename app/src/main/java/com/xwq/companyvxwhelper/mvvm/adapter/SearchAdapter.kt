@@ -1,6 +1,5 @@
 package com.xwq.companyvxwhelper.mvvm.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
-import com.xwq.companyvxwhelper.bean.SearchDialogItemBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogItemBean
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
-import java.lang.ref.WeakReference
 
 class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

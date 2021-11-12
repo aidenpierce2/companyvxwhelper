@@ -35,7 +35,7 @@ class CompanyDao(context: Context) : BaseDataBaseHelper(context) {
 
     // 查找指定uuid的数据
     fun getBeanByUuid(uuid : String) : CompanyDBBean?{
-        if (TextUtils.isEmpty(uuid)) {
+        if (uuid.isNullOrEmpty()) {
             return null
         }
 

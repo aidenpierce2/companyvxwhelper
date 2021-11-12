@@ -17,7 +17,7 @@ import java.util.concurrent.TimeoutException
 /**
  * Created by xwq on 2021 06 03
  */
-abstract class BaseObserver<T>(private val mContext: Context?) : Observer<BaseNetworkResponse<T>> {
+abstract class BaseObserver<T>(var mContext: Context?) : Observer<BaseNetworkResponse<T>> {
     override fun onSubscribe(d: Disposable) {
         onRequestStart()
     }

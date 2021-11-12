@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.DataBaseBean.UserLoginAccountDBBean
-import com.xwq.companyvxwhelper.bean.DataBaseBean.UserLoginAccountDBBeanDao
 import com.xwq.companyvxwhelper.bean.Enum.InputInformationTypeEnum
 import com.xwq.companyvxwhelper.bean.Enum.InputSettingEnum
 import com.xwq.companyvxwhelper.bean.Enum.MultiAdapterEnum
-import com.xwq.companyvxwhelper.bean.SettingAdapterBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.SettingAdapterBean
 import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.databaseCenter.DatabaseManager
 import com.xwq.companyvxwhelper.mvvm.adapter.InputPhoneAdapter
@@ -257,10 +256,6 @@ class InputPhoneNumOrWxAccountActivity : BaseActivity<InputPhoneNumView, InputPh
             userLoginAccountBean.userPhoneNum = phoneData
             DatabaseManager.getUserLoginAccountInstance().addOrReplace(userLoginAccountBean)
         }
-    }
-
-    override fun needEventBus(): Boolean {
-        return false
     }
 
     override fun getSelfModel(): InputPhoneNumModel {

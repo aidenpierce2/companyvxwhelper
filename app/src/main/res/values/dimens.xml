@@ -17,6 +17,8 @@
     <dimen name="margin9">40dp</dimen>
     <dimen name="margin10">45dp</dimen>
     <dimen name="margin11">50dp</dimen>
+    <dimen name="margin12">55dp</dimen>
+    <dimen name="margin13">60dp</dimen>
     
     <dimen name="home_input_search_height">40dp</dimen>
     <dimen name="search_location_rcy_margin">50dp</dimen>

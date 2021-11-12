@@ -30,6 +30,20 @@ class SharePreferenceUtil {
         }
     }
 
+    fun setData (key: String, value: Boolean) {
+        if (editor != null) {
+            editor!!.putBoolean(key, value)
+            editor!!.commit()
+        }
+    }
+
+    fun setData (key: String, value: Long) {
+        if (editor != null) {
+            editor!!.putLong(key, value)
+            editor!!.commit()
+        }
+    }
+
     fun getData (key : String)  : String{
         return getData(key, "")
     }
@@ -37,6 +51,20 @@ class SharePreferenceUtil {
     fun getData (key : String, defaultValue : String) : String{
         if (share != null) {
             return share!!.getString(key, defaultValue)!!
+        }
+        return defaultValue
+    }
+
+    fun getData (key: String, defaultValue: Boolean) : Boolean {
+        if (share != null) {
+            return share!!.getBoolean(key, defaultValue)
+        }
+        return defaultValue
+    }
+
+    fun getData (key: String, defaultValue: Long) : Long {
+        if (share != null) {
+            return share!!.getLong(key, defaultValue)
         }
         return defaultValue
     }

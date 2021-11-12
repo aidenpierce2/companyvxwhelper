@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.Enum.InputSettingEnum
-import com.xwq.companyvxwhelper.bean.Enum.UserCheckInEnum
-import com.xwq.companyvxwhelper.bean.InformationSettingItemBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.InformationSettingItemBean
 import com.xwq.companyvxwhelper.mvvm.adapter.InformationSettingAdapter
-import com.xwq.companyvxwhelper.mvvm.adapter.decoration.RevenueSummaryItemDecoration
 import com.xwq.companyvxwhelper.mvvm.model.activity.InfomationSettingModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.InformationSettingView
 import kotlinx.android.synthetic.main.activity_base_setting.*
@@ -93,10 +91,6 @@ class InformationSettingActivity : BaseActivity<InformationSettingView, Infomati
     }
 
     override fun needLocation(): Boolean {
-        return false
-    }
-
-    override fun needEventBus(): Boolean {
         return false
     }
 

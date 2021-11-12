@@ -5,7 +5,7 @@
     <data>
         <variable
             name="location"
-            type="com.xwq.companyvxwhelper.bean.LocationFragmentBean" />
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.LocationFragmentBean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +54,20 @@
                 app:layout_constraintBottom_toBottomOf="@+id/fragment_location_actv_location"
                 android:src="@mipmap/wm_page_main_arrow_black"/>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragment_location_aciv_running_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/shape_no_running"
+                android:drawablePadding="@dimen/margin1"
+                android:text="@string/no_running"
+                app:layout_constraintTop_toTopOf="@+id/fragment_location_aciv_location"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_location_aciv_location"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_location_aciv_warning"
+                android:layout_marginRight="@dimen/margin2"/>
+
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/fragment_location_aciv_warning"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@mipmap/wm_sc_home_message_center"

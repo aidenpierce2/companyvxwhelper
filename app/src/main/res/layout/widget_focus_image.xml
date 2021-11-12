@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="WorkCycleItemBean"
-            type="com.xwq.companyvxwhelper.bean.WorkCycleItemBean" />
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.WorkCycleItemBean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

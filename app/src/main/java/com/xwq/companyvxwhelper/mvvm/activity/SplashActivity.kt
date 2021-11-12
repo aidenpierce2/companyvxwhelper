@@ -38,17 +38,11 @@ class SplashActivity : BaseActivity<SplashView, SplashModel>(), SplashView{
 
     override fun initData() {
         var token = SharePreferenceUtil.instance.getData(Const.USER_TOKEN)
-        if (TextUtils.isEmpty(token)) {
+        if (token.isNullOrEmpty()) {
             startActivity(Intent().setClass(this@SplashActivity, LoginActivity::class.java))
         } else {
             getModel().checkTokenValid(token)
         }
-        Handler().postDelayed(Runnable {
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-            this@SplashActivity.finish()
-        }, 1000)
-
-
     }
 
     override fun initListener() {
@@ -60,10 +54,6 @@ class SplashActivity : BaseActivity<SplashView, SplashModel>(), SplashView{
     }
 
     override fun needLocation(): Boolean {
-        return false
-    }
-
-    override fun needEventBus(): Boolean {
         return false
     }
 

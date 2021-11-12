@@ -12,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import java.net.Proxy
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
@@ -44,6 +45,7 @@ class Api {
                 OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)
                     .writeTimeout(10, TimeUnit.SECONDS)
+                    .proxy(Proxy.NO_PROXY)
             val trustAllCerts = arrayOf<TrustManager>(
                 object : X509TrustManager {
                     override fun checkClientTrusted(
@@ -105,7 +107,7 @@ class Api {
         fun createRequestBody(requestBodyStr : String) : RequestBody{
             var requestBodyStr : String = ""
             var CONTENT_TYPE: MediaType? = MediaType.parse("application/json")
-            if (!TextUtils.isEmpty(requestBodyStr)) {
+            if (!requestBodyStr.isNullOrEmpty()) {
                 var reqStr = Gson().toJson(requestBodyStr)
                 return RequestBody.create(CONTENT_TYPE, reqStr)
             }

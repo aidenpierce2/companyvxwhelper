@@ -3,19 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/style_user_input_telorpass"
-    android:layout_marginLeft="@dimen/margin4"
-    android:layout_marginRight="@dimen/margin4">
+    android:background="@drawable/style_user_input_telorpass">
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/widget_user_telorpass_acet_input"
         android:layout_width="0dp"
-        android:layout_height="@dimen/margin11"
+        android:layout_height="@dimen/margin13"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_login_aciv_icon"
+        app:layout_constraintTop_toTopOf="@+id/widget_user_telorpass_aciv_delete"
+        app:layout_constraintBottom_toBottomOf="@+id/widget_user_telorpass_aciv_delete"
         app:layout_constraintEnd_toStartOf="@+id/widget_user_telorpass_aciv_delete"
         android:background="@null"
-        android:paddingLeft="@dimen/margin3"
+        android:textSize="@dimen/middle_size"
+        android:paddingLeft="@dimen/margin4"
         android:paddingRight="@dimen/margin3" />
 
     <androidx.appcompat.widget.AppCompatImageView

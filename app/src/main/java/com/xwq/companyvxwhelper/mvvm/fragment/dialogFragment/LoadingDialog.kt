@@ -2,20 +2,10 @@ package com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment
 
 import android.app.Dialog
 import android.graphics.drawable.AnimationDrawable
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.trello.rxlifecycle2.components.support.RxFragment
-import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseDialog
-import com.xwq.companyvxwhelper.databindbean.LoadingDataBindBean
-import com.xwq.companyvxwhelper.databinding.DialogLoadingBinding
 import com.xwq.companyvxwhelper.utils.LogUtil
 import kotlinx.android.synthetic.main.dialog_loading.*
 import java.util.*
@@ -100,9 +90,6 @@ class LoadingDialog : BaseDialog() {
         return false
     }
 
-    override fun needEventBus(): Boolean {
-        return false
-    }
 
     @Synchronized fun build(fragmentManager: FragmentManager, allowStateLose: Boolean) {
         if (fragmentManager == null) {

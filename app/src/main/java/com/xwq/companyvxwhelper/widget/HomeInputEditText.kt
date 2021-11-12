@@ -82,13 +82,13 @@ class HomeInputEditText: ConstraintLayout, NoDoubleClickListener {
         centerACET = container!!.findViewById(R.id.widget_home_input_aciv_input)
         rightACBT = container!!.findViewById(R.id.widget_home_input_acbt_input)
 
-        if (TextUtils.isEmpty(centerHintColor)) {
+        if (centerHintColor.isNullOrEmpty()) {
             centerHintColor = ColorTranslate.tranColorIntToStr(R.color.inputHint)
         }
-        if (TextUtils.isEmpty(centerStrColor)) {
+        if (centerStrColor.isNullOrEmpty()) {
             centerStrColor = ColorTranslate.tranColorIntToStr(R.color.input)
         }
-        if (TextUtils.isEmpty(rightStrColor)) {
+        if (rightStrColor.isNullOrEmpty()) {
             rightStrColor = ColorTranslate.tranColorIntToStr(R.color.searchColor)
         }
 

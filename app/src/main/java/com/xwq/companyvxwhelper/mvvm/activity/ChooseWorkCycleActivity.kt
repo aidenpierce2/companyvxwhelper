@@ -7,7 +7,7 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.DataBaseBean.UserCheckInDBBean
 import com.xwq.companyvxwhelper.bean.Enum.UserCheckInEnum
-import com.xwq.companyvxwhelper.bean.WorkCycleItemBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.WorkCycleItemBean
 import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.mvvm.adapter.ChooseWorkCycleAdapter
 import com.xwq.companyvxwhelper.mvvm.model.activity.ChooseWorkCycleModel
@@ -202,10 +202,6 @@ class ChooseWorkCycleActivity : BaseActivity<ChooseWorkCycleView, ChooseWorkCycl
                 //下一章 自己选取
             }
         }
-    }
-
-    override fun needEventBus(): Boolean {
-        return false
     }
 
     override fun getSelfModel(): ChooseWorkCycleModel {

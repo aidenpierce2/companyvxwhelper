@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.WindowManager
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
@@ -31,9 +30,9 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseFragment
 import com.xwq.companyvxwhelper.bean.DataBaseBean.CompanyDBBean
 import com.xwq.companyvxwhelper.bean.DataBaseBean.UserClockInDBBean
-import com.xwq.companyvxwhelper.bean.DialogMainGuideBean
-import com.xwq.companyvxwhelper.bean.LocationFragmentBean
-import com.xwq.companyvxwhelper.bean.SearchDialogItemBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.DialogMainGuideBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.LocationFragmentBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogItemBean
 import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.databaseCenter.DatabaseManager
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.MainGuideDialog
@@ -102,7 +101,7 @@ class LocationFragment : BaseFragment<LocationView, LocationModel>(),
         //有没有设置公司坐标
         var userPhoneNum : String = SharePreferenceUtil.instance.getData(Const.USER_PHONENUM)
         userPhoneNum.let {
-            if (TextUtils.isEmpty(userPhoneNum)) {
+            if (userPhoneNum.isNullOrEmpty()) {
                 // 没有 前往设置
                 LogUtil.log(TAG, "showSetCompanyLocation 1")
                 showSetCompanyLocation()

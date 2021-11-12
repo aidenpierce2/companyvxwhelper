@@ -3,32 +3,26 @@ package com.xwq.companyvxwhelper.widget
 import android.content.Context
 import android.content.Intent
 import android.content.res.TypedArray
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView.BufferType
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.*
 import com.xwq.companyvxwhelper.R
-import com.xwq.companyvxwhelper.bean.EventBusMessageTypeBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.EventBusMessageTypeBean
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.service.TimeCutDownService
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.widget_user_input_verifycode.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 @InverseBindingMethods(
@@ -55,22 +49,19 @@ import java.util.*
 )
 class UserInputVerifyCodeEditView : ConstraintLayout {
 
-    val TIME_INTERVAL = 1
-    val MAX_TIME = 60
-    var hintText : String = ""
-    var inputtext : String = ""
-    var clicktext : String = ""
+    val PRE_CUT_DOWN_TIME = 1
+    var hintText : String? = ""
+    var inputtext : String? = ""
+    var clicktext : String? = ""
     var clickAble : Boolean = false
 
     lateinit var editInput : AppCompatEditText
     lateinit var showACTV : AppCompatTextView
 
-    lateinit var iHintTextChangedListener : InverseBindingListener
-    lateinit var iInputTextChangedListener : InverseBindingListener
-    lateinit var iClickTextChangedListener : InverseBindingListener
-    lateinit var iClickAbleChangedListener : InverseBindingListener
+    var onIHintTextChange : OnIHintTextChangeListener? = null
+    var onIClickAbleChange : OnIClickAbleListener? = null
 
-    var eventBus : EventBus? = null
+    var observer : ParcelabelObserver = ParcelabelObserver()
 
     constructor(context : Context) : this(context, null) {
     }
@@ -82,70 +73,140 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
         init(attributeSet)
     }
 
-    fun setIHintText(hintText : String) {
-        if(!this.hintText.equals(hintText)) {
-            this.hintText = hintText
+    interface OnIHintTextChangeListener {
+        fun onIHintTextChange()
+    }
+
+    interface OnIClickAbleListener {
+        fun onIClickAbleChange()
+    }
+
+    class ParcelabelObserver() : Observer<String>,Parcelable {
+        constructor(parcel: Parcel) : this() {
+        }
+
+        override fun onSubscribe(d: Disposable) {
+
+        }
+
+        override fun onNext(t: String) {
+
+        }
+
+        override fun onError(e: Throwable) {
+
+        }
+
+        override fun onComplete() {
+
+        }
+
+        override fun describeContents(): Int {
+            return 0;
+        }
+
+        override fun writeToParcel(dest: Parcel?, flags: Int) {
+
+        }
+
+        companion object CREATOR : Parcelable.Creator<ParcelabelObserver> {
+            override fun createFromParcel(parcel: Parcel): ParcelabelObserver {
+                return ParcelabelObserver(parcel)
+            }
+
+            override fun newArray(size: Int): Array<ParcelabelObserver?> {
+                return arrayOfNulls(size)
+            }
         }
     }
 
-    fun getIHintText() : String{
-        return this.hintText
-    }
+    companion object {
+        @BindingAdapter("iHintText")
+        @JvmStatic
+        fun setIHintText(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, hintText : String) {
+            if(!hintText.isNullOrEmpty()) {
+                userInputVerifyCodeEditView.hintText = hintText
+                userInputVerifyCodeEditView.editInput.hint = hintText
+            }
+        }
 
-    fun setIHintTextChanged(iHintTextChangedListener : InverseBindingListener) {
-        if (iHintTextChangedListener != null) {
-            this.iHintTextChangedListener = iHintTextChangedListener
+        @BindingAdapter("iInputText")
+        @JvmStatic
+        fun setIInputText(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, inputtext : String) {
+            if (!inputtext.isNullOrEmpty()) {
+                userInputVerifyCodeEditView.inputtext = inputtext
+                userInputVerifyCodeEditView.editInput.setText(inputtext,BufferType.EDITABLE)
+            }
+        }
+
+        @InverseBindingAdapter(attribute = "iInputText", event = "iInputTextChanged")
+        @JvmStatic
+        fun getIInputText(userInputVerifyCodeEditView: UserInputVerifyCodeEditView) : String{
+            return userInputVerifyCodeEditView.editInput.text.toString()
+        }
+
+        @BindingAdapter(value = ["iInputText", "iInputTextChanged"], requireAll = false)
+        @JvmStatic
+        fun setOnIHintTextChangeListener(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, onIHintTextChange : OnIHintTextChangeListener?,
+            inverseBindingListener: InverseBindingListener) {
+            if (inverseBindingListener == null) {
+                userInputVerifyCodeEditView.onIHintTextChange = onIHintTextChange
+            } else {
+                if (onIHintTextChange == null) {
+                    userInputVerifyCodeEditView.onIHintTextChange = object : OnIHintTextChangeListener {
+                        override fun onIHintTextChange() {
+                            if (onIHintTextChange != null) {
+                                onIHintTextChange.onIHintTextChange()
+                            } else {
+                                inverseBindingListener.onChange()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @BindingAdapter("iClickText")
+        @JvmStatic
+        fun setIClickText(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, iClickText : String) {
+            if (!iClickText.isNullOrEmpty()) {
+                userInputVerifyCodeEditView.clicktext = iClickText
+                userInputVerifyCodeEditView.showACTV.setText(iClickText, BufferType.EDITABLE)
+            }
+        }
+
+        @BindingAdapter("iClickAble")
+        @JvmStatic
+        fun setIClickAble(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, iClickAble : Boolean) {
+            userInputVerifyCodeEditView.clickAble = iClickAble
+            userInputVerifyCodeEditView.showACTV.isClickable = iClickAble
+        }
+
+        @InverseBindingAdapter(attribute = "iClickAble", event = "iClickAbleChanged")
+        @JvmStatic
+        fun getIClickAble(userInputVerifyCodeEditView: UserInputVerifyCodeEditView) : Boolean {
+            return userInputVerifyCodeEditView.clickAble
+        }
+
+        @BindingAdapter(value = ["iClickAble", "iClickAbleChanged"], requireAll = false)
+        @JvmStatic
+        fun setOnIClickAbleListener(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, onIClickAbleListener: OnIClickAbleListener?,
+        inverseBindingListener: InverseBindingListener) {
+            if (inverseBindingListener == null) {
+                userInputVerifyCodeEditView.onIClickAbleChange = onIClickAbleListener
+            } else {
+                userInputVerifyCodeEditView.onIClickAbleChange = object : OnIClickAbleListener {
+                    override fun onIClickAbleChange() {
+                        if (onIClickAbleListener != null) {
+                            onIClickAbleListener.onIClickAbleChange()
+                        } else {
+                            inverseBindingListener.onChange()
+                        }
+                    }
+                }
+            }
         }
     }
-
-    fun setIInputText(inputtext : String) {
-        if(!this.inputtext.equals(inputtext)) {
-            this.inputtext = inputtext
-        }
-    }
-
-    fun getIInputText() : String{
-        return this.inputtext
-    }
-
-    fun setIInputTextChanged(iInputTextChangedListener : InverseBindingListener) {
-        if (iInputTextChangedListener != null) {
-            this.iInputTextChangedListener = iInputTextChangedListener
-        }
-    }
-
-    fun setIClickText(clicktext : String) {
-        if(!this.clicktext.equals(clicktext)) {
-            this.clicktext = clicktext
-        }
-    }
-
-    fun getIClickText() : String{
-        return this.clicktext
-    }
-
-    fun setIClickTextChanged(iClickTextChangedListener : InverseBindingListener) {
-        if (iClickTextChangedListener != null) {
-            this.iClickTextChangedListener = iClickTextChangedListener
-        }
-    }
-
-    fun setIClickAble(clickAble : Boolean) {
-        if(this.clickAble != clickAble) {
-            this.clickAble = clickAble
-        }
-    }
-
-    fun getIClickAble() : Boolean{
-        return this.clickAble
-    }
-
-    fun setIClickAbleChanged(iClickAbleChangedListener : InverseBindingListener) {
-        if (iClickAbleChangedListener != null) {
-            this.iClickAbleChangedListener = iClickAbleChangedListener
-        }
-    }
-
 
     private fun init(attributeSet: AttributeSet?) {
         var array : TypedArray = context.obtainStyledAttributes(attributeSet, R.styleable.UserInputVertifyView)
@@ -177,50 +238,29 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                setIInputText(s.toString())
+
             }
         })
 
-        if (getIClickAble()) {
-            showACTV.setOnClickListener(object : NoDoubleClickListener{
-                override fun onClick(v: View?) {
-                    super.onClick(v)
-                    setIClickAble(false)
-                    registerEventBus()
+        showACTV.setOnClickListener(object : NoDoubleClickListener{
+            override fun onClick(v: View?) {
+                super.onClick(v)
+                if (getIClickAble(this@UserInputVerifyCodeEditView)) {
                     dispatchMessage()
                 }
-            })
-        }
-    }
+            }
+        })
 
-    private fun registerEventBus() {
-        if (eventBus == null) {
-            eventBus = EventBus()
-        }
-        eventBus?.register(this)
-    }
-
-    private fun unRegisterEventBus() {
-        eventBus?.unregister(this)
     }
 
     private fun dispatchMessage() {
         var preMessage = context.getString(R.string.re_rend_message)
         val posMessage = context.getString(R.string.second)
-        var surplusTime = MAX_TIME
-        var curTime = TIME_INTERVAL
+        var surplusTime = PRE_CUT_DOWN_TIME
 
         context.startService(Intent(context, TimeCutDownService::class.java)
-            .putExtra("STARTTIME", surplusTime)
-            .putExtra("PRECUTDOWNTIME", curTime))
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    private fun onMessageEvent(event: EventBusMessageTypeBean) {
-        when (event.eventBusMessageTypeBeanEnum) {
-            EventBusMessageTypeBean.EventBusMessageTypeBeanEnum.CUTDOWNTIME -> {setIClickText(event.getLong(TimeCutDownService::class.java.simpleName).toString())}
-            EventBusMessageTypeBean.EventBusMessageTypeBeanEnum.CUTDOWNEND -> {unRegisterEventBus();setIClickAble(true)}
-        }
+            .putExtra("PRECUTDOWNTIME", surplusTime)
+            .putExtra("OBSERVER", observer))
     }
 
 }

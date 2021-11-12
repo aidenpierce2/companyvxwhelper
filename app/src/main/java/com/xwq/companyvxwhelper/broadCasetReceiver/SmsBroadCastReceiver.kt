@@ -21,7 +21,7 @@ class SmsBroadCastReceiver : BaseBroadCastReceiver<SendSmsBroadCastView, SendSms
     override fun onReceive(p0: Context?, p1: Intent?) {
 
         var action = p1!!.action
-        if (TextUtils.isEmpty(action)) {
+        if (action.isNullOrEmpty()) {
             return
         }
 
