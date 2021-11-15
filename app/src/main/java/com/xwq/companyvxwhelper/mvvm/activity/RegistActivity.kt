@@ -14,12 +14,14 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.Enum.PassWordErrEnum
 import com.xwq.companyvxwhelper.bean.RequestBean.RegisterReqBean
+import com.xwq.companyvxwhelper.bean.RequestBean.SendSmsReqBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.RegisterResBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.RegisteActivityBean
 import com.xwq.companyvxwhelper.const.Const.USER_ENUSRE_AUTH
 import com.xwq.companyvxwhelper.const.Const.USER_POLICY_CHECKED
 import com.xwq.companyvxwhelper.mvvm.model.activity.RegisterModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.RegisterView
+import com.xwq.companyvxwhelper.service.TimeCutDownService
 import com.xwq.companyvxwhelper.utils.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.regex.Matcher
@@ -129,6 +131,14 @@ class RegistActivity  : BaseActivity<RegisterView, RegisterModel>(),RegisterView
         ToastUtil.showToast(R.string.web_err)
     }
 
+    override fun getSmsSucc() {
+
+    }
+
+    override fun getSmsFail() {
+
+    }
+
     override fun showToast(value: String) {
 
     }
@@ -227,5 +237,19 @@ class RegistActivity  : BaseActivity<RegisterView, RegisterModel>(),RegisterView
             }
         }
         return indexArray
+    }
+
+    fun getSmsVerifyCode() : Boolean{
+        var telephoneNumStr : String = registeActivityBean?.userTelBean?.inputText!!
+        var timeStamp : String = System.currentTimeMillis().toString()
+        if (!PhoneNumMatcherUtils.checkIsVaildPhoneNum(telephoneNumStr)) {
+            ToastUtil.showToast(R.string.input_correct_phonenum)
+            return false
+        }
+        if (ServiceUtils.isTargetServiceRunning(TimeCutDownService::class.java.toString())) {
+            return false
+        }
+        getModel().getVerifyCode(SendSmsReqBean(telephoneNumStr, timeStamp))
+        return true
     }
 }

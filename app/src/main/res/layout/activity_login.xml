@@ -39,7 +39,7 @@
             app:tInputStyle="usertelephone"
             app:tHintText="@{LoginActivityBean.userTelBean.hintText}"
             app:tInputText="@={LoginActivityBean.userTelBean.inputText}"
-            app:tShowClear="@={LoginActivityBean.userTelBean.showClear}"
+            app:tShowClear="@{LoginActivityBean.userTelBean.showClear}"
             />
 
         <com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
@@ -54,7 +54,7 @@
             app:tInputStyle="uerpassword"
             app:tHintText="@{LoginActivityBean.userPassBean.hintText}"
             app:tInputText="@={LoginActivityBean.userPassBean.inputText}"
-            app:tShowClear="@={LoginActivityBean.userPassBean.showClear}"
+            app:tShowClear="@{LoginActivityBean.userPassBean.showClear}"
             />
 
         <androidx.appcompat.widget.AppCompatTextView

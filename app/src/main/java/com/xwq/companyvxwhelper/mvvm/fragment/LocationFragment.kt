@@ -396,8 +396,4 @@ class LocationFragment : BaseFragment<LocationView, LocationModel>(),
             .show(mContext.supportFragmentManager, true)
     }
 
-    override fun needEventBus(): Boolean {
-        return false
-    }
-
 }

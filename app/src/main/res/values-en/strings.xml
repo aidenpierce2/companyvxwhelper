@@ -64,6 +64,7 @@ You have not confirmed the company location, please set the company location fir
     <string name="register_now">Regist now</string>
     <string name="no_running">Not Running</string>
     <string name="running">Running</string>
+    <string name="get_verifycode">Get verification code</string>
     //web
     <string name="get_sms_succ">get sms success,please pay attention to ckeck</string>
     <string name="web_err">Network exception, please try again later!</string>

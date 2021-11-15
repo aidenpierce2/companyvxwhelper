@@ -11,15 +11,16 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView.BufferType
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.*
+import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
-import com.xwq.companyvxwhelper.bean.dataBindingBean.EventBusMessageTypeBean
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
+import com.xwq.companyvxwhelper.mvvm.activity.RegistActivity
 import com.xwq.companyvxwhelper.service.TimeCutDownService
-import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.widget_user_input_verifycode.view.*
@@ -59,6 +60,7 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
     lateinit var showACTV : AppCompatTextView
 
     var onIHintTextChange : OnIHintTextChangeListener? = null
+    var onIClickTextListener : OnIClickTextListener? = null
     var onIClickAbleChange : OnIClickAbleListener? = null
 
     var observer : ParcelabelObserver = ParcelabelObserver()
@@ -77,37 +79,56 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
         fun onIHintTextChange()
     }
 
+    interface OnIClickTextListener {
+        fun onIClickTextChange()
+    }
+
     interface OnIClickAbleListener {
         fun onIClickAbleChange()
     }
 
     class ParcelabelObserver() : Observer<String>,Parcelable {
+
+
         constructor(parcel: Parcel) : this() {
         }
 
         override fun onSubscribe(d: Disposable) {
 
+    }
+
+    override fun onNext(t: String) {
+        var leftOverTime = t.toLong()
+        appCompatActivity?.runOnUiThread {
+            showLeftOverTime(leftOverTime)
         }
+    }
 
-        override fun onNext(t: String) {
+     override fun onError(e: Throwable) {
 
-        }
+    }
 
-        override fun onError(e: Throwable) {
+    override fun onComplete() {
 
-        }
+    }
 
-        override fun onComplete() {
+    override fun describeContents(): Int {
+        return 0;
+    }
 
-        }
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
 
-        override fun describeContents(): Int {
-            return 0;
-        }
+    }
 
-        override fun writeToParcel(dest: Parcel?, flags: Int) {
-
-        }
+      private fun showLeftOverTime(leftOverTime : Long) {
+          val preMessage = MyApplication.app.getString(R.string.re_rend_message)
+          val preSecond = MyApplication.app.getString(R.string.second)
+          if (leftOverTime > 0) {
+              setIClickText(userInputVerifyCodeEditView!!, preMessage.replace("x", leftOverTime.toString()) + preSecond)
+          } else {
+              setIClickText(userInputVerifyCodeEditView!!, MyApplication.app.getString(R.string.get_verifycode))
+          }
+      }
 
         companion object CREATOR : Parcelable.Creator<ParcelabelObserver> {
             override fun createFromParcel(parcel: Parcel): ParcelabelObserver {
@@ -118,9 +139,12 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
                 return arrayOfNulls(size)
             }
         }
+
     }
 
     companion object {
+        var appCompatActivity : AppCompatActivity? = null
+        var userInputVerifyCodeEditView: UserInputVerifyCodeEditView? = null
         @BindingAdapter("iHintText")
         @JvmStatic
         fun setIHintText(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, hintText : String) {
@@ -175,6 +199,30 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
             }
         }
 
+        @InverseBindingAdapter(attribute = "iClickText", event = "iClickTextChanged")
+        @JvmStatic
+        fun getIClickText(userInputVerifyCodeEditView: UserInputVerifyCodeEditView) : String{
+            return userInputVerifyCodeEditView.showACTV.text.toString()
+        }
+
+        @BindingAdapter(value = ["iClickText", "iClickTextChanged"], requireAll = false)
+        fun setOnIClickTextListener(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, onIClickTextListener: OnIClickTextListener,
+        inverseBindingListener: InverseBindingListener) {
+            if (inverseBindingListener == null) {
+                userInputVerifyCodeEditView.onIClickTextListener = onIClickTextListener
+            } else {
+                userInputVerifyCodeEditView.onIClickTextListener = object : OnIClickTextListener {
+                    override fun onIClickTextChange() {
+                        if (onIClickTextListener != null) {
+                            onIClickTextListener.onIClickTextChange()
+                        } else {
+                            inverseBindingListener.onChange()
+                        }
+                    }
+                }
+            }
+        }
+
         @BindingAdapter("iClickAble")
         @JvmStatic
         fun setIClickAble(userInputVerifyCodeEditView: UserInputVerifyCodeEditView, iClickAble : Boolean) {
@@ -206,6 +254,7 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
                 }
             }
         }
+
     }
 
     private fun init(attributeSet: AttributeSet?) {
@@ -217,12 +266,18 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
         array.recycle()
 
         LayoutInflater.from(context).inflate(R.layout.widget_user_input_verifycode, this@UserInputVerifyCodeEditView)
+        if (context is AppCompatActivity) {
+            appCompatActivity = context as AppCompatActivity
+        }
+        userInputVerifyCodeEditView = this
+        dispatchMessage(true)
         initView()
     }
 
     private fun initView() {
         editInput = widget_input_verify_acet_input
         showACTV = widget_user_telorpass_actv_input
+
 
         initListener()
     }
@@ -246,21 +301,22 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
             override fun onClick(v: View?) {
                 super.onClick(v)
                 if (getIClickAble(this@UserInputVerifyCodeEditView)) {
-                    dispatchMessage()
+                    if (appCompatActivity is RegistActivity && (appCompatActivity as RegistActivity).getSmsVerifyCode()) {
+                        dispatchMessage(false)
+                    }
                 }
             }
         })
-
     }
 
-    private fun dispatchMessage() {
-        var preMessage = context.getString(R.string.re_rend_message)
-        val posMessage = context.getString(R.string.second)
+    private fun dispatchMessage(isInit : Boolean) {
         var surplusTime = PRE_CUT_DOWN_TIME
 
         context.startService(Intent(context, TimeCutDownService::class.java)
+            .putExtra("ISINIT", isInit)
             .putExtra("PRECUTDOWNTIME", surplusTime)
             .putExtra("OBSERVER", observer))
+
     }
 
 }

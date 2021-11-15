@@ -7,4 +7,7 @@ interface RegisterView : IBaseView{
 
     fun registSucc(data : RegisterResBean)
     fun registFail()
+
+    fun getSmsSucc()
+    fun getSmsFail()
 }

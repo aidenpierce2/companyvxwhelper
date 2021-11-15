@@ -16,7 +16,8 @@
         android:background="@null"
         android:textSize="@dimen/middle_size"
         android:paddingLeft="@dimen/margin4"
-        android:paddingRight="@dimen/margin3" />
+        android:paddingRight="@dimen/margin3"
+        android:maxLines="1" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/widget_user_telorpass_aciv_delete"

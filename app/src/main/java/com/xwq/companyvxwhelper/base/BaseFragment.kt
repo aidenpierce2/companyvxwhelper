@@ -14,7 +14,6 @@ import com.xwq.companyvxwhelper.bean.dataBindingBean.LocationBean
 import com.xwq.companyvxwhelper.callbackListener.RetryListener
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.utils.LogUtil
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , NoDoubleClickListener, RetryListener {
@@ -27,7 +26,6 @@ abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , No
     lateinit var locationObservable : MyApplication.LocationObservable
     lateinit var locationInterface : iLocationInterface
     protected lateinit var binding: ViewDataBinding
-    private var eventBus : EventBus? = null
 
     override fun onAttach(activity: Activity) {
         LogUtil.log(TAG, "onAttach execute!")
@@ -55,10 +53,6 @@ abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , No
         super.onActivityCreated(savedInstanceState)
         mContext = (activity as RxAppCompatActivity?)!!
 
-        eventBus = EventBus.getDefault()
-        if (needEventBus()) {
-            eventBus?.register(this)
-        }
         initView(savedInstanceState)
         if (needLocation()) {
             locationInterface = this as iLocationInterface
@@ -103,7 +97,6 @@ abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , No
     override fun onDetach() {
         LogUtil.log(TAG, "onDetach execute!")
         super.onDetach()
-        eventBus?.unregister(this)
     }
 
     /**
@@ -125,11 +118,6 @@ abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , No
      * 需不需要获取地址
      */
     abstract fun needLocation() : Boolean
-
-    /**
-     * 需不需要eventbus
-     */
-    abstract fun needEventBus() : Boolean
 
     /**
      * 获取当前地址的接口

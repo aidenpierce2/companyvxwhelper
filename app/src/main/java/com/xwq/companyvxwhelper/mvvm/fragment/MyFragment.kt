@@ -145,9 +145,4 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
         mineMLPV.removeObservable(this@MyFragment)
     }
 
-    override fun needEventBus(): Boolean {
-        return false
-    }
-
-
 }

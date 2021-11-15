@@ -37,9 +37,5 @@ class HistoryFragment : BaseFragment<LocationView, LocationModel>(){
         return false
     }
 
-    override fun needEventBus(): Boolean {
-        return false
-    }
-
 
 }

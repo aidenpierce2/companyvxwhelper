@@ -44,9 +44,6 @@ class UserTelOrPassInputEditView : ConstraintLayout {
     lateinit var editInput : AppCompatEditText
     lateinit var clearIcon : AppCompatImageView
     var onTHintListener : onTHintTextChangeListener? = null
-    lateinit var tHintTextAttrChangeListener : InverseBindingListener
-    lateinit var tInputTextAttrChangeListener : InverseBindingListener
-    lateinit var tShowClearAttrChangeListener : InverseBindingListener
 
     constructor(context : Context) : this(context, null) {
     }
@@ -63,6 +60,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
     }
 
     companion object {
+        var userTelOrPassInputEditView : UserTelOrPassInputEditView? = null
         @BindingAdapter("tHintText")
         @JvmStatic
         fun setTHintText(userTelOrPassInputEditView: UserTelOrPassInputEditView, hintText : String) {
@@ -105,47 +103,17 @@ class UserTelOrPassInputEditView : ConstraintLayout {
                 }
             }
         }
-    }
 
-    fun getTHintText() : String? {
-        return this.hintText
-    }
-
-    fun setTHintTextAttrChange(tHintTextAttrChangeListener : InverseBindingListener ) {
-        if (tHintTextAttrChangeListener != null) {
-            this.tHintTextAttrChangeListener = tHintTextAttrChangeListener
-        }
-    }
-
-    fun setTInputText(tInputText : String) {
-        if (!this.inputtext.equals(tInputText)) {
-            this.inputtext = tInputText
-        }
-    }
-
-    fun getTInputText() : String? {
-        return this.inputtext
-    }
-
-    fun setTInputTextAttrChange(tInputTextAttrChangeListener : InverseBindingListener ) {
-        if (tInputTextAttrChangeListener != null) {
-            this.tInputTextAttrChangeListener = tInputTextAttrChangeListener
-        }
-    }
-
-    fun setTShowClear(showClear : Boolean) {
-        if (this.showClear != showClear) {
-            this.showClear = showClear
-        }
-    }
-
-    fun getTShowClear() : Boolean {
-        return this.showClear
-    }
-
-    fun setTShowClearAttrChange(tShowClearAttrChangeListener : InverseBindingListener ) {
-        if (tShowClearAttrChangeListener != null) {
-            this.tShowClearAttrChangeListener = tShowClearAttrChangeListener
+        @BindingAdapter("tShowClear")
+        @JvmStatic
+        fun setTShowClear(userTelOrPassInputEditView: UserTelOrPassInputEditView, showClear : Boolean) {
+            if (userTelOrPassInputEditView != null) {
+                if (showClear) {
+                    userTelOrPassInputEditView.clearIcon.visibility = View.VISIBLE
+                } else {
+                    userTelOrPassInputEditView.clearIcon.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -158,6 +126,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
         array.recycle()
 
         LayoutInflater.from(context).inflate(R.layout.widget_user_telorpass, this@UserTelOrPassInputEditView)
+        userTelOrPassInputEditView = this@UserTelOrPassInputEditView
         initView()
     }
 
@@ -173,18 +142,13 @@ class UserTelOrPassInputEditView : ConstraintLayout {
             }
             1 -> {editInput.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD; editInput.transformationMethod = PasswordTransformationMethod()}
         }
-        if (showClear) {
-            clearIcon.visibility = View.VISIBLE
-        } else {
-            clearIcon.visibility = View.GONE
-        }
-        setTShowClear(showClear)
+        setTShowClear(userTelOrPassInputEditView!!, showClear)
 
         initListener()
     }
 
     private fun initListener() {
-        editInput.addTextChangedListener(object : TextWatcher {
+        userTelOrPassInputEditView!!.editInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -194,23 +158,19 @@ class UserTelOrPassInputEditView : ConstraintLayout {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                this@UserTelOrPassInputEditView.onTHintListener?.onTHintTextChange()
                 var curText = s.toString()
                 if (curText.isNullOrEmpty()) {
-                    clearIcon.visibility = View.GONE
-                    setTShowClear(true)
+                    setTShowClear(userTelOrPassInputEditView!!, false)
                 } else {
-                    clearIcon.visibility = View.VISIBLE
-                    setTShowClear(false)
+                    setTShowClear(userTelOrPassInputEditView!!, true)
                 }
-                setTInputText(s.toString())
             }
         })
 
-        clearIcon.setOnClickListener(object : NoDoubleClickListener{
+        userTelOrPassInputEditView!!.clearIcon.setOnClickListener(object : NoDoubleClickListener{
             override fun onClick(v: View?) {
                 super.onClick(v)
-                setTInputText("")
+                setTInputText(userTelOrPassInputEditView!!,"")
             }
         })
     }

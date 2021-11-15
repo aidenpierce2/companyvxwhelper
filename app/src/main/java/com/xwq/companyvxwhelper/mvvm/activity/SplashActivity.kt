@@ -43,6 +43,7 @@ class SplashActivity : BaseActivity<SplashView, SplashModel>(), SplashView{
         } else {
             getModel().checkTokenValid(token)
         }
+
     }
 
     override fun initListener() {
