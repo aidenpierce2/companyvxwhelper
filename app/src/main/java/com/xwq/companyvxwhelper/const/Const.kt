@@ -32,6 +32,8 @@ object Const : BaseEntity() {
     const val SERVICE_RUNNING = "service_running"
     // 获取验证码剩余时间
     const val GET_VERIFYCODE_START_TIME = "get_verifycode_start_time"
+    // 我的下拉刷新 是否可以点击
+    const val PULLDOWN_CAN_CLICK = "pulldown_can_click"
 
     // 默认浮动签到时间(分钟）
     const val DEF_SIGN_MIN : Int = 3

@@ -17,9 +17,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
+import com.xwq.companyvxwhelper.const.Const.PULLDOWN_CAN_CLICK
 import com.xwq.companyvxwhelper.publicinterface.ObservableInterface
 import com.xwq.companyvxwhelper.publicinterface.ObserverInterface
 import com.xwq.companyvxwhelper.utils.LogUtil
+import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.utils.WindowScreenUtil
 import kotlinx.android.synthetic.main.widget_mine.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -88,8 +90,8 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
     private var needDamp : Boolean = false
 
     //测试
-    private var testPullDistacne : Float = 0F
-    private var testGoBackDistacne : Float = 0F
+    private var pullDistacne : Float = 0F
+    private var goBackDistacne : Float = 0F
 
     // 初始化tag
     private var initTag : Boolean = false
@@ -263,14 +265,15 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                 (curView.parent as ConstraintLayout).post (object : Runnable {
                     override fun run() {
                         if (viewStatue == ViewStatue.PULLDOWN) {
-                            testPullDistacne += realAddMiddleDistance
-                            testGoBackDistacne = 0f
+                            pullDistacne += realAddMiddleDistance.toInt()
+                            goBackDistacne = 0f
                             (curView.parent as ConstraintLayout).scrollBy(0,  -realAddMiddleDistance.toInt())
                         } else if (viewStatue == ViewStatue.GOBACK) {
-                            if (testPullDistacne != 0f) {
-                                LogUtil.log(TAG, "testPullDistacne: " + testPullDistacne)
+                            if (pullDistacne != 0f) {
+                                LogUtil.log(TAG, "pullDistacne: " + pullDistacne)
                             }
-                            testPullDistacne = 0f
+                            goBackDistacne += realAddMiddleDistance.toInt()
+                            LogUtil.log(TAG, "GOBACK middle distance: " + (-realAddMiddleDistance.toInt()).toString())
                             (curView.parent as ConstraintLayout).scrollBy(0,  realAddMiddleDistance.toInt())
                         }
                     }
@@ -328,7 +331,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                 curPointy = ev.rawY
                 // 区分情况 当处于阶段二时才生效否则不处理
                 if (viewStatue == ViewStatue.DEFAUL) {
-
+                    SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, true)
                     getRealScrollYDistance(curPointy, prePointy)
                     //初始状态 进入下滑状态
                     if(curPointy - prePointy > 0) {
@@ -337,7 +340,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                     }
                     return true
                 } else if (viewStatue == ViewStatue.PULLDOWN) {
-//                    LogUtil.log(TAG, "realScrollYDistance: " + realScrollYDistance + " maxAvailableDistance: " + maxAvailableDistance)
+                    SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, false)
                     // 用户尝试查看页头 不允许
                     if (prePointy <= 0) {
                         needDamp = false
@@ -348,7 +351,8 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                     //判断长度有没有到达限度 到达禁止触摸事件 开始加载
                     if (realScrollYDistance >= maxAvailableDistance * loadingMaxRate) {
                         // 通知已经到达阶段三 不允许滑动
-                        needDamp = true
+                        // 先不允许进入 45 直接跳过
+                        needDamp = false
                         viewStatue = ViewStatue.LOADING
 
                         return true
@@ -379,6 +383,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
 //                LogUtil.log(TAG, "ACTION_UP, executed!")
                 // 阶段3 4均触发
                 if (viewStatue == ViewStatue.PULLDOWN) {
+                    SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, false)
                     // 下拉取消状态直接回复
                     viewStatue = ViewStatue.GOBACK
 
@@ -386,6 +391,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                     invalidate()
                     return true
                 } else if (viewStatue == ViewStatue.LOADING) {
+                    SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, false)
                     // 加载状态 持续最大加载时间 或者 加载成功后 再回复
                     startLoadingDrawable()
                     loadingCountDown()
@@ -401,7 +407,6 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
 
     //获取真实的ydistance
     fun getRealScrollYDistance(curPointy : Float, prePointy : Float) {
-//        LogUtil.log(TAG, "curPointy: " + curPointy + " prePointy: " + prePointy)
         if (curPointy -  prePointy <= 0) {
             return
         }
@@ -448,18 +453,22 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                         realAddMiddleDistance = preScrollYDistance - realScrollYDistance
                         preScrollYDistance = realScrollYDistance
                         mainBgScallLogic()
-
-                        testGoBackDistacne += realAddMiddleDistance
                         if (animation?.animatedValue as Float <= 0) {
-                            LogUtil.log(TAG, "testGoBackDistacne: " + testGoBackDistacne)
-
+                            var compensate = (pullDistacne - goBackDistacne).toInt()
+                            (curView.parent as ConstraintLayout).scrollBy(0, compensate)
+                            LogUtil.log(TAG, "compensate: " + compensate)
+                            LogUtil.log(TAG, "goBackDistacne: " + goBackDistacne)
+                            pullDistacne = 0f
                             if (needDamp) {
                                 viewStatue = ViewStatue.DAMPING
+                                SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, false)
                                 dampingLogic()
                             } else {
                                 viewStatue = ViewStatue.DEFAUL
+                                SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, true)
                             }
                             viewStatue = ViewStatue.DEFAUL
+                            SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, true)
                         }
                     }
                 })
@@ -477,6 +486,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
         CoroutineScope(Dispatchers.Main).launch {
             realScrollYDistance = 0f
             viewStatue = ViewStatue.DAMPING
+            SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, false)
             var channel : Channel<String> = Channel<String>()
 
             var curDampingValue : Float = maxDampingValue
@@ -494,7 +504,6 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                         )
                         curDampingValue = animatedValue
                         if (animatedValue >= maxDampingValue) {
-                            LogUtil.log(TAG, "send ok!")
                             CoroutineScope(Dispatchers.Main).launch {
                                 if (!channel.isClosedForSend) {
                                     channel.send("ok")
@@ -526,6 +535,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                                 curDampingValue = animatedValue
                                 if (animatedValue <= 0f) {
                                     viewStatue = ViewStatue.DEFAUL
+                                    SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, true)
                                 }
                             }
                         })
@@ -572,7 +582,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
                 if (webLoadingStatus == false) {
 
                     viewStatue = ViewStatue.GOBACK
-
+                    SharePreferenceUtil.instance.setData(PULLDOWN_CAN_CLICK, false)
                     resetLoadingDrawable()
                     kickBackLogic()
                 }

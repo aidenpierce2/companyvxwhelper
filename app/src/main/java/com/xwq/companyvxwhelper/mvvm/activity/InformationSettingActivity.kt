@@ -55,7 +55,7 @@ class InformationSettingActivity : BaseActivity<InformationSettingView, Infomati
 
         var phoneLoginStr = resources.getText(R.string.phonenum_login)
         var spannableString : SpannableString = SpannableString(phoneLoginStr)
-        spannableString.setSpan(ForegroundColorSpan(resources.getColor(R.color.recommendColor)), phoneLoginStr.indexOf("("), phoneLoginStr.indexOf(")"), SpannableString.SPAN_INCLUSIVE_INCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(resources.getColor(R.color.recommendColor)), phoneLoginStr.indexOf("("), phoneLoginStr.indexOf(")") + 1, SpannableString.SPAN_INCLUSIVE_INCLUSIVE)
 
         dataList.add(InformationSettingItemBean(resources.getDrawable(R.mipmap.userphone), spannableString))
         dataList.add(InformationSettingItemBean(resources.getDrawable(R.mipmap.wxicon), resources.getString(R.string.wx_login)))

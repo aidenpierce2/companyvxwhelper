@@ -17,6 +17,7 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseFragment
 import com.xwq.companyvxwhelper.bean.dataBindingBean.FunctionItemBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.MyFragmentBean
+import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.mvvm.activity.InformationSettingActivity
 import com.xwq.companyvxwhelper.mvvm.adapter.FunctionAdapter
 import com.xwq.companyvxwhelper.mvvm.adapter.decoration.RevenueSummaryItemDecoration
@@ -24,6 +25,7 @@ import com.xwq.companyvxwhelper.mvvm.model.fragment.MyModel
 import com.xwq.companyvxwhelper.mvvm.view.fragment.MyView
 import com.xwq.companyvxwhelper.publicinterface.ObservableInterface
 import com.xwq.companyvxwhelper.utils.LogUtil
+import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.widget.MineLocationPullView
 import com.xwq.companyvxwhelper.widget.RoundImageView
 import kotlinx.android.synthetic.main.fragment_mine.*
@@ -120,16 +122,17 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
 
         functionRCY.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         functionRCY.adapter = functionAdapter
-        functionRCY.addItemDecoration(RevenueSummaryItemDecoration(mContext, RevenueSummaryItemDecoration.VERTICAL_LIST))
 
         functionAdapter?.setOnItemClickListener(object : FunctionAdapter.onChooseItemListener {
             override fun onChooseItem(data: FunctionItemBean, postion: Int) {
-                when (postion) {
-                    0 -> {startActivity(Intent().setClass(mContext, InformationSettingActivity::class.java))}
-                    1 -> {startActivity(Intent().setClass(mContext, InformationSettingActivity::class.java))}
-                    2 -> {}
-                    3 -> {}
-                    4 -> {}
+                if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, false)) {
+                    when (postion) {
+                        0 -> {startActivity(Intent().setClass(mContext, InformationSettingActivity::class.java))}
+                        1 -> {startActivity(Intent().setClass(mContext, InformationSettingActivity::class.java))}
+                        2 -> {}
+                        3 -> {}
+                        4 -> {}
+                    }
                 }
             }
         })

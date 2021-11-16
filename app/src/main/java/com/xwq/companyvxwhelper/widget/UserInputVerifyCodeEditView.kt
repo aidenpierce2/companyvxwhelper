@@ -140,7 +140,6 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
                 return arrayOfNulls(size)
             }
         }
-
     }
 
     companion object {

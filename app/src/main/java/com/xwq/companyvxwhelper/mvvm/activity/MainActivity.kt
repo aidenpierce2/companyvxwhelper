@@ -1,5 +1,6 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
+import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -13,11 +14,13 @@ import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.base.Enum.PermissionArray
 import com.xwq.companyvxwhelper.base.Enum.PermissionMode
 import com.xwq.companyvxwhelper.bean.dataBindingBean.RadioButtonBean
+import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.mvvm.fragment.HistoryFragment
 import com.xwq.companyvxwhelper.mvvm.fragment.LocationFragment
 import com.xwq.companyvxwhelper.mvvm.fragment.MyFragment
 import com.xwq.companyvxwhelper.mvvm.model.activity.MainModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.MainView
+import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.widget.RedDotRadioButton
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -79,7 +82,9 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
     override fun initListener() {
         containerRG!!.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
-                switchFragment(p1)
+                if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, false)) {
+                    switchFragment(p1)
+                }
             }
         })
     }
@@ -230,6 +235,13 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
 
     override fun hideLoading() {
         super.hideLoading()
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, false)) {
+            return super.onTouchEvent(event)
+        }
+        return true
     }
 
 }
