@@ -13,15 +13,14 @@ class SharePreferenceUtil {
     var editor : SharedPreferences.Editor? = null
 
     companion object {
+        @JvmStatic
         var instance : SharePreferenceUtil = SharePreferenceUtil()
     }
 
-
-    fun SharePreferenceUtil() {
-        share = app!!.getSharedPreferences(SHARE_TAG, Context.MODE_PRIVATE) as SharedPreferences
+    constructor() {
+        share = app.getSharedPreferences(SHARE_TAG, Context.MODE_PRIVATE) as SharedPreferences
         editor = share!!.edit()
     }
-
 
     fun setData (key : String, value : String) {
         if (editor != null) {

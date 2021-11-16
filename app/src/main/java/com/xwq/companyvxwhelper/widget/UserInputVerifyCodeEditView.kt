@@ -21,6 +21,7 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.mvvm.activity.RegistActivity
 import com.xwq.companyvxwhelper.service.TimeCutDownService
+import com.xwq.companyvxwhelper.utils.ServiceUtils
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.widget_user_input_verifycode.view.*
@@ -270,14 +271,15 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
             appCompatActivity = context as AppCompatActivity
         }
         userInputVerifyCodeEditView = this
-        dispatchMessage(true)
+        if (!ServiceUtils.isTargetServiceRunning(TimeCutDownService::class.java.name)) {
+            dispatchMessage(true)
+        }
         initView()
     }
 
     private fun initView() {
         editInput = widget_input_verify_acet_input
         showACTV = widget_user_telorpass_actv_input
-
 
         initListener()
     }

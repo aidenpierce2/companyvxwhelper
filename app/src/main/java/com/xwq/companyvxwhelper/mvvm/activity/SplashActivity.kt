@@ -40,6 +40,7 @@ class SplashActivity : BaseActivity<SplashView, SplashModel>(), SplashView{
         var token = SharePreferenceUtil.instance.getData(Const.USER_TOKEN)
         if (token.isNullOrEmpty()) {
             startActivity(Intent().setClass(this@SplashActivity, LoginActivity::class.java))
+            finish()
         } else {
             getModel().checkTokenValid(token)
         }

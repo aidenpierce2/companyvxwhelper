@@ -53,7 +53,7 @@ class TimeCutDownService : Service() {
             cutDownTime(60, preCutDownTime)
         } else {
             if (isInit) {
-                if (curTime - preCutDownTime < 60) {
+                if (curTime - preStartTime < 60000) {
                     cutDownTime(getLeftOverTime(curTime, preStartTime), preCutDownTime)
                 } else {
                     stopSelf()
@@ -62,7 +62,7 @@ class TimeCutDownService : Service() {
             } else {
                 if (curTime < preStartTime) {
 
-                } else  if (curTime - preCutDownTime < 60) {
+                } else  if (curTime - preCutDownTime < 60000) {
                     cutDownTime(getLeftOverTime(curTime, preStartTime), preCutDownTime)
                 } else {
                     SharePreferenceUtil.instance.setData(GET_VERIFYCODE_START_TIME, curTime)
@@ -85,12 +85,13 @@ class TimeCutDownService : Service() {
     }
 
     fun getLeftOverTime(curTime: Long, startTime : Long) : Long {
-        return (curTime - startTime) / 1000
+        return 60 - ((curTime - startTime) / 1000)
     }
 
     @Synchronized fun cutDownTime(startTime : Long, preCutDownTime : Int) {
         if (timer == null ) {
             timer = Timer()
+
         }
 
         var leftOverTime : Long = startTime
@@ -105,9 +106,9 @@ class TimeCutDownService : Service() {
                         timer?.cancel()
                         timer = null
                         stopSelf()
-                        SharePreferenceUtil.instance.setData(GET_VERIFYCODE_START_TIME, System.currentTimeMillis())
                         this@TimeCutDownService.emitter?.onNext(leftOverTime.toString())
                     }
+                    SharePreferenceUtil.instance.setData(GET_VERIFYCODE_START_TIME, System.currentTimeMillis())
                 }
             }, 0, 1000)
         }

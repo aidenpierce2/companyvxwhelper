@@ -82,7 +82,8 @@
             android:layout_marginTop="@dimen/margin4"
             app:tHintText="@{RegisteActivityBean.userPassBean.hintText}"
             app:tInputText="@={RegisteActivityBean.userPassBean.inputText}"
-            app:tShowClear="@{RegisteActivityBean.userPassBean.showClear}"/>
+            app:tShowClear="@{RegisteActivityBean.userPassBean.showClear}"
+            app:tInputStyle="uerpassword"/>
 
         <com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
             android:id="@+id/activity_register_utpvev_reinput_password"
@@ -95,7 +96,8 @@
             android:layout_marginTop="@dimen/margin4"
             app:tHintText="@{RegisteActivityBean.userRePassBean.hintText}"
             app:tInputText="@={RegisteActivityBean.userRePassBean.inputText}"
-            app:tShowClear="@{RegisteActivityBean.userRePassBean.showClear}"/>
+            app:tShowClear="@{RegisteActivityBean.userRePassBean.showClear}"
+            app:tInputStyle="uerpassword"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/activity_register_accb_ensure_auth"

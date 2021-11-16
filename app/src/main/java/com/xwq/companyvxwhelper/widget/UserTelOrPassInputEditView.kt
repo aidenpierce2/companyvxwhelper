@@ -43,7 +43,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
 
     lateinit var editInput : AppCompatEditText
     lateinit var clearIcon : AppCompatImageView
-    var onTHintListener : onTHintTextChangeListener? = null
+    var onTInputTextChange : OnTInputTextChangeListener? = null
 
     constructor(context : Context) : this(context, null) {
     }
@@ -55,12 +55,11 @@ class UserTelOrPassInputEditView : ConstraintLayout {
         init(attributeSet)
     }
 
-    interface onTHintTextChangeListener {
-        fun onTHintTextChange()
+    interface OnTInputTextChangeListener {
+        fun onTInputTextChange()
     }
 
     companion object {
-        var userTelOrPassInputEditView : UserTelOrPassInputEditView? = null
         @BindingAdapter("tHintText")
         @JvmStatic
         fun setTHintText(userTelOrPassInputEditView: UserTelOrPassInputEditView, hintText : String) {
@@ -73,7 +72,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
         @BindingAdapter("tInputText")
         @JvmStatic
         fun setTInputText(userTelOrPassInputEditView: UserTelOrPassInputEditView, inputtext : String) {
-            if (!inputtext.isNullOrEmpty()) {
+            if (!userTelOrPassInputEditView.editInput.text.toString().equals(inputtext)) {
                 userTelOrPassInputEditView.inputtext = inputtext
                 userTelOrPassInputEditView.editInput.setText(inputtext, BufferType.EDITABLE)
             }
@@ -85,17 +84,17 @@ class UserTelOrPassInputEditView : ConstraintLayout {
             return userTelOrPassInputEditView.editInput.text.toString()
         }
 
-        @BindingAdapter(value = ["onTHintTextChange", "tInputTextAttrChange"], requireAll = false)
+        @BindingAdapter(value = ["tInputText", "tInputTextAttrChange"], requireAll = false)
         @JvmStatic
-        fun setOnTHintTextChangeListener(userTelOrPassInputEditView: UserTelOrPassInputEditView, onTHintListener : onTHintTextChangeListener?,
+        fun setTInputChangeListener(userTelOrPassInputEditView: UserTelOrPassInputEditView, onTInputTextChange : OnTInputTextChangeListener?,
             inverseBindingListener : InverseBindingListener) {
             if(inverseBindingListener == null) {
-                userTelOrPassInputEditView.onTHintListener = onTHintListener
+                userTelOrPassInputEditView.onTInputTextChange = onTInputTextChange
             } else {
-                userTelOrPassInputEditView.onTHintListener = object : onTHintTextChangeListener {
-                    override fun onTHintTextChange() {
-                        if (onTHintListener != null) {
-                            onTHintListener.onTHintTextChange()
+                userTelOrPassInputEditView.onTInputTextChange = object : OnTInputTextChangeListener {
+                    override fun onTInputTextChange() {
+                        if (onTInputTextChange != null) {
+                            onTInputTextChange.onTInputTextChange()
                         } else {
                             inverseBindingListener.onChange()
                         }
@@ -126,7 +125,6 @@ class UserTelOrPassInputEditView : ConstraintLayout {
         array.recycle()
 
         LayoutInflater.from(context).inflate(R.layout.widget_user_telorpass, this@UserTelOrPassInputEditView)
-        userTelOrPassInputEditView = this@UserTelOrPassInputEditView
         initView()
     }
 
@@ -140,15 +138,17 @@ class UserTelOrPassInputEditView : ConstraintLayout {
             0 -> {editInput.inputType = InputType.TYPE_CLASS_NUMBER;editInput.filters = arrayOf(
                 InputFilter.LengthFilter(11))
             }
-            1 -> {editInput.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD; editInput.transformationMethod = PasswordTransformationMethod()}
+            1 -> {editInput.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD; editInput.transformationMethod = PasswordTransformationMethod();
+                editInput.inputType = InputType.TYPE_CLASS_NUMBER;editInput.filters = arrayOf(
+                    InputFilter.LengthFilter(16))}
         }
-        setTShowClear(userTelOrPassInputEditView!!, showClear)
+        setTShowClear(this, showClear)
 
         initListener()
     }
 
     private fun initListener() {
-        userTelOrPassInputEditView!!.editInput.addTextChangedListener(object : TextWatcher {
+        editInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -160,17 +160,20 @@ class UserTelOrPassInputEditView : ConstraintLayout {
             override fun afterTextChanged(s: Editable?) {
                 var curText = s.toString()
                 if (curText.isNullOrEmpty()) {
-                    setTShowClear(userTelOrPassInputEditView!!, false)
+                    setTShowClear(this@UserTelOrPassInputEditView, false)
                 } else {
-                    setTShowClear(userTelOrPassInputEditView!!, true)
+                    clearIcon.visibility = View.VISIBLE
+                    setTShowClear(this@UserTelOrPassInputEditView, true)
                 }
+                onTInputTextChange?.onTInputTextChange()
+                setTInputText(this@UserTelOrPassInputEditView, curText)
             }
         })
 
-        userTelOrPassInputEditView!!.clearIcon.setOnClickListener(object : NoDoubleClickListener{
+        clearIcon.setOnClickListener(object : NoDoubleClickListener{
             override fun onClick(v: View?) {
                 super.onClick(v)
-                setTInputText(userTelOrPassInputEditView!!,"")
+                setTInputText(this@UserTelOrPassInputEditView,"")
             }
         })
     }

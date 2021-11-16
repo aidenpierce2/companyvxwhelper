@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/widget_user_telorpass_aciv_delete"
         app:layout_constraintEnd_toStartOf="@+id/widget_user_telorpass_aciv_delete"
         android:background="@null"
-        android:textSize="@dimen/middle_size"
+        android:textSize="@dimen/large_size"
         android:paddingLeft="@dimen/margin4"
         android:paddingRight="@dimen/margin3"
         android:maxLines="1" />
