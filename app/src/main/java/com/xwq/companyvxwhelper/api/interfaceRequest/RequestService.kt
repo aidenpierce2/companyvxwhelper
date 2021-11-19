@@ -36,4 +36,8 @@ interface RequestService {
     @POST
     fun forgetPassWord(@retrofit2.http.Url requestUrl: String, @FieldMap map : Map<String, String>) : Observable<BaseNetworkResponse<ForgetPassWordResBean>>
 
+    // 获取个人信息
+    @GET
+    fun getUserInfo(@retrofit2.http.Url requestUrl: String) : Observable<BaseNetworkResponse<UserInfoResBean>>
+
 }

@@ -1,5 +1,6 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
@@ -21,8 +22,12 @@ import com.xwq.companyvxwhelper.mvvm.fragment.MyFragment
 import com.xwq.companyvxwhelper.mvvm.model.activity.MainModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.MainView
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
+import com.xwq.companyvxwhelper.utils.ToastUtil
 import com.xwq.companyvxwhelper.widget.RedDotRadioButton
 import kotlinx.android.synthetic.main.activity_main.*
+import java.sql.Time
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
 
@@ -40,6 +45,8 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
     var locationRDRB : RedDotRadioButton? = null
     var historyRDRB : RedDotRadioButton? = null
     var mineRDRB : RedDotRadioButton? = null
+    var keyCodeBackClickCount : Int = 0
+    var exitTimer : Timer? = null
 
 
     override fun setContentViewId(): Int {
@@ -82,7 +89,7 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
     override fun initListener() {
         containerRG!!.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
-                if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, false)) {
+                if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, true)) {
                     switchFragment(p1)
                 }
             }
@@ -237,11 +244,34 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
         super.hideLoading()
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, false)) {
-            return super.onTouchEvent(event)
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            when (keyCodeBackClickCount) {
+                0 -> {keyCodeBackClickCount++;ToastUtil.showToast(R.string.exit_app);excuteTimer()}
+                1 -> {keyCodeBackClickCount=0;destoryTimer();exit()}
+            }
+            return true
         }
-        return true
+        return super.onKeyUp(keyCode, event)
+    }
+
+    fun excuteTimer() {
+        if (exitTimer == null) {
+            exitTimer = Timer()
+        }
+
+        exitTimer?.schedule(object : TimerTask() {
+            override fun run() {
+                keyCodeBackClickCount = 0
+                exitTimer?.cancel()
+                exitTimer = null
+            }
+        }, 2000)
+    }
+
+    fun destoryTimer() {
+        exitTimer?.cancel()
+        exitTimer = null
     }
 
 }

@@ -48,13 +48,13 @@
         </activity>
         <activity android:name=".mvvm.activity.RegistActivity" />
         <activity android:name=".mvvm.activity.ForgetPassWordActivity"/>
-        <activity android:name="com.xwq.companyvxwhelper.mvvm.activity.MainActivity"
-            android:launchMode="singleInstance"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".mvvm.activity.MainActivity">
         </activity>
         <activity android:name=".mvvm.activity.InformationSettingActivity">
         </activity>
         <activity android:name=".mvvm.activity.InputPhoneNumOrWxAccountActivity">
+        </activity>
+        <activity android:name=".mvvm.activity.SettingActivity">
         </activity>
 
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->

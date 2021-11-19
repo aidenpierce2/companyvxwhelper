@@ -16,7 +16,13 @@ class Urls {
         const val SUB_USER_REGISTER = "/api/user/register"
         //提交登录
         const val SUB_USER_LOGIN = "/api/user/login"
-        // 忘记密码
+        //忘记密码
         const val FORGET_PASSWORD = "/api/user/forgetpassword"
+        //获取个人信息
+        const val GET_USER_INFO = "/api/user/getpersioninfo"
+        //上传个人信息头像
+        const val SUB_USER_HEADER = "/api/user/userheader"
+        //保存个人信息
+        const val SUB_USER_INFO = "/api/user/subpersioninfo"
     }
 }

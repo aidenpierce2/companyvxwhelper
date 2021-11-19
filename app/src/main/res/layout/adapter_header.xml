@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="SettingDBBean"
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.SettingDBBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_setting_cstl_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_setting_cstl_top_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@{SettingDBBean.headerStr}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/large_size"
+            android:layout_marginLeft="@dimen/margin3"/>
+
+        <com.xwq.companyvxwhelper.widget.RoundImageView
+            android:id="@+id/activity_setting_cstl_riv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/activity_setting_cstl_aciv_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:webImageUrl="@{SettingDBBean.contentDrawableUrl}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/activity_setting_cstl_aciv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/activity_setting_cstl_riv_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_setting_cstl_riv_header"
+            android:src="@{SettingDBBean.rightDrawable}"
+            android:layout_marginRight="@dimen/margin3"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

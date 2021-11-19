@@ -19,6 +19,7 @@ import com.xwq.companyvxwhelper.bean.dataBindingBean.FunctionItemBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.MyFragmentBean
 import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.mvvm.activity.InformationSettingActivity
+import com.xwq.companyvxwhelper.mvvm.activity.SettingActivity
 import com.xwq.companyvxwhelper.mvvm.adapter.FunctionAdapter
 import com.xwq.companyvxwhelper.mvvm.adapter.decoration.RevenueSummaryItemDecoration
 import com.xwq.companyvxwhelper.mvvm.model.fragment.MyModel
@@ -96,16 +97,15 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
         telephoneTV = fragment_mine_qctv_telephone
         functionRCY = fragment_mine_main_rcv
 
-        roundIV.setRoundMode(RoundImageView.RoundMode.ROUND_VIEW)
-        roundIV.setRoundDisable(false)
     }
 
     override fun init() {
-        myFragmentBean = MyFragmentBean("", "", "", arrayOf<FunctionItemBean>())
+        myFragmentBean = MyFragmentBean("", "", "", null, arrayOf<FunctionItemBean>())
         // 测试图片地址
         myFragmentBean.headImgUrl = "https://img2.baidu.com/it/u=4001462169,2041869795&fm=26&fmt=auto&gp=0.jpg"
         myFragmentBean.nickName = "喜洋洋2021"
         myFragmentBean.userPhone = "139****3217"
+        myFragmentBean.rightDrawable = resources.getDrawable(R.mipmap.right_enter)
         binding.setVariable(BR.my, myFragmentBean)
 
         mineMLPV.addObservable(this@MyFragment)
@@ -125,7 +125,7 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
 
         functionAdapter?.setOnItemClickListener(object : FunctionAdapter.onChooseItemListener {
             override fun onChooseItem(data: FunctionItemBean, postion: Int) {
-                if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, false)) {
+                if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, true)) {
                     when (postion) {
                         0 -> {startActivity(Intent().setClass(mContext, InformationSettingActivity::class.java))}
                         1 -> {startActivity(Intent().setClass(mContext, InformationSettingActivity::class.java))}
@@ -136,6 +136,7 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
                 }
             }
         })
+        binding.setVariable(BR.MyFragment, this)
     }
 
     override fun needLocation(): Boolean {
@@ -148,4 +149,7 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
         mineMLPV.removeObservable(this@MyFragment)
     }
 
+    fun toSetting() {
+        startActivity(Intent().setClass(context, SettingActivity::class.java))
+    }
 }

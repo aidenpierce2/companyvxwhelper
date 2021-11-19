@@ -65,7 +65,14 @@ You have not confirmed the company location, please set the company location fir
     <string name="no_running">Not Running</string>
     <string name="running">Running</string>
     <string name="get_verifycode">Get verification code</string>
+    <string name="exit_app">Press again to exit the program</string>
     //web
     <string name="get_sms_succ">get sms success,please pay attention to ckeck</string>
     <string name="web_err">Network exception, please try again later!</string>
+    //setting
+    <string name="header">Header</string>
+    <string name="nickName">Nick Name</string>
+    <string name="sexual">Sexual</string>
+    <string name="telephoneNum">Telephone</string>
+    <string name="lonALat">Latitude And Longitude</string>
 </resources>

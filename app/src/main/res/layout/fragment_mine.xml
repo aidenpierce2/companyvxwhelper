@@ -6,6 +6,10 @@
         <variable
             name="my"
             type="com.xwq.companyvxwhelper.bean.dataBindingBean.MyFragmentBean" />
+
+        <variable
+            name="MyFragment"
+            type="com.xwq.companyvxwhelper.mvvm.fragment.MyFragment" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -49,6 +53,7 @@
                     android:elevation="@dimen/margin1"
                     app:cardCornerRadius="@dimen/margin3"
                     app:layout_constraintWidth_percent="0.8"
+                    android:onClick="@{() -> MyFragment.toSetting()}"
                     >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,7 +76,7 @@
                             android:id="@+id/fragment_mine_qctv_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/fragment_mine_riv_main"
                             app:layout_constraintBottom_toTopOf="@+id/fragment_mine_qctv_telephone"
                             app:layout_constraintLeft_toRightOf="@+id/fragment_mine_riv_main"
                             android:maxLines="1"
@@ -88,13 +93,24 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintLeft_toLeftOf="@+id/fragment_mine_qctv_nickname"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_mine_qctv_nickname"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginTop="@dimen/margin4"
+                            app:layout_constraintBottom_toBottomOf="@+id/fragment_mine_riv_main"
+                            android:layout_marginTop="@dimen/margin3"
                             android:layout_marginBottom="@dimen/margin4"
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:text="@{my.userPhone}"
                             app:layout_constraintVertical_chainStyle="spread"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/margin3"
+                            android:layout_height="0dp"
+                            app:layout_constraintDimensionRatio="4:7"
+                            android:src="@mipmap/right_enter"
+                            android:scaleType="fitXY"
+                            app:layout_constraintTop_toTopOf="@+id/fragment_mine_riv_main"
+                            app:layout_constraintBottom_toBottomOf="@+id/fragment_mine_riv_main"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginRight="@dimen/margin3"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>

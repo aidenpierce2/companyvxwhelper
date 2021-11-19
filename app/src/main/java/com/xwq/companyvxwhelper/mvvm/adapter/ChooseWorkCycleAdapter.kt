@@ -15,7 +15,7 @@ import com.xwq.companyvxwhelper.bean.dataBindingBean.WorkCycleItemBean
 import com.xwq.companyvxwhelper.utils.WindowScreenUtil
 import com.xwq.companyvxwhelper.widget.SwitchButton
 
-class ChooseWorkCycleAdapter(mContext : Context, sparseCount : Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class  ChooseWorkCycleAdapter(mContext : Context, sparseCount : Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val TAG = this@ChooseWorkCycleAdapter::class.java.simpleName.toString()
     val widthHeightRate = 1.2

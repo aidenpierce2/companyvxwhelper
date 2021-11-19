@@ -323,4 +323,5 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
     fun backToLogin() {
 
     }
+
 }

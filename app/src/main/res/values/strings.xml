@@ -63,7 +63,14 @@
     <string name="no_running">未运行</string>
     <string name="running">运行</string>
     <string name="get_verifycode">获取验证码</string>
+    <string name="exit_app">再按一次退出程序</string>
     //网络
     <string name="get_sms_succ">短信下发成功,请注意查收</string>
     <string name="web_err">网络异常,请稍后再试!</string>
+    //设置
+    <string name="header">头像</string>
+    <string name="nickName">昵称</string>
+    <string name="sexual">性别</string>
+    <string name="telephoneNum">手机号码</string>
+    <string name="lonALat">经纬度</string>
 </resources>

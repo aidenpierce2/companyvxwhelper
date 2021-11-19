@@ -30,4 +30,6 @@
     <color name="rougeColor">#f05b72</color>
     <color name="todaysColor">#f15b6c</color>
     <color name="darkblueColor">#3eede7</color>
+    <color name="linearColor">#FFEFF0F2</color>
+    <color name="greyColor">#FFEFF0F2</color>
 </resources>
