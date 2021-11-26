@@ -1,6 +1,9 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.util.SparseArray
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
@@ -17,6 +20,7 @@ class SettingActivity : BaseActivity<SettingView, SettingModel>(),SettingView {
 
     var dataList : SparseArray<SettingDBBean> = SparseArray<SettingDBBean>()
     var mainRcy : RecyclerView? = null
+    var backACIV : AppCompatImageView? = null
     var settingAdapter : SettingAdapter? = null
 
     override fun setContentViewId(): Int {
@@ -37,6 +41,8 @@ class SettingActivity : BaseActivity<SettingView, SettingModel>(),SettingView {
 
     override fun initView() {
         mainRcy = activity_base_setting_rcy_main
+        backACIV = activity_base_setting_aciv_back
+        fitSystemWindow()
     }
 
     override fun initData() {
@@ -44,7 +50,11 @@ class SettingActivity : BaseActivity<SettingView, SettingModel>(),SettingView {
     }
 
     override fun initListener() {
-
+        backACIV?.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                finish()
+            }
+        })
     }
 
     override fun startRequest() {
@@ -78,7 +88,7 @@ class SettingActivity : BaseActivity<SettingView, SettingModel>(),SettingView {
         dialog_search_location_rcy!!.addItemDecoration(RevenueSummaryItemDecoration(this, RevenueSummaryItemDecoration.VERTICAL_LIST))
     }
 
-    override fun getUsreInfoFail(data: String) {
+    override fun getUserInfoFail(data: String) {
 
     }
 }

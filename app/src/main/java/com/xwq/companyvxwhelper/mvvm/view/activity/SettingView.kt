@@ -6,5 +6,5 @@ import com.xwq.companyvxwhelper.bean.ResponseBean.UserInfoResBean
 interface SettingView : IBaseView {
 
     fun getUserInfoSucc(data : UserInfoResBean?)
-    fun getUsreInfoFail(data : String)
+    fun getUserInfoFail(data : String)
 }
