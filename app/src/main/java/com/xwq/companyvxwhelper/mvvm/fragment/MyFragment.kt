@@ -2,6 +2,7 @@ package com.xwq.companyvxwhelper.mvvm.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
@@ -18,6 +19,7 @@ import com.xwq.companyvxwhelper.base.BaseFragment
 import com.xwq.companyvxwhelper.bean.dataBindingBean.FunctionItemBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.MyFragmentBean
 import com.xwq.companyvxwhelper.const.Const
+import com.xwq.companyvxwhelper.databinding.FragmentMineBinding
 import com.xwq.companyvxwhelper.mvvm.activity.InformationSettingActivity
 import com.xwq.companyvxwhelper.mvvm.activity.SettingActivity
 import com.xwq.companyvxwhelper.mvvm.adapter.FunctionAdapter
@@ -29,12 +31,10 @@ import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.widget.MineLocationPullView
 import com.xwq.companyvxwhelper.widget.RoundImageView
-import kotlinx.android.synthetic.main.fragment_mine.*
 
-class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
+class MyFragment : BaseFragment<FragmentMineBinding, MyView, MyModel>(), ObservableInterface{
 
     lateinit private var myFragmentBean : MyFragmentBean
-
     lateinit private var mineMLPV : MineLocationPullView
     lateinit private var mainCard : CardView
     lateinit private var mainCSTL : ConstraintLayout
@@ -63,10 +63,6 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
         mainCSTL.layoutParams = mainLayoutParams
     }
 
-    override fun setContentViewId(): Int {
-        return R.layout.fragment_mine
-    }
-
     override fun onClick(p0: View?) {
 
     }
@@ -89,13 +85,13 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        mineMLPV = fragment_mine_mlpv
-        mainCSTL = fragment_mine_main_container
-        mainCard = fragment_mine_main_card
-        roundIV = fragment_mine_riv_main
-        nickNameTV = fragment_mine_qctv_nickname
-        telephoneTV = fragment_mine_qctv_telephone
-        functionRCY = fragment_mine_main_rcv
+        mineMLPV = getBinding().fragmentMineMlpv
+        mainCSTL = getBinding().fragmentMineMainContainer
+        mainCard = getBinding().fragmentMineMainCard
+        roundIV = getBinding().fragmentMineRivMain
+        nickNameTV = getBinding().fragmentMineQctvNickname
+        telephoneTV = getBinding().fragmentMineQctvTelephone
+        functionRCY = getBinding().fragmentMineMainRcv
 
     }
 
@@ -106,7 +102,7 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
         myFragmentBean.nickName = "喜洋洋2021"
         myFragmentBean.userPhone = "139****3217"
         myFragmentBean.rightDrawable = resources.getDrawable(R.mipmap.right_enter)
-        binding.setVariable(BR.my, myFragmentBean)
+        getBinding().setVariable(BR.my, myFragmentBean)
 
         mineMLPV.addObservable(this@MyFragment)
 
@@ -136,7 +132,7 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
                 }
             }
         })
-        binding.setVariable(BR.MyFragment, this)
+        getBinding().setVariable(BR.MyFragment, this)
     }
 
     override fun needLocation(): Boolean {
@@ -151,5 +147,9 @@ class MyFragment : BaseFragment<MyView, MyModel>(), ObservableInterface{
 
     fun toSetting() {
         startActivity(Intent().setClass(context, SettingActivity::class.java))
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.fragment_mine
     }
 }

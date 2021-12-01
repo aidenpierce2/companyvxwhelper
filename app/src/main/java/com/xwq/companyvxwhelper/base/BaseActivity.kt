@@ -8,21 +8,20 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
+import android.view.*
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewbinding.ViewBinding
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.Enum.PermissionArray
 import com.xwq.companyvxwhelper.base.Enum.PermissionMode
 import com.xwq.companyvxwhelper.callbackListener.RetryListener
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBinding
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBindingImpl
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.mvvm.dialog.IosAlertDialog
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.LoadingDialog
@@ -32,12 +31,12 @@ import java.util.*
 import kotlin.system.exitProcess
 
 
-abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivity(),
+abstract class BaseActivity<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T>> : RxAppCompatActivity(),
     NoDoubleClickListener, IBaseView, RetryListener{
 
     val TAG : String = this::class.java.simpleName.toString()
 
-    private var binding : ViewDataBinding? = null
+    private var dataBinding : VB? = null
     var permissionManager : PermissionManager? = null
     // 需不需要实例化 看界面本身
     lateinit var locationObserver : iLocationObserver
@@ -47,7 +46,7 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       binding = DataBindingUtil.setContentView(this, setContentViewId())
+       dataBinding = DataBindingUtil.setContentView(this, getContentViewId())
         if (fullScreenEnable()) {
             showScreenFull(this)
 
@@ -82,7 +81,7 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
     /**
      * 设置布局id
      */
-    abstract fun setContentViewId(): Int
+    abstract fun getContentViewId() : Int
 
     /**
      * 是否设置全屏
@@ -152,7 +151,7 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
     /**
      * 全屏方法
      */
-    private fun showScreenFull(activity: BaseActivity<T, M>) {
+    private fun showScreenFull(activity: BaseActivity<VB, T, M>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色
@@ -303,8 +302,8 @@ abstract class BaseActivity<T : IBaseView, M : BaseModel<T>> : RxAppCompatActivi
         }
     }
 
-    fun getBinding() : ViewDataBinding{
-        return binding!!
+    fun getBinding() : VB{
+        return dataBinding!!
     }
 
     class iLocationObserver : Observer {

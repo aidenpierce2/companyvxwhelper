@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.WindowManager
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
@@ -35,6 +36,8 @@ import com.xwq.companyvxwhelper.bean.dataBindingBean.LocationFragmentBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogItemBean
 import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.databaseCenter.DatabaseManager
+import com.xwq.companyvxwhelper.databinding.FragmentHistoryBinding
+import com.xwq.companyvxwhelper.databinding.FragmentLocationBinding
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.MainGuideDialog
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.SearchLocationDialog
 import com.xwq.companyvxwhelper.mvvm.model.fragment.LocationModel
@@ -43,10 +46,9 @@ import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.PackageUtils
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.widget.HomeInputEditText
-import kotlinx.android.synthetic.main.fragment_location.*
 
 
-class LocationFragment : BaseFragment<LocationView, LocationModel>(),
+class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, LocationModel>(),
     BaseFragment.iLocationInterface,LocationSource, AMapLocationListener,PoiSearch.OnPoiSearchListener{
 
     val STROKE_COLOR = Color.argb(0, 255, 255, 255)
@@ -54,6 +56,7 @@ class LocationFragment : BaseFragment<LocationView, LocationModel>(),
 
     lateinit var mapView : MapView
     lateinit var aMap : AMap
+    var mainHIET : HomeInputEditText? = null
     private var mListener: OnLocationChangedListener? = null
     private var mlocationClient: AMapLocationClient? = null
     private var mLocationOption: AMapLocationClientOption? = null
@@ -69,24 +72,20 @@ class LocationFragment : BaseFragment<LocationView, LocationModel>(),
     private var companyLatitude : Double = 0.00
     private var companyLontitude : Double = 0.00
 
-    override fun setContentViewId(): Int {
-        return R.layout.fragment_location
-    }
-
     override fun retryRequest() {
 
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         if (!this::mapView.isInitialized) {
-            mapView = fragment_location_mv_map
+            mapView = getBinding().fragmentLocationMvMap
             mapView.onCreate(savedInstanceState)
         }
         if (!this::aMap.isInitialized) {
             aMap = mapView.map
         }
         if (!this::hiet.isInitialized) {
-            hiet = fragment_location_hiet
+            hiet = getBinding().fragmentLocationHiet
         }
     }
 
@@ -139,7 +138,7 @@ class LocationFragment : BaseFragment<LocationView, LocationModel>(),
         super.onResume()
         mapView.onResume()
 
-        fragment_location_hiet.setOnButtonClickListener(object :
+        mainHIET?.setOnButtonClickListener(object :
             HomeInputEditText.onButtonClickListener {
             override fun onButtonClick() {
 
@@ -273,7 +272,7 @@ class LocationFragment : BaseFragment<LocationView, LocationModel>(),
     fun setLocation(locationNickName: String) {
         var curBean : LocationFragmentBean = LocationFragmentBean()
         curBean.locationNickName = locationNickName
-        binding.setVariable(BR.location, curBean)
+        getBinding().setVariable(BR.location, curBean)
     }
 
     // 判断企业微信有没有安装
@@ -394,6 +393,10 @@ class LocationFragment : BaseFragment<LocationView, LocationModel>(),
             })
             .allowCancelAble(false)
             .show(mContext.supportFragmentManager, true)
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.fragment_location
     }
 
 }

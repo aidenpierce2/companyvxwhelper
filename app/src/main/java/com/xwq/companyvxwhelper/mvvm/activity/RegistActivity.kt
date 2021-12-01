@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.util.SparseArray
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatCheckBox
 import com.xwq.companyvxwhelper.BR
@@ -17,25 +18,20 @@ import com.xwq.companyvxwhelper.bean.RequestBean.RegisterReqBean
 import com.xwq.companyvxwhelper.bean.RequestBean.SendSmsReqBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.RegisterResBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.RegisteActivityBean
-import com.xwq.companyvxwhelper.const.Const.USER_ENUSRE_AUTH
 import com.xwq.companyvxwhelper.const.Const.USER_POLICY_CHECKED
+import com.xwq.companyvxwhelper.databinding.ActivityRegisterBinding
 import com.xwq.companyvxwhelper.mvvm.model.activity.RegisterModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.RegisterView
 import com.xwq.companyvxwhelper.service.TimeCutDownService
 import com.xwq.companyvxwhelper.utils.*
-import kotlinx.android.synthetic.main.activity_register.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class RegistActivity  : BaseActivity<RegisterView, RegisterModel>(),RegisterView {
+class RegistActivity  : BaseActivity<ActivityRegisterBinding, RegisterView, RegisterModel>(),RegisterView {
 
     val RESULTCODE = 0x03
     var registeActivityBean : RegisteActivityBean? = null
     lateinit var ensureAuth : AppCompatCheckBox
-
-    override fun setContentViewId(): Int {
-        return R.layout.activity_register
-    }
 
     override fun fullScreenEnable(): Boolean {
         return  true
@@ -50,7 +46,7 @@ class RegistActivity  : BaseActivity<RegisterView, RegisterModel>(),RegisterView
     }
 
     override fun initView() {
-        ensureAuth = activity_register_accb_ensure_auth
+        ensureAuth = getBinding().activityRegisterAccbEnsureAuth
     }
 
     override fun initData() {
@@ -251,5 +247,9 @@ class RegistActivity  : BaseActivity<RegisterView, RegisterModel>(),RegisterView
         }
         getModel().getVerifyCode(SendSmsReqBean(telephoneNumStr, timeStamp))
         return true
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_register
     }
 }

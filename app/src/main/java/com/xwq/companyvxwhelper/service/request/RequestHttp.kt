@@ -19,7 +19,7 @@ class RequestHttp {
     var responseListener : ResponseListener? = null
 
     fun getTimeStamp(context: Context) : RequestHttp{
-        context as BaseActivity<*, *>
+        context as BaseActivity<*, *, *>
         var url = Urls.ALI_TIME_STAMP
         Api.createApi()!!.create(RequestService::class.java).getTimeStamp(url)
             .subscribeOn(Schedulers.io())

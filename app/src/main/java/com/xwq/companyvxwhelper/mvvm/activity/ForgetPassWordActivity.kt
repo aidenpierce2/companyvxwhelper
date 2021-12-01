@@ -2,6 +2,7 @@ package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.content.Intent
 import android.util.SparseArray
+import android.view.LayoutInflater
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
@@ -9,6 +10,7 @@ import com.xwq.companyvxwhelper.bean.RequestBean.ForgetPassWordReqBean
 import com.xwq.companyvxwhelper.bean.RequestBean.SendSmsReqBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.ForgetPasswordBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.NoticeGetVerifyCodeBean
+import com.xwq.companyvxwhelper.databinding.ActivityForgetpasswordBinding
 import com.xwq.companyvxwhelper.mvvm.model.activity.ForgetPassWordModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.ForgetPassWordView
 import com.xwq.companyvxwhelper.utils.PackageInfoUtils
@@ -16,15 +18,11 @@ import com.xwq.companyvxwhelper.utils.PhoneNumMatcherUtils
 import com.xwq.companyvxwhelper.utils.ToastUtil
 import com.xwq.companyvxwhelper.utils.VerifyCodeUtils
 
-class ForgetPassWordActivity : BaseActivity<ForgetPassWordView, ForgetPassWordModel>(), ForgetPassWordView {
+class ForgetPassWordActivity : BaseActivity<ActivityForgetpasswordBinding, ForgetPassWordView, ForgetPassWordModel>(), ForgetPassWordView {
 
     val RESULTCODE = 0x02
 
     var forgetPasswordBean : ForgetPasswordBean? = null
-
-    override fun setContentViewId(): Int {
-        return R.layout.activity_forgetpassword
-    }
 
     override fun fullScreenEnable(): Boolean {
         return true
@@ -148,5 +146,9 @@ class ForgetPassWordActivity : BaseActivity<ForgetPassWordView, ForgetPassWordMo
 
     override fun subForgetPassInfoFail() {
         ToastUtil.showToast(R.string.web_err)
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_forgetpassword
     }
 }

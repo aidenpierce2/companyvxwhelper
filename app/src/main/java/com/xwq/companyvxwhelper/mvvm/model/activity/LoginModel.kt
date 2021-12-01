@@ -8,10 +8,11 @@ import com.xwq.companyvxwhelper.base.BaseObserver
 import com.xwq.companyvxwhelper.base.IBaseView
 import com.xwq.companyvxwhelper.bean.RequestBean.LoginReqBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.LoginResBean
+import com.xwq.companyvxwhelper.databinding.ActivityLoginBinding
 import com.xwq.companyvxwhelper.mvvm.view.activity.ForgetPassWordView
 import com.xwq.companyvxwhelper.mvvm.view.activity.LoginView
 
-class LoginModel(baseView :  LoginView) : BaseModel<LoginView>(baseView) {
+class LoginModel(baseView :  LoginView) : BaseModel<ActivityLoginBinding, LoginView>(baseView) {
     var url : String = ""
 
     fun login(loginReqBean : LoginReqBean) {

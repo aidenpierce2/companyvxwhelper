@@ -1,6 +1,7 @@
 package com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment
 
 import android.app.Dialog
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -9,11 +10,11 @@ import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseDialog
 import com.xwq.companyvxwhelper.bean.dataBindingBean.DialogMainGuideBean
+import com.xwq.companyvxwhelper.databinding.DialogMainGuideBinding
 import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.WindowScreenUtil
-import kotlinx.android.synthetic.main.dialog_main_guide.*
 
-class MainGuideDialog : BaseDialog() {
+class MainGuideDialog : BaseDialog<DialogMainGuideBinding>() {
 
     private val SCREEN_WIDTH_RATE : Float = 0.8F
 
@@ -44,24 +45,20 @@ class MainGuideDialog : BaseDialog() {
 
     }
 
-    override fun setContentId(): Int {
-        return R.layout.dialog_main_guide
-    }
-
     override fun setBind() {
 
     }
 
     override fun initView() {
 
-        binding.setVariable(BR.MainGuideDialog, this@MainGuideDialog)
+        getBinding().setVariable(BR.MainGuideDialog, this@MainGuideDialog)
 
         getDialogWindow().setWindowAnimations(R.style.main_guide_animation)
 
-        mainCSTL = dialog_main_guide_cstl_main
-        mainContentACTV = dialog_main_guide_actv_content
-        leftChooseACTV = dialog_main_guide_actv_leftChoose
-        rightChooseACTV = dialog_main_guide_actv_rightChoose
+        mainCSTL = getBinding().dialogMainGuideCstlMain
+        mainContentACTV = getBinding().dialogMainGuideActvContent
+        leftChooseACTV = getBinding().dialogMainGuideActvLeftChoose
+        rightChooseACTV = getBinding().dialogMainGuideActvRightChoose
 
         var layoutParams = mainCSTL.layoutParams
         layoutParams.width = (WindowScreenUtil.getScreenWidth(context) * SCREEN_WIDTH_RATE).toInt()
@@ -75,7 +72,7 @@ class MainGuideDialog : BaseDialog() {
     }
 
     override fun initData() {
-        binding.setVariable(BR.DialogMainGuideBean, bean)
+        getBinding().setVariable(BR.DialogMainGuideBean, bean)
     }
 
     override fun initListener() {
@@ -140,6 +137,10 @@ class MainGuideDialog : BaseDialog() {
     interface IClickInterface{
         fun onLeftChoosed(dialog : MainGuideDialog)
         fun onRightChoosed(dialog : MainGuideDialog)
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.dialog_main_guide
     }
 
 }

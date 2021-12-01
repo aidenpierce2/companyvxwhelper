@@ -14,8 +14,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.*
 import com.xwq.companyvxwhelper.R
+import com.xwq.companyvxwhelper.databinding.WidgetUserTelorpassBinding
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
-import kotlinx.android.synthetic.main.widget_user_telorpass.view.*
 
 @InverseBindingMethods(
     InverseBindingMethod(
@@ -129,8 +129,8 @@ class UserTelOrPassInputEditView : ConstraintLayout {
     }
 
     private fun initView() {
-        editInput = widget_user_telorpass_acet_input
-        clearIcon = widget_user_telorpass_aciv_delete
+        editInput = WidgetUserTelorpassBinding.inflate(LayoutInflater.from(context)).widgetUserTelorpassAcetInput
+        clearIcon = WidgetUserTelorpassBinding.inflate(LayoutInflater.from(context)).widgetUserTelorpassAcivDelete
 
         editInput.setHintTextColor(resources.getColor(R.color.inputHint))
         editInput.setTextColor(resources.getColor(R.color.contentColor))

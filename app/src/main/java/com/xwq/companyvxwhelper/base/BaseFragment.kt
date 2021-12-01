@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.components.support.RxFragment
 import com.xwq.companyvxwhelper.MyApplication
@@ -16,7 +17,7 @@ import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.utils.LogUtil
 import java.util.*
 
-abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , NoDoubleClickListener, RetryListener {
+abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T>> : RxFragment() , NoDoubleClickListener, RetryListener {
 
     var TAG : String = this::class.java.simpleName.toString()
 
@@ -25,7 +26,7 @@ abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , No
     lateinit var locationObserver : LocationObserver
     lateinit var locationObservable : MyApplication.LocationObservable
     lateinit var locationInterface : iLocationInterface
-    protected lateinit var binding: ViewDataBinding
+    private lateinit var dataBinding: VB
 
     override fun onAttach(activity: Activity) {
         LogUtil.log(TAG, "onAttach execute!")
@@ -43,8 +44,8 @@ abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , No
         savedInstanceState: Bundle?
     ): View? {
         LogUtil.log(TAG, "onCreateView execute!")
-        binding = DataBindingUtil.inflate(inflater, setContentViewId(), container,false)
-        mFContainer = binding!!.root
+        dataBinding = DataBindingUtil.inflate(inflater, getContentViewId(), container,false)
+        mFContainer = dataBinding!!.root
         return mFContainer
     }
 
@@ -102,7 +103,7 @@ abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , No
     /**
      * 获取根布局id
      */
-    abstract fun setContentViewId() : Int
+    abstract fun getContentViewId() : Int
 
     /**
      * 初始化view
@@ -150,6 +151,10 @@ abstract class BaseFragment<T : IBaseView, M : BaseModel<T>> : RxFragment() , No
         if (preInitLocation()) {
             locationObservable.removeImpl(TAG)
         }
+    }
+
+    fun getBinding() : VB{
+        return dataBinding!!
     }
 
     inner class LocationObserver : Observer {

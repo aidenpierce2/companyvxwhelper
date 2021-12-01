@@ -3,6 +3,7 @@ package com.xwq.companyvxwhelper.mvvm.activity
 import android.content.Intent
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -12,12 +13,12 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.Enum.InputSettingEnum
 import com.xwq.companyvxwhelper.bean.dataBindingBean.InformationSettingItemBean
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBinding
 import com.xwq.companyvxwhelper.mvvm.adapter.InformationSettingAdapter
 import com.xwq.companyvxwhelper.mvvm.model.activity.InfomationSettingModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.InformationSettingView
-import kotlinx.android.synthetic.main.activity_base_setting.*
 
-class InformationSettingActivity : BaseActivity<InformationSettingView, InfomationSettingModel>(),InformationSettingView {
+class InformationSettingActivity : BaseActivity<ActivityBaseSettingBinding, InformationSettingView, InfomationSettingModel>(),InformationSettingView {
 
     lateinit var backACIV : AppCompatImageView
     lateinit var titleACTV : AppCompatTextView
@@ -25,10 +26,6 @@ class InformationSettingActivity : BaseActivity<InformationSettingView, Infomati
 
     var dataList : ArrayList<InformationSettingItemBean> = arrayListOf()
     var informationSettingAdapter : InformationSettingAdapter? = null
-
-    override fun setContentViewId(): Int {
-        return R.layout.activity_base_setting
-    }
 
     override fun fullScreenEnable(): Boolean {
         return true
@@ -43,9 +40,9 @@ class InformationSettingActivity : BaseActivity<InformationSettingView, Infomati
     }
 
     override fun initView() {
-        backACIV = activity_base_setting_aciv_back
-        titleACTV = activity_base_setting_actv_title
-        mainRCY = activity_base_setting_rcy_main
+        backACIV = getBinding().activityBaseSettingAcivBack
+        titleACTV = getBinding().activityBaseSettingActvTitle
+        mainRCY = getBinding().activityBaseSettingRcyMain
     }
 
     override fun initData() {
@@ -108,5 +105,9 @@ class InformationSettingActivity : BaseActivity<InformationSettingView, Infomati
 
     override fun hideLoading() {
         super.hideLoading()
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_base_setting
     }
 }

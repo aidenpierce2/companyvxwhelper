@@ -3,6 +3,7 @@ package com.xwq.companyvxwhelper.mvvm.activity
 import android.content.Intent
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -17,6 +18,7 @@ import com.xwq.companyvxwhelper.bean.Enum.MultiAdapterEnum
 import com.xwq.companyvxwhelper.bean.dataBindingBean.SettingAdapterBean
 import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.databaseCenter.DatabaseManager
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBinding
 import com.xwq.companyvxwhelper.mvvm.adapter.InputPhoneAdapter
 import com.xwq.companyvxwhelper.mvvm.dialog.IosAlertDialog
 import com.xwq.companyvxwhelper.mvvm.model.activity.InputPhoneNumModel
@@ -24,13 +26,12 @@ import com.xwq.companyvxwhelper.mvvm.view.activity.InputPhoneNumView
 import com.xwq.companyvxwhelper.utils.PhoneNumMatcherUtils
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.utils.ToastUtil
-import kotlinx.android.synthetic.main.activity_base_setting.*
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-class InputPhoneNumOrWxAccountActivity : BaseActivity<InputPhoneNumView, InputPhoneNumModel>(),InputPhoneNumView {
+class InputPhoneNumOrWxAccountActivity : BaseActivity<ActivityBaseSettingBinding, InputPhoneNumView, InputPhoneNumModel>(),InputPhoneNumView {
 
     lateinit var backACIV : AppCompatImageView
     lateinit var titleACTV : AppCompatTextView
@@ -39,10 +40,6 @@ class InputPhoneNumOrWxAccountActivity : BaseActivity<InputPhoneNumView, InputPh
     var inputPhoneAdapter : InputPhoneAdapter? = null
     var dataList : ArrayList<SettingAdapterBean> = arrayListOf()
     var inputSettingEnum : InputSettingEnum? = null
-
-    override fun setContentViewId(): Int {
-        return R.layout.activity_base_setting
-    }
 
     override fun fullScreenEnable(): Boolean {
         return true
@@ -57,10 +54,10 @@ class InputPhoneNumOrWxAccountActivity : BaseActivity<InputPhoneNumView, InputPh
     }
 
     override fun initView() {
-        backACIV = activity_base_setting_aciv_back
-        titleACTV = activity_base_setting_actv_title
-        rightACIV = activity_base_setting_actv_right
-        mainRCY = activity_base_setting_rcy_main
+        backACIV = getBinding().activityBaseSettingAcivBack
+        titleACTV = getBinding().activityBaseSettingActvTitle
+        rightACIV = getBinding().activityBaseSettingActvRight
+        mainRCY = getBinding().activityBaseSettingRcyMain
     }
 
     override fun initData() {
@@ -272,6 +269,10 @@ class InputPhoneNumOrWxAccountActivity : BaseActivity<InputPhoneNumView, InputPh
 
     override fun hideLoading() {
         super.hideLoading()
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_base_setting
     }
 
 }

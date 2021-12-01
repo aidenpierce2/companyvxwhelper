@@ -1,5 +1,6 @@
 package com.xwq.companyvxwhelper.base
 
+import androidx.viewbinding.ViewBinding
 import com.xwq.companyvxwhelper.api.Api
 import com.xwq.companyvxwhelper.api.interfaceRequest.RequestService
 import io.reactivex.ObservableTransformer
@@ -7,13 +8,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function
 import java.lang.RuntimeException
 
-abstract class BaseModel<T : IBaseView>(value : IBaseView?) {
+abstract class BaseModel<VB : ViewBinding, T : IBaseView>(value : IBaseView?) {
     open var curView : T? = null
-    open var curContext : BaseActivity<IBaseView, BaseModel<IBaseView>>? = null
+    open var curContext : BaseActivity<VB, IBaseView, BaseModel<VB, IBaseView>>? = null
 
     init {
         curView = value as T?
-        curContext = value as BaseActivity<IBaseView, BaseModel<IBaseView>>
+        curContext = value as BaseActivity<VB, IBaseView, BaseModel<VB, IBaseView>>
     }
 
     var mDisposable : CompositeDisposable = CompositeDisposable()

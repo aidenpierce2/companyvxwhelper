@@ -9,9 +9,10 @@ import com.xwq.companyvxwhelper.bean.RequestBean.RegisterReqBean
 import com.xwq.companyvxwhelper.bean.RequestBean.SendSmsReqBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.RegisterResBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.SendSmsResBean
+import com.xwq.companyvxwhelper.databinding.ActivityRegisterBinding
 import com.xwq.companyvxwhelper.mvvm.view.activity.RegisterView
 
-class RegisterModel(baseView : RegisterView) : BaseModel<RegisterView>(baseView) {
+class RegisterModel(baseView : RegisterView) : BaseModel<ActivityRegisterBinding, RegisterView>(baseView) {
     var url = ""
 
     fun getVerifyCode(sendSmsReqBean: SendSmsReqBean) {

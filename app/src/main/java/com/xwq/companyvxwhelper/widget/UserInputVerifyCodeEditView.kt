@@ -18,13 +18,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.*
 import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
+import com.xwq.companyvxwhelper.databinding.WidgetUserInputVerifycodeBinding
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.mvvm.activity.RegistActivity
 import com.xwq.companyvxwhelper.service.TimeCutDownService
 import com.xwq.companyvxwhelper.utils.ServiceUtils
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.widget_user_input_verifycode.view.*
 import java.util.*
 
 @InverseBindingMethods(
@@ -277,8 +277,8 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
     }
 
     private fun initView() {
-        editInput = widget_input_verify_acet_input
-        showACTV = widget_user_telorpass_actv_input
+        editInput = WidgetUserInputVerifycodeBinding.inflate(LayoutInflater.from(context)).widgetInputVerifyAcetInput
+        showACTV = WidgetUserInputVerifycodeBinding.inflate(LayoutInflater.from(context)).widgetUserTelorpassActvInput
 
         initListener()
     }

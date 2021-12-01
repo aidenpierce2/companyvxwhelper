@@ -10,10 +10,11 @@ import com.xwq.companyvxwhelper.bean.RequestBean.ForgetPassWordReqBean
 import com.xwq.companyvxwhelper.bean.RequestBean.SendSmsReqBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.ForgetPassWordResBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.SendSmsResBean
+import com.xwq.companyvxwhelper.databinding.ActivityForgetpasswordBinding
 import com.xwq.companyvxwhelper.mvvm.view.activity.ForgetPassWordView
 import io.reactivex.schedulers.Schedulers
 
-class ForgetPassWordModel(baseView :  ForgetPassWordView) : BaseModel<ForgetPassWordView>(baseView) {
+class ForgetPassWordModel(baseView :  ForgetPassWordView) : BaseModel<ActivityForgetpasswordBinding, ForgetPassWordView>(baseView) {
     var  url = ""
 
     fun getVerifyCode(sendSmsReqBean: SendSmsReqBean) {

@@ -13,7 +13,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.xwq.companyvxwhelper.R
-import kotlinx.android.synthetic.main.dialog_ios_alert.*
 import java.lang.reflect.Field
 
 class IosAlertDialog: DialogFragment() {
@@ -75,10 +74,10 @@ class IosAlertDialog: DialogFragment() {
     }
 
     fun initView () {
-        titleACTV = dialog_ios_alert_actv_title
-        contentACTV = dialog_ios_alert_actv_content
-        cancelACTV = dialog_ios_alert_actv_cancel
-        sureACTV = dialog_ios_alert_actv_sure
+        titleACTV
+        contentACTV
+        cancelACTV
+        sureACTV
     }
 
     fun initData () {

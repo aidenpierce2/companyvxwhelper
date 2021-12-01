@@ -1,5 +1,6 @@
 package com.xwq.companyvxwhelper.api.Transform
 
+import androidx.viewbinding.ViewBinding
 import com.xwq.companyvxwhelper.base.BaseModel
 import com.xwq.companyvxwhelper.base.BroadCastBaseModel
 import com.xwq.companyvxwhelper.base.IBaseView
@@ -15,7 +16,7 @@ object RxTransformer {
      * @param <T> 泛型
      * @return 返回Observable
     </T> */
-    open fun <T, V : IBaseView,M : BaseModel<V>> switchSchedulers(baseModel: M): ObservableTransformer<T?, T?>? {
+    open fun <VB : ViewBinding, T, V : IBaseView,M : BaseModel<VB, V>> switchSchedulers(baseModel: M): ObservableTransformer<T?, T?>? {
         return ObservableTransformer { upstream ->
             upstream
                 .subscribeOn(Schedulers.io())

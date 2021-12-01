@@ -1,8 +1,10 @@
 package com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment
 
 import android.app.Dialog
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amap.api.services.core.AMapException
@@ -15,15 +17,15 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseDialog
 import com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogItemBean
+import com.xwq.companyvxwhelper.databinding.DialogSearchLocationBinding
 import com.xwq.companyvxwhelper.mvvm.adapter.SearchAdapter
 import com.xwq.companyvxwhelper.mvvm.adapter.decoration.RevenueSummaryItemDecoration
 import com.xwq.companyvxwhelper.utils.DistanceUtils
 import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.ToastUtil
-import kotlinx.android.synthetic.main.dialog_search_location.*
 import java.util.ArrayList
 
-class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
+class SearchLocationDialog : BaseDialog<DialogSearchLocationBinding>(), OnPoiSearchListener {
 
     var defSearchContent : String = ""
     var searchContent : String = ""
@@ -33,6 +35,8 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
     lateinit var onChooseListenr : onChooseListener
     var mPoiSearchQuery : PoiSearch.Query? = null
     private var searchAdapter : SearchAdapter? = null
+    var searchACET : AppCompatEditText? = null
+    var mainRcy : RecyclerView? = null
 
     companion object {
         private var singleInstance : SearchLocationDialog? = null
@@ -49,10 +53,6 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
         dialog.window.attributes.windowAnimations = R.style.search_dialog_animation
     }
 
-    override fun setContentId(): Int {
-        return R.layout.dialog_search_location
-    }
-
     override fun setBind() {
 
     }
@@ -62,9 +62,9 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
     }
 
     override fun initData() {
-        binding.setVariable(BR.SearchLocation, singleInstance)
+        getBinding().setVariable(BR.SearchLocation, singleInstance)
         var searchDialogDataBean : SearchDialogBean = SearchDialogBean(defSearchContent)
-        binding.setVariable(BR.SearchDialogBean, searchDialogDataBean)
+        getBinding().setVariable(BR.SearchDialogBean, searchDialogDataBean)
 
         LogUtil.log(TAG, "ready to show LoadingDialog")
         LoadingDialog.getSingleton()
@@ -99,7 +99,7 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
                     var data : Array<SearchDialogItemBean> =
                         convertPoiItemToSearchDialogItemBean(pois)
 
-                    dialog_search_location_rcy.layoutManager = LinearLayoutManager(mContextWeakRef.get(), RecyclerView.VERTICAL, false)
+                    mainRcy?.layoutManager = LinearLayoutManager(mContextWeakRef.get(), RecyclerView.VERTICAL, false)
                     if (singleInstance!!.searchAdapter == null) {
                         searchAdapter = SearchAdapter()
                         searchAdapter!!.setData(data)
@@ -111,10 +111,10 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
                             }
                         })
 
-                        dialog_search_location_rcy.adapter = searchAdapter
-                        dialog_search_location_rcy!!.addItemDecoration(RevenueSummaryItemDecoration(mContextWeakRef.get()!!, RevenueSummaryItemDecoration.VERTICAL_LIST))
+                        mainRcy?.adapter = searchAdapter
+                        mainRcy?.addItemDecoration(RevenueSummaryItemDecoration(mContextWeakRef.get()!!, RevenueSummaryItemDecoration.VERTICAL_LIST))
                     } else {
-                        dialog_search_location_rcy.adapter = searchAdapter
+                        mainRcy?.adapter = searchAdapter
                         searchAdapter!!.setData(data)
                         searchAdapter!!.notifyDataSetChanged()
                     }
@@ -171,7 +171,7 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
             }
             R.id.dialog_search_location_actv_input -> {
                 //开始搜索
-                searchContent = dialog_search_location_acet_search.text!!.trim().toString()
+                searchContent = searchACET?.text!!.trim().toString()
                 if (searchContent == null || searchContent.isEmpty()) {
                     ToastUtil.showToast(R.string.need_input_search_value)
                     return
@@ -229,6 +229,10 @@ class SearchLocationDialog : BaseDialog(), OnPoiSearchListener {
 
     interface onChooseListener {
         fun onItemChoosed(itemBean: SearchDialogItemBean)
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.adapter_search
     }
 
 }

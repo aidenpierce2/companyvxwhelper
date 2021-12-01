@@ -1,6 +1,7 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.util.SparseArray
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -9,23 +10,18 @@ import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.dataBindingBean.SettingDBBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.UserInfoResBean
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBinding
 import com.xwq.companyvxwhelper.mvvm.adapter.SettingAdapter
 import com.xwq.companyvxwhelper.mvvm.adapter.decoration.RevenueSummaryItemDecoration
 import com.xwq.companyvxwhelper.mvvm.model.activity.SettingModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.SettingView
-import kotlinx.android.synthetic.main.activity_base_setting.*
-import kotlinx.android.synthetic.main.dialog_search_location.*
 
-class SettingActivity : BaseActivity<SettingView, SettingModel>(),SettingView {
+class SettingActivity : BaseActivity<ActivityBaseSettingBinding, SettingView, SettingModel>(),SettingView {
 
     var dataList : SparseArray<SettingDBBean> = SparseArray<SettingDBBean>()
     var mainRcy : RecyclerView? = null
     var backACIV : AppCompatImageView? = null
     var settingAdapter : SettingAdapter? = null
-
-    override fun setContentViewId(): Int {
-        return R.layout.activity_base_setting
-    }
 
     override fun fullScreenEnable(): Boolean {
         return true
@@ -40,8 +36,8 @@ class SettingActivity : BaseActivity<SettingView, SettingModel>(),SettingView {
     }
 
     override fun initView() {
-        mainRcy = activity_base_setting_rcy_main
-        backACIV = activity_base_setting_aciv_back
+        mainRcy = getBinding().activityBaseSettingRcyMain
+        backACIV = getBinding().activityBaseSettingAcivBack
         fitSystemWindow()
     }
 
@@ -85,10 +81,14 @@ class SettingActivity : BaseActivity<SettingView, SettingModel>(),SettingView {
         }
         settingAdapter?.dataList = dataList
         mainRcy?.adapter = settingAdapter
-        dialog_search_location_rcy!!.addItemDecoration(RevenueSummaryItemDecoration(this, RevenueSummaryItemDecoration.VERTICAL_LIST))
+        mainRcy!!.addItemDecoration(RevenueSummaryItemDecoration(this, RevenueSummaryItemDecoration.VERTICAL_LIST))
     }
 
     override fun getUserInfoFail(data: String) {
 
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_base_setting
     }
 }

@@ -14,16 +14,17 @@ import android.view.MotionEvent.*
 import android.view.animation.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.const.Const.PULLDOWN_CAN_CLICK
+import com.xwq.companyvxwhelper.databinding.WidgetMineBinding
 import com.xwq.companyvxwhelper.publicinterface.ObservableInterface
 import com.xwq.companyvxwhelper.publicinterface.ObserverInterface
 import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.utils.WindowScreenUtil
-import kotlinx.android.synthetic.main.widget_mine.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -96,7 +97,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
     // 初始化tag
     private var initTag : Boolean = false
     //上下文
-    lateinit private var mContext : BaseActivity<*, *>
+    lateinit private var mContext : BaseActivity<*, *, *>
     //主容器
     lateinit private var mainContainer : ConstraintLayout
     //顶部加载视图
@@ -126,7 +127,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
     constructor(context : Context, attrs : AttributeSet?, defStyleAttr : Int) : super(context, attrs, defStyleAttr){
 
         setWillNotDraw(false)
-        mContext = context as BaseActivity<*, *>
+        mContext = context as BaseActivity<*, *, *>
 
         var typedArray : TypedArray = context.obtainStyledAttributes(attrs, R.styleable.MineLocationPullView)
         topPicWidth = typedArray.getDimension(R.styleable.MineLocationPullView_topPicWidth, 0f)
@@ -138,12 +139,14 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
         cardPhoneNumber = typedArray.getString(R.styleable.MineLocationPullView_cardPhoneNumber)
         typedArray.recycle()
 
-        curView = LayoutInflater.from(context).inflate(R.layout.widget_mine, this@MineLocationPullView)
+        curView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.widget_mine, container,false)
+        mainContainer = WidgetMineBinding.inflate(LayoutInflater.from(context)).wigetMineCstlContainer
+        topLoadingIV = WidgetMineBinding.inflate(LayoutInflater.from(context)).wigetMineAcivTop
+        mainBgIV = WidgetMineBinding.inflate(LayoutInflater.from(context)).wigetMineAcivMainBg
 
-        mainContainer = wiget_mine_cstl_container
-        topLoadingIV = wiget_mine_aciv_top
-        mainBgIV = wiget_mine_aciv_main_bg
-
+//        mainContainer = curView.findViewById(R.id.wiget_mine_cstl_container)
+//        topLoadingIV = curView.findViewById(R.id.wiget_mine_aciv_top)
+//        mainBgIV = curView.findViewById(R.id.wiget_mine_aciv_main_bg)
     }
 
     override fun addObservable(dataObj: ObservableInterface) {
@@ -210,14 +213,16 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
             }
         }
 
-        var firstChild = topLoadingIV
-        var firstChildParams = firstChild.layoutParams
-        firstChildParams.width = topPicWidth.toInt()
-        firstChildParams.height = topPicHeight.toInt()
-        firstChild.layoutParams = firstChildParams
+        var firstChildParams = topLoadingIV.layoutParams
+        var balance = Math.min(topPicWidth, topPicHeight)
+        topPicWidth = balance
+        topPicHeight = balance
+        firstChildParams.width = balance.toInt()
+        firstChildParams.height = balance.toInt()
+        topLoadingIV.layoutParams = firstChildParams
 
 
-        var layoutParams : ConstraintLayout.LayoutParams = firstChild.layoutParams as ConstraintLayout.LayoutParams
+        var layoutParams : ConstraintLayout.LayoutParams = topLoadingIV.layoutParams as ConstraintLayout.LayoutParams
         var height = layoutParams.height
 
         // 计算差值

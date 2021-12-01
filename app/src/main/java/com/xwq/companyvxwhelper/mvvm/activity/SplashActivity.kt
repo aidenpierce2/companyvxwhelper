@@ -1,24 +1,19 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.content.Intent
-import android.content.SharedPreferences
-import android.os.Handler
-import android.text.TextUtils
+import android.view.LayoutInflater
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
-import com.xwq.companyvxwhelper.bean.RequestBean.SendSmsReqBean
 import com.xwq.companyvxwhelper.const.Const
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBinding
+import com.xwq.companyvxwhelper.databinding.ActivitySplashBinding
 import com.xwq.companyvxwhelper.mvvm.model.activity.SplashModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.SplashView
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.utils.ToastUtil
 
 
-class SplashActivity : BaseActivity<SplashView, SplashModel>(), SplashView{
-
-    override fun setContentViewId(): Int {
-        return R.layout.activity_splash
-    }
+class SplashActivity : BaseActivity<ActivitySplashBinding, SplashView, SplashModel>(), SplashView{
 
     override fun fullScreenEnable(): Boolean {
         return true
@@ -84,6 +79,11 @@ class SplashActivity : BaseActivity<SplashView, SplashModel>(), SplashView{
 
     override fun getSelfModel(): SplashModel {
         return SplashModel(this@SplashActivity)
+    }
+
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_splash
     }
 
 }

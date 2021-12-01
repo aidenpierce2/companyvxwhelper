@@ -8,9 +8,10 @@ import com.xwq.companyvxwhelper.base.BaseNetworkResponse
 import com.xwq.companyvxwhelper.base.BaseObserver
 import com.xwq.companyvxwhelper.bean.ResponseBean.CheckTokenResBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.LoginResBean
+import com.xwq.companyvxwhelper.databinding.ActivitySplashBinding
 import com.xwq.companyvxwhelper.mvvm.view.activity.SplashView
 
-class SplashModel(splashView: SplashView) : BaseModel<SplashView>(splashView) {
+class SplashModel(splashView: SplashView) : BaseModel<ActivitySplashBinding, SplashView>(splashView) {
     var url : String = ""
 
     //检测token的有效性

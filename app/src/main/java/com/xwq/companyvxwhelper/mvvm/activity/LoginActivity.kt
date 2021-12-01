@@ -2,6 +2,7 @@ package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.content.Context
 import android.content.Intent
+import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
@@ -10,39 +11,31 @@ import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.Enum.EncryOrDecryEnum
-import com.xwq.companyvxwhelper.bean.Enum.PassWordErrEnum
 import com.xwq.companyvxwhelper.mvvm.model.activity.LoginModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.LoginView
 import com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
-import kotlinx.android.synthetic.main.activity_login.*
 import com.xwq.companyvxwhelper.bean.dataBindingBean.LoginActivityBean
 import com.xwq.companyvxwhelper.bean.RequestBean.LoginReqBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.LoginResBean
 import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.const.Const.REMEMBER_PASS
+import com.xwq.companyvxwhelper.databinding.ActivityLoginBinding
 import com.xwq.companyvxwhelper.utils.*
 import com.xwq.companyvxwhelper.utils.DevieTypeUtils.Companion.getDeviceTypeValue
-import com.xwq.companyvxwhelper.utils.PackageInfoUtils.Companion.getVerisonCode
 import com.xwq.companyvxwhelper.utils.PackageInfoUtils.Companion.getVersionName
 import com.xwq.companyvxwhelper.utils.SignKeyUtils.Companion.encryOrDecryValue
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.flow
 
-class LoginActivity : BaseActivity<LoginView, LoginModel>(),LoginView {
+class LoginActivity : BaseActivity<ActivityLoginBinding, LoginView, LoginModel>(),LoginView {
 
-    lateinit var userPhoneNumUTOIE : UserTelOrPassInputEditView
-    lateinit var userPasswordUTOIE : UserTelOrPassInputEditView
-    lateinit var forgetPasswordACTV : AppCompatTextView
-    lateinit var versionCodeACTV : AppCompatTextView
+    var userPhoneNumUTOIE : UserTelOrPassInputEditView? = null
+    var userPasswordUTOIE : UserTelOrPassInputEditView? = null
+    var forgetPasswordACTV : AppCompatTextView? = null
+    var versionCodeACTV : AppCompatTextView? = null
     var loginActivityBean : LoginActivityBean?  =null
     var checkStatus : Boolean = false
     var registLauncher : ActivityResultLauncher<String>? = null
     var forgetLauncher : ActivityResultLauncher<String>? = null
 
-    override fun setContentViewId(): Int {
-        return R.layout.activity_login
-    }
 
     override fun fullScreenEnable(): Boolean {
         return true
@@ -57,10 +50,10 @@ class LoginActivity : BaseActivity<LoginView, LoginModel>(),LoginView {
     }
 
     override fun initView() {
-        userPhoneNumUTOIE = activity_login_utpvev_phonenum
-        userPasswordUTOIE = activity_login_utvcev_phonenum
-        forgetPasswordACTV = activity_login_actv_forpassword
-        versionCodeACTV = activity_login_actv_versioncode
+        userPhoneNumUTOIE = getBinding().activityLoginUtpvevPhonenum
+        userPasswordUTOIE = getBinding().activityLoginUtvcevPassword
+        forgetPasswordACTV = getBinding().activityLoginActvForpassword
+        versionCodeACTV = getBinding().activityLoginActvVersioncode
     }
 
     override fun initData() {
@@ -155,10 +148,10 @@ class LoginActivity : BaseActivity<LoginView, LoginModel>(),LoginView {
         var loginReqBean : LoginReqBean = LoginReqBean()
         val tempSignKey = Md5Util.makeSignKey()
         loginReqBean.encryptUserPhone = encryOrDecryValue(preTelePhone, EncryOrDecryEnum.ENCRYPTION, tempSignKey)
-        loginReqBean.encrypyUserPassWord = encryOrDecryValue(prePassWord, EncryOrDecryEnum.ENCRYPTION, tempSignKey)
+        loginReqBean.encryptUserPassWord = encryOrDecryValue(prePassWord, EncryOrDecryEnum.ENCRYPTION, tempSignKey)
         loginReqBean.signKey = tempSignKey
         loginReqBean.loginType = getDeviceTypeValue()
-        loginReqBean.userDefaltSignKey = true
+        loginReqBean.userDefaultSignKey = true
         return loginReqBean
     }
 
@@ -220,6 +213,10 @@ class LoginActivity : BaseActivity<LoginView, LoginModel>(),LoginView {
 
     override fun loginFail() {
 
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_login
     }
 
 }

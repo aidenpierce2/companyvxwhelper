@@ -5,11 +5,12 @@ import com.xwq.companyvxwhelper.api.Urls.Companion.GET_USER_INFO
 import com.xwq.companyvxwhelper.base.BaseModel
 import com.xwq.companyvxwhelper.base.BaseObserver
 import com.xwq.companyvxwhelper.bean.ResponseBean.UserInfoResBean
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBinding
 import com.xwq.companyvxwhelper.mvvm.view.activity.SettingView
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
-class SettingModel(setingView: SettingView) : BaseModel<SettingView>(setingView) {
+class SettingModel(setingView: SettingView) : BaseModel<ActivityBaseSettingBinding, SettingView>(setingView) {
     var url : String = ""
 
     fun getUserAccountInfo() {

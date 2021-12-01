@@ -1,6 +1,8 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
+import android.view.LayoutInflater
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xwq.companyvxwhelper.R
@@ -9,6 +11,8 @@ import com.xwq.companyvxwhelper.bean.DataBaseBean.UserCheckInDBBean
 import com.xwq.companyvxwhelper.bean.Enum.UserCheckInEnum
 import com.xwq.companyvxwhelper.bean.dataBindingBean.WorkCycleItemBean
 import com.xwq.companyvxwhelper.const.Const
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBinding
+import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBindingImpl
 import com.xwq.companyvxwhelper.mvvm.adapter.ChooseWorkCycleAdapter
 import com.xwq.companyvxwhelper.mvvm.model.activity.ChooseWorkCycleModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.ChooseWorkCycleView
@@ -16,17 +20,12 @@ import com.xwq.companyvxwhelper.utils.CalculateTimeStampUtils
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.utils.TimeStampUtils
 import com.xwq.companyvxwhelper.widget.SwitchButton
-import kotlinx.android.synthetic.main.activity_base_setting.*
 
-class ChooseWorkCycleActivity : BaseActivity<ChooseWorkCycleView, ChooseWorkCycleModel>(), ChooseWorkCycleView {
+class ChooseWorkCycleActivity : BaseActivity<ActivityBaseSettingBinding, ChooseWorkCycleView, ChooseWorkCycleModel>(), ChooseWorkCycleView {
 
     lateinit var mainRCY : RecyclerView
     var dataList : ArrayList<WorkCycleItemBean> = arrayListOf()
     lateinit var chooseWorkCycleAdapter : ChooseWorkCycleAdapter
-
-    override fun setContentViewId(): Int {
-        return R.layout.activity_base_setting
-    }
 
     override fun fullScreenEnable(): Boolean {
         return true
@@ -41,7 +40,8 @@ class ChooseWorkCycleActivity : BaseActivity<ChooseWorkCycleView, ChooseWorkCycl
     }
 
     override fun initView() {
-        mainRCY = activity_base_setting_rcy_main
+
+        mainRCY = getBinding().activityBaseSettingRcyMain
     }
 
     override fun initData() {
@@ -218,5 +218,9 @@ class ChooseWorkCycleActivity : BaseActivity<ChooseWorkCycleView, ChooseWorkCycl
 
     override fun hideLoading() {
         super.hideLoading()
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_base_setting
     }
 }

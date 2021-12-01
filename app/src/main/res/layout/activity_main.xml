@@ -1,73 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".mvvm.activity.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/activity_main_fl_container"
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/activity_main_rg_container"
-        app:layout_constraintVertical_weight="1"
-        />
+        android:layout_height="match_parent"
+        tools:context=".mvvm.activity.MainActivity">
 
-    <RadioGroup
-        android:id="@+id/activity_main_rg_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_main_fl_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
+        <FrameLayout
+            android:id="@+id/activity_main_fl_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_rg_container"
+            app:layout_constraintVertical_weight="1" />
 
-        <com.xwq.companyvxwhelper.widget.RedDotRadioButton
-            android:id="@+id/activity_main_rdrb_location"
-            android:layout_width="0dp"
+        <RadioGroup
+            android:id="@+id/activity_main_rg_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:button="@null"
-            android:drawableTop="@drawable/selector_location"
-            android:padding="5dp"
-            app:showDots="false"
-            android:drawablePadding="5dp"
-            android:textColor="@color/selector_location_color"
-            android:text="@string/homepage"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_fl_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal">
 
-        <com.xwq.companyvxwhelper.widget.RedDotRadioButton
-            android:id="@+id/activity_main_rdrb_history"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:button="@null"
-            android:drawableTop="@drawable/selector_history"
-            android:padding="5dp"
-            app:showDots="false"
-            android:drawablePadding="5dp"
-            android:textColor="@color/selector_history_color"
-            android:text="@string/history"/>
+            <com.xwq.companyvxwhelper.widget.RedDotRadioButton
+                android:id="@+id/activity_main_rdrb_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/selector_location"
+                android:padding="5dp"
+                app:showDots="false"
+                android:drawablePadding="5dp"
+                android:textColor="@color/selector_location_color"
+                android:text="@string/homepage" />
 
-        <com.xwq.companyvxwhelper.widget.RedDotRadioButton
-            android:id="@+id/activity_main_rdrb_mine"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:button="@null"
-            android:drawableTop="@drawable/selector_mine"
-            android:drawablePadding="5dp"
-            android:padding="5dp"
-            app:showDots="false"
-            android:textColor="@color/selector_mine_color"
-            android:text="@string/mine"/>
-    </RadioGroup>
+            <com.xwq.companyvxwhelper.widget.RedDotRadioButton
+                android:id="@+id/activity_main_rdrb_history"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/selector_history"
+                android:padding="5dp"
+                app:showDots="false"
+                android:drawablePadding="5dp"
+                android:textColor="@color/selector_history_color"
+                android:text="@string/history" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.xwq.companyvxwhelper.widget.RedDotRadioButton
+                android:id="@+id/activity_main_rdrb_mine"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/selector_mine"
+                android:drawablePadding="5dp"
+                android:padding="5dp"
+                app:showDots="false"
+                android:textColor="@color/selector_mine_color"
+                android:text="@string/mine" />
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

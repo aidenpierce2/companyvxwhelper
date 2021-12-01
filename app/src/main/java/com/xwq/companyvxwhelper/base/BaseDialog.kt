@@ -15,17 +15,18 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.viewbinding.ViewBinding
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.utils.LogUtil
 import java.lang.ref.WeakReference
 import java.lang.reflect.Field
 
 
-abstract class BaseDialog : DialogFragment(), NoDoubleClickListener{
+abstract class BaseDialog<VB : ViewDataBinding> : DialogFragment(), NoDoubleClickListener{
 
     val TAG : String = this::class.java.simpleName.toString()
     lateinit var mContextWeakRef : WeakReference<AppCompatActivity>
-    lateinit var binding : ViewDataBinding
+    private lateinit var binding : VB
     lateinit var mContainerRef : WeakReference<View>
     protected var window : Window? = null
     lateinit protected var inflater : LayoutInflater
@@ -38,7 +39,7 @@ abstract class BaseDialog : DialogFragment(), NoDoubleClickListener{
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding = DataBindingUtil.inflate(inflater, setContentId(), container,false)
+        binding = DataBindingUtil.inflate(inflater, getContentViewId(), container,false)
         setBind()
         mContainerRef = WeakReference<View>(binding!!.root)
         return mContainerRef.get()
@@ -83,7 +84,7 @@ abstract class BaseDialog : DialogFragment(), NoDoubleClickListener{
     // 设置动画效果 可以要 可以不要
     abstract fun setAnimation(dialog : Dialog)
 
-    abstract fun setContentId() : Int
+    abstract fun getContentViewId() : Int
 
     abstract fun setBind()
 
@@ -99,6 +100,10 @@ abstract class BaseDialog : DialogFragment(), NoDoubleClickListener{
 
     protected fun getDialogWindow() : Window{
         return mContextWeakRef.get()!!.window
+    }
+
+    protected fun getBinding() : VB{
+        return binding
     }
 
     fun showNotAllowStateLoss(manager: FragmentManager) {

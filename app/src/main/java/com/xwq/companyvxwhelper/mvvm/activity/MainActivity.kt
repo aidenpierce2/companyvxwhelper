@@ -1,7 +1,7 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.view.KeyEvent
-import android.view.MotionEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -16,6 +16,7 @@ import com.xwq.companyvxwhelper.base.Enum.PermissionArray
 import com.xwq.companyvxwhelper.base.Enum.PermissionMode
 import com.xwq.companyvxwhelper.bean.dataBindingBean.RadioButtonBean
 import com.xwq.companyvxwhelper.const.Const
+import com.xwq.companyvxwhelper.databinding.ActivityMainBinding
 import com.xwq.companyvxwhelper.mvvm.fragment.HistoryFragment
 import com.xwq.companyvxwhelper.mvvm.fragment.LocationFragment
 import com.xwq.companyvxwhelper.mvvm.fragment.MyFragment
@@ -24,12 +25,11 @@ import com.xwq.companyvxwhelper.mvvm.view.activity.MainView
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.utils.ToastUtil
 import com.xwq.companyvxwhelper.widget.RedDotRadioButton
-import kotlinx.android.synthetic.main.activity_main.*
 import java.sql.Time
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
+class MainActivity : BaseActivity<ActivityMainBinding, MainView, MainModel>(),MainView{
 
     var radioButtons : RadioButtonBean? = null
     val fragmentManager : FragmentManager by lazy {
@@ -47,11 +47,6 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
     var mineRDRB : RedDotRadioButton? = null
     var keyCodeBackClickCount : Int = 0
     var exitTimer : Timer? = null
-
-
-    override fun setContentViewId(): Int {
-        return R.layout.activity_main
-    }
 
     override fun fullScreenEnable(): Boolean {
         return true
@@ -120,11 +115,11 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
     }
 
     fun initLayout() {
-        mainFL = activity_main_fl_container
-        containerRG = activity_main_rg_container
-        locationRDRB = activity_main_rdrb_location
-        historyRDRB = activity_main_rdrb_history
-        mineRDRB = activity_main_rdrb_mine
+        mainFL = getBinding().activityMainFlContainer
+        containerRG = getBinding().activityMainRgContainer
+        locationRDRB = getBinding().activityMainRdrbLocation
+        historyRDRB = getBinding().activityMainRdrbHistory
+        mineRDRB = getBinding().activityMainRdrbMine
     }
 
     fun initFragment() {
@@ -272,6 +267,10 @@ class MainActivity : BaseActivity<MainView, MainModel>(),MainView{
     fun destoryTimer() {
         exitTimer?.cancel()
         exitTimer = null
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.activity_main
     }
 
 }

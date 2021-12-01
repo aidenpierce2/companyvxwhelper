@@ -43,7 +43,7 @@
             />
 
         <com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
-            android:id="@+id/activity_login_utvcev_phonenum"
+            android:id="@+id/activity_login_utvcev_password"
             android:layout_width="0dp"
             app:layout_constraintWidth_percent="0.85"
             android:layout_height="@dimen/margin10"
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@+id/activity_login_utpvev_phonenum"
-            app:layout_constraintTop_toBottomOf="@+id/activity_login_utvcev_phonenum"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_utvcev_password"
             android:drawableLeft="@{LoginActivityBean.checkDrawable}"
             android:text="@{LoginActivityBean.checkStatusStr}"
             android:onClick="@{() -> LoginActivity.switchStatus()}"

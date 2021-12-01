@@ -2,15 +2,16 @@ package com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment
 
 import android.app.Dialog
 import android.graphics.drawable.AnimationDrawable
+import android.view.LayoutInflater
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.FragmentManager
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseDialog
+import com.xwq.companyvxwhelper.databinding.DialogLoadingBinding
 import com.xwq.companyvxwhelper.utils.LogUtil
-import kotlinx.android.synthetic.main.dialog_loading.*
 import java.util.*
 
-class LoadingDialog : BaseDialog() {
+class LoadingDialog : BaseDialog<DialogLoadingBinding>() {
 
     // 最大网络加载时间10秒钟
     private val MAX_LOADING_TIME : Long = 10000
@@ -34,17 +35,13 @@ class LoadingDialog : BaseDialog() {
 
     }
 
-    override fun setContentId(): Int {
-        return R.layout.dialog_loading
-    }
-
     override fun setBind() {
 //        var bean : LoadingDataBindBean = LoadingDataBindBean(R.drawable.dialog_loading_animation)
 //        binding.setVariable(BR.LoadingDataBindBean, bean)
     }
 
     override fun initView() {
-        loadingACIV = dialog_loading_aciv_01
+        loadingACIV
     }
 
     override fun initData() {
@@ -62,13 +59,6 @@ class LoadingDialog : BaseDialog() {
                 disMiss()
             }
         }, MAX_LOADING_TIME)
-//        animation = AnimationUtils.loadAnimation(mContext, R.anim.animation_loading)
-//        animation!!.repeatMode = Animation.INFINITE
-//        animation!!.duration = 1000
-//        var animationInterpolator : AccelerateDecelerateInterpolator = AccelerateDecelerateInterpolator()
-//        animation!!.interpolator = animationInterpolator
-//        loadingACIV!!.animation = animation
-//        loadingACIV!!.startAnimation(animation)
     }
 
     override fun initListener() {
@@ -108,5 +98,9 @@ class LoadingDialog : BaseDialog() {
         } else {
             showNotAllowStateLoss(fragmentManager)
         }
+    }
+
+    override fun getContentViewId(): Int {
+        return R.layout.dialog_loading
     }
 }
