@@ -75,4 +75,12 @@ You have not confirmed the company location, please set the company location fir
     <string name="sexual">Sexual</string>
     <string name="telephoneNum">Telephone</string>
     <string name="lonALat">Latitude And Longitude</string>
+    //History
+    <string name="startAndEndTime">Start And End Time</string>
+    <string name="startTime">Start Time</string>
+    <string name="endTime">End Time</string>
+    <string name="statusChoose">Choose Status</string>
+    <string name="allStatus">All Status</string>
+    <string name="succStatus">Success</string>
+    <string name="failStatus">Fail</string>
 </resources>

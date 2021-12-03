@@ -1,26 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
-            name="history"
-            type="com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryFragmentBean" />
+            name="HistoryFragment"
+            type="com.xwq.companyvxwhelper.mvvm.fragment.HistoryFragment" />
+        
+        <variable
+            name="HistoryFragmentBaseBean"
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryFragmentBaseBean" />
     </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:openDrawer="left">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@{history.test}"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.scwang.smart.refresh.layout.SmartRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/fragment_history_nagv_main"
+                android:layout_width="@dimen/margin3"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_history_avtv_timeinterval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@{HistoryFragmentBaseBean.timeIntever}"
+                        android:textSize="@dimen/large_size"
+                        android:layout_marginLeft="@dimen/margin4"
+                        android:textColor="@color/titleColor"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fragment_history_cstl_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/fragment_history_avtv_timeinterval"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_history_avtv_timeinterval"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_history_avtv_starttime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{HistoryFragmentBaseBean.startTime}"
+                            android:textSize="@dimen/middle_size"
+                            android:textColor="@color/contentColor"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/fragment_history_avtv_endtime"
+                            android:layout_marginTop="@dimen/margin4"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="@+id/fragment_history_avtv_starttime"
+                            app:layout_constraintTop_toBottomOf="@+id/fragment_history_avtv_starttime"
+                            app:layout_constraintEnd_toEndOf="@+id/fragment_history_avtv_starttime"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="@dimen/margin4"
+                            android:layout_marginTop="@dimen/margin1"
+                            android:onClick="@{() -> HistoryFragment.chooseStartTime()}"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_history_avtv_endtime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toEndOf="@+id/fragment_history_avtv_starttime"
+                            app:layout_constraintTop_toTopOf="@+id/fragment_history_avtv_starttime"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:text="@{HistoryFragmentBaseBean.endTime}"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="@+id/fragment_history_avtv_endtime"
+                            app:layout_constraintTop_toBottomOf="@+id/fragment_history_avtv_endtime"
+                            app:layout_constraintEnd_toEndOf="@+id/fragment_history_avtv_endtime"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="@dimen/margin4"
+                            android:layout_marginTop="@dimen/margin1"
+                            android:onClick="@{() -> HistoryFragment.chooseEndTime()}"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_history_avtv_choosestatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/fragment_history_avtv_timeinterval"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_history_cstl_time"
+                        android:text="@{HistoryFragmentBaseBean.statusChoose}"
+                        android:textSize="@dimen/bigger_size"/>
+
+                    <RadioGroup
+                        android:id="@+id/fragment_history_rg_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/fragment_history_avtv_timeinterval"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_history_avtv_choosestatus"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{HistoryFragmentBaseBean.allStatus}"
+                            android:textSize="@dimen/middle_size"
+                            android:textColor="@color/contentColor"
+                            android:paddingLeft="@dimen/margin1"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{HistoryFragmentBaseBean.ensureStr}"
+                            android:textSize="@dimen/middle_size"
+                            android:textColor="@color/contentColor"
+                            android:paddingLeft="@dimen/margin1"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{HistoryFragmentBaseBean.errStatus}"
+                            android:textSize="@dimen/middle_size"
+                            android:textColor="@color/contentColor"
+                            android:paddingLeft="@dimen/margin1"/>
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_history_actv_blank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_history_rg_status"
+                        app:layout_constraintBottom_toTopOf="@+id/fragment_history_actv_separator"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_history_actv_separator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/linear_width"
+                        android:background="@color/linearColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_history_actv_blank"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_history_actv_separator"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/fragment_history_acbt_cancel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/fragment_history_acbt_ensure"
+                            android:layout_marginTop="@dimen/margin4"
+                            android:layout_marginBottom="@dimen/margin4"
+                            android:text="@{HistoryFragmentBaseBean.cancelStr}"
+                            android:textSize="@dimen/bigger_size"
+                            android:textColor="@color/contentColor"
+                            android:onClick="@{() -> HistoryFragment.cancelDrawer()}"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/fragment_history_acbt_ensure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toEndOf="@+id/fragment_history_acbt_cancel"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginTop="@dimen/margin4"
+                            android:layout_marginBottom="@dimen/margin4"
+                            android:text="@{HistoryFragmentBaseBean.ensureStr}"
+                            android:textSize="@dimen/bigger_size"
+                            android:textColor="@color/contentColor"
+                            android:onClick="@{() -> HistoryFragment.ensureDrawable()}"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.navigation.NavigationView>
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

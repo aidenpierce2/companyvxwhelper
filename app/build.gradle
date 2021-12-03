@@ -106,6 +106,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //material
+    implementation 'com.google.android.material:material:1.4.0'
     //EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
     //RxJava2
@@ -141,6 +143,8 @@ dependencies {
     //Glide 图片加载框架
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
-
+    //刷新头
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'
+    implementation  'com.scwang.smart:refresh-header-material:2.0.3'
 
 }

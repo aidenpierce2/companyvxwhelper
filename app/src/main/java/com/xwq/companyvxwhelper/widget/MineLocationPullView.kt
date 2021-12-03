@@ -139,14 +139,11 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
         cardPhoneNumber = typedArray.getString(R.styleable.MineLocationPullView_cardPhoneNumber)
         typedArray.recycle()
 
-        curView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.widget_mine, container,false)
-        mainContainer = WidgetMineBinding.inflate(LayoutInflater.from(context)).wigetMineCstlContainer
-        topLoadingIV = WidgetMineBinding.inflate(LayoutInflater.from(context)).wigetMineAcivTop
-        mainBgIV = WidgetMineBinding.inflate(LayoutInflater.from(context)).wigetMineAcivMainBg
-
-//        mainContainer = curView.findViewById(R.id.wiget_mine_cstl_container)
-//        topLoadingIV = curView.findViewById(R.id.wiget_mine_aciv_top)
-//        mainBgIV = curView.findViewById(R.id.wiget_mine_aciv_main_bg)
+        var widgetMineBinding = DataBindingUtil.inflate<WidgetMineBinding>(LayoutInflater.from(context), R.layout.widget_mine, this@MineLocationPullView,true)
+        curView = widgetMineBinding.root
+        mainContainer = widgetMineBinding.wigetMineCstlContainer
+        topLoadingIV = widgetMineBinding.wigetMineAcivTop
+        mainBgIV = widgetMineBinding.wigetMineAcivMainBg
     }
 
     override fun addObservable(dataObj: ObservableInterface) {
@@ -162,7 +159,7 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
     override fun notifyAllObservable() {
         super.notifyAllObservable()
         for (element in observableList) {
-            element.notifyDataChange( mainBgHeight - maxAvailableDistance + realScrollYDistance)
+            element.notifyDataChange( mainBgHeight - maxAvailableDistance * 2 + realScrollYDistance / 3 * 4)
         }
     }
 
@@ -213,25 +210,23 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
             }
         }
 
-        var firstChildParams = topLoadingIV.layoutParams
-        var balance = Math.min(topPicWidth, topPicHeight)
-        topPicWidth = balance
-        topPicHeight = balance
-        firstChildParams.width = balance.toInt()
-        firstChildParams.height = balance.toInt()
-        topLoadingIV.layoutParams = firstChildParams
+        var firstChild = topLoadingIV
+        var firstChildParams = firstChild.layoutParams
+        firstChildParams.width = topPicWidth.toInt()
+        firstChildParams.height = topPicHeight.toInt()
+        firstChild.layoutParams = firstChildParams
 
 
         var layoutParams : ConstraintLayout.LayoutParams = topLoadingIV.layoutParams as ConstraintLayout.LayoutParams
         var height = layoutParams.height
 
-        // 计算差值
-        var balanceHeight = Math.min(mainBgHeight * (1 - mainBgScreenRate), height.toFloat() + layoutParams.topMargin + layoutParams.bottomMargin)
-        maxAvailableDistance = balanceHeight + WindowScreenUtil.getStatusBarHeight(MyApplication.app)
-
-        var mainBgLayoutFramelayout = mainBgIV.layoutParams
+        var mainBgLayoutFramelayout : ConstraintLayout.LayoutParams = mainBgIV.layoutParams as ConstraintLayout.LayoutParams
         mainBgLayoutFramelayout.height = mainBgHeight.toInt()
         mainBgIV.layoutParams = mainBgLayoutFramelayout
+
+        // 计算差值
+        var balanceHeight = Math.min(mainBgHeight * (1 - mainBgScreenRate), height.toFloat() + layoutParams.topMargin + mainBgLayoutFramelayout.topMargin)
+        maxAvailableDistance = balanceHeight
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -252,12 +247,12 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
         // 状态2 3 切贝塞尔弧
         if (viewStatue == ViewStatue.PULLDOWN || viewStatue == ViewStatue.GOBACK) {
             var path = Path()
-            path.moveTo(0f, -realScrollYDistance)
+            path.moveTo(0f, -maxAvailableDistance)
             path.lineTo(0f, mainBgHeight - maxAvailableDistance)
             path.cubicTo(0f, (mainBgHeight - maxAvailableDistance) + realScrollYDistance / 3 * 4,
                 WindowScreenUtil.getScreenWidth(MyApplication.app).toFloat(), (mainBgHeight - maxAvailableDistance) + realScrollYDistance / 3 * 4,
                 WindowScreenUtil.getScreenWidth(MyApplication.app).toFloat(), mainBgHeight - maxAvailableDistance)
-            path.lineTo(WindowScreenUtil.getScreenWidth(MyApplication.app).toFloat(), -realScrollYDistance)
+            path.lineTo(WindowScreenUtil.getScreenWidth(MyApplication.app).toFloat(), -maxAvailableDistance)
             path.close()
             canvas!!.clipPath(path)
         }
@@ -447,22 +442,18 @@ class MineLocationPullView: ConstraintLayout, ObserverInterface {
     fun kickBackLogic() {
         mContext.runOnUiThread(object : Runnable{
             override fun run() {
-                var valueAnimator : ValueAnimator = ObjectAnimator.ofFloat(realScrollYDistance, 0.0F)
+                var valueAnimator : ValueAnimator = ObjectAnimator.ofInt(realScrollYDistance.toInt(), 0)
                 valueAnimator.duration = kickBackDuration.toLong()
                 valueAnimator.addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
                     override fun onAnimationUpdate(animation: ValueAnimator?) {
                         if (preScrollYDistance == 0f) {
                             preScrollYDistance = realScrollYDistance
                         }
-                        realScrollYDistance = animation?.animatedValue as Float
+                        realScrollYDistance = (animation?.animatedValue as Integer).toFloat()
                         realAddMiddleDistance = preScrollYDistance - realScrollYDistance
                         preScrollYDistance = realScrollYDistance
                         mainBgScallLogic()
-                        if (animation?.animatedValue as Float <= 0) {
-                            var compensate = (pullDistacne - goBackDistacne).toInt()
-                            (curView.parent as ConstraintLayout).scrollBy(0, compensate)
-                            LogUtil.log(TAG, "compensate: " + compensate)
-                            LogUtil.log(TAG, "goBackDistacne: " + goBackDistacne)
+                        if ((animation?.animatedValue as Integer) <= 0) {
                             pullDistacne = 0f
                             if (needDamp) {
                                 viewStatue = ViewStatue.DAMPING
