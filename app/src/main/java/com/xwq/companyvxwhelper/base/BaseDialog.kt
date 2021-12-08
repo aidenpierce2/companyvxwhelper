@@ -102,7 +102,7 @@ abstract class BaseDialog<VB : ViewDataBinding> : DialogFragment(), NoDoubleClic
         return mContextWeakRef.get()!!.window
     }
 
-    protected fun getBinding() : VB{
+    fun getBinding() : VB{
         return binding
     }
 

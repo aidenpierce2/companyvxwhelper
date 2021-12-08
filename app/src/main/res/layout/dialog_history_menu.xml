@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="HistoryMenuDialog"
+            type="com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.HistoryMenuDialog" />
+        <variable
+            name="DialogHistoryMenuBean"
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.DialogHistoryMenuBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="3:5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/dialog_history_menu_style"
+            android:elevation="@dimen/margin1">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dialog_history_menu_actv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin5"
+                android:text="@{DialogHistoryMenuBean.titleStr}"
+                android:textColor="@color/titleColor"
+                android:textSize="@dimen/large_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dialog_history_menu_actv_timeIntever"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin6"
+                android:text="@{DialogHistoryMenuBean.timeIntever}"
+                android:textColor="@color/titleColor"
+                android:textSize="@dimen/middle_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_actv_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dialog_history_menu_actv_startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin5"
+                android:layout_marginTop="@dimen/margin5"
+                android:text="@{DialogHistoryMenuBean.startTime}"
+                android:textColor="@color/contentColor"
+                android:textSize="@dimen/small_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_actv_timeIntever" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/dialog_history_menu_acbt_startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin8"
+                android:layout_marginLeft="@dimen/margin4"
+                android:text="@={DialogHistoryMenuBean.startTimeValue}"
+                android:textColor="@color/white"
+                android:onClick="@{() -> HistoryMenuDialog.selectTimeSchedule(true)}"
+                app:layout_constraintStart_toEndOf="@+id/dialog_history_menu_actv_startTime"
+                app:layout_constraintTop_toTopOf="@+id/dialog_history_menu_actv_startTime"
+                app:layout_constraintBottom_toBottomOf="@+id/dialog_history_menu_actv_startTime"
+                android:background="@color/ensureButtonColor"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dialog_history_menu_actv_endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin8"
+                android:layout_marginTop="@dimen/margin3"
+                android:text="@{DialogHistoryMenuBean.endTime}"
+                android:textColor="@color/contentColor"
+                android:textSize="@dimen/small_size"
+                android:layout_marginRight="@dimen/margin4"
+                app:layout_constraintEnd_toStartOf="@+id/dialog_history_menu_acbt_endTime"
+                app:layout_constraintTop_toTopOf="@+id/dialog_history_menu_acbt_endTime"
+                app:layout_constraintBottom_toBottomOf="@+id/dialog_history_menu_acbt_endTime"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/dialog_history_menu_acbt_endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin8"
+                android:text="@={DialogHistoryMenuBean.endTimeValue}"
+                android:textColor="@color/white"
+                android:onClick="@{() -> HistoryMenuDialog.selectTimeSchedule(false)}"
+                app:layout_constraintStart_toStartOf="@+id/dialog_history_menu_acbt_startTime"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_acbt_startTime"
+                android:layout_marginTop="@dimen/margin4"
+                android:background="@color/ensureButtonColor"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dialog_history_menu_actv_statusChoose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin6"
+                android:text="@{DialogHistoryMenuBean.statusChoose}"
+                android:textSize="@dimen/middle_size"
+                android:textColor="@color/titleColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_acbt_endTime" />
+
+            <RadioGroup
+                android:id="@+id/dialog_history_menu_rg_choosestatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin4"
+                android:layout_marginTop="@dimen/margin3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_actv_statusChoose">
+
+                <RadioButton
+                    android:id="@+id/dialog_history_menu_rb_chooseall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin3"
+                    android:text="@{DialogHistoryMenuBean.allStatus}" />
+
+                <RadioButton
+                    android:id="@+id/dialog_history_menu_rb_chooseensure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin3"
+                    android:text="@{DialogHistoryMenuBean.ensureStr}" />
+
+                <RadioButton
+                    android:id="@+id/dialog_history_menu_rb_chooseserr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin3"
+                    android:text="@{DialogHistoryMenuBean.errStatus}" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dialog_history_menu_actv_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/dialog_history_menu_actv_separator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_rg_choosestatus" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dialog_history_menu_actv_separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/linear_width"
+                android:background="@color/linearColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_actv_empty" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_actv_separator">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/dialog_history_menu_acbt_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_history_menu_acbt_sure"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:layout_marginBottom="@dimen/margin3"
+                    android:text="@{DialogHistoryMenuBean.cancelStr}"
+                    android:background="@color/cancelColor"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/dialog_history_menu_acbt_sure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin8"
+                    app:layout_constraintStart_toEndOf="@+id/dialog_history_menu_acbt_cancel"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:layout_marginBottom="@dimen/margin3"
+                    android:text="@{DialogHistoryMenuBean.ensureStr}"
+                    android:background="@color/ensureButtonColor"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

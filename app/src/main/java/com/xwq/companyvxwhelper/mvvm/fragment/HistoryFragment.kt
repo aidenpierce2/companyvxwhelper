@@ -1,24 +1,28 @@
 package com.xwq.companyvxwhelper.mvvm.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.recyclerview.widget.RecyclerView
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseFragment
 import com.xwq.companyvxwhelper.databinding.FragmentHistoryBinding
 import com.xwq.companyvxwhelper.mvvm.model.fragment.HistoryModel
-import com.xwq.companyvxwhelper.mvvm.model.fragment.LocationModel
 import com.xwq.companyvxwhelper.mvvm.view.fragment.HistoryView
-import com.xwq.companyvxwhelper.mvvm.view.fragment.LocationView
 import com.xwq.companyvxwhelper.utils.LogUtil
-import com.xwq.companyvxwhelper.utils.WindowScreenUtil
-import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryFragmentBaseBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.DialogHistoryMenuBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryDataBean
+import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
+import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.HistoryMenuDialog
+import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.LoadingDialog
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, HistoryModel>(){
 
-    val navigateRate : Float = 0.7F
+    lateinit var mainSRFL : SmartRefreshLayout
+    lateinit var mainRCY : RecyclerView
+    lateinit var menuACIV : AppCompatImageView
 
     override fun onClick(p0: View?) {
 
@@ -34,22 +38,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, Histor
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        var layoutParams : DrawerLayout.LayoutParams = getBinding().fragmentHistoryNagvMain.layoutParams as DrawerLayout.LayoutParams
-        layoutParams.width = (WindowScreenUtil.getScreenWidth(mContext) * navigateRate).toInt()
-        getBinding().fragmentHistoryNagvMain.layoutParams = layoutParams
+        mainSRFL = getBinding().fragmentHistorySrfl
+        mainRCY = getBinding().fragmentHistoryRcyMain
+        menuACIV = getBinding().fragmentHistoryAcivMenu
     }
 
     override fun init() {
         getBinding().setVariable(BR.HistoryFragment, this)
-        var historyFragmentBaseBean : HistoryFragmentBaseBean? = null
-        historyFragmentBaseBean?.timeIntever = mContext.resources.getString(R.string.startAndEndTime)
-        historyFragmentBaseBean?.startTime = mContext.resources.getString(R.string.startTime)
-        historyFragmentBaseBean?.endTime = mContext.resources.getString(R.string.endTime)
-        historyFragmentBaseBean?.statusChoose = mContext.resources.getString(R.string.statusChoose)
-        historyFragmentBaseBean?.allStatus = mContext.resources.getString(R.string.allStatus)
-        historyFragmentBaseBean?.cancelStr = mContext.resources.getString(R.string.failStatus)
-        historyFragmentBaseBean?.ensureStr = mContext.resources.getString(R.string.succStatus)
-        getBinding().setVariable(BR.HistoryFragmentBaseBean, historyFragmentBaseBean)
+        getBinding().setVariable(BR.HistoryDataBean, HistoryDataBean(resources.getDrawable(R.mipmap.menu)))
     }
 
     override fun needLocation(): Boolean {
@@ -60,23 +56,26 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, Histor
         return R.layout.fragment_history
     }
 
-    //选择开始时间
-    fun chooseStartTime() {
+    fun clickMenu() {
+        HistoryMenuDialog.getSingleton().build(mContext.supportFragmentManager, true)
+        registerDialogMenuListener()
+    }
+
+    fun registerDialogMenuListener() {
+        HistoryMenuDialog.getSingleton().viewClickListener = object : HistoryMenuDialog.ViewClickListener {
+            override fun onCancel(historyMenuDialog: HistoryMenuDialog) {
+                historyMenuDialog.disMiss()
+            }
+
+            override fun onEnsure(historyMenuDialog: HistoryMenuDialog) {
+                historyMenuDialog.disMiss()
+            }
+        }
+    }
+
+    //请求数据
+    fun requestHistoryDataInfo() {
 
     }
 
-    //选择结束时间
-    fun chooseEndTime() {
-
-    }
-
-    //取消
-    fun cancelDrawer() {
-
-    }
-
-    //确定
-    fun ensureDrawable() {
-
-    }
 }

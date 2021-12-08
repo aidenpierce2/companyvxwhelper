@@ -76,6 +76,7 @@ You have not confirmed the company location, please set the company location fir
     <string name="telephoneNum">Telephone</string>
     <string name="lonALat">Latitude And Longitude</string>
     //History
+    <string name="historysearch">Search History</string>
     <string name="startAndEndTime">Start And End Time</string>
     <string name="startTime">Start Time</string>
     <string name="endTime">End Time</string>
