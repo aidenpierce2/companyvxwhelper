@@ -38,8 +38,7 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         var itemView : View = holder.itemView
         itemView.setOnClickListener(object : NoDoubleClickListener{
-            override fun noDoubleClick(v: View?) {
-                super.noDoubleClick(v)
+            override fun onClick(v: View?) {
                 if (this@SearchAdapter.listener != null) {
                     this@SearchAdapter.listener!!.onChooseItem(itemData, position)
                 }

@@ -8,17 +8,15 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseFragment
+import com.xwq.companyvxwhelper.bean.ResponseBean.HistoryResBean
 import com.xwq.companyvxwhelper.databinding.FragmentHistoryBinding
 import com.xwq.companyvxwhelper.mvvm.model.fragment.HistoryModel
 import com.xwq.companyvxwhelper.mvvm.view.fragment.HistoryView
 import com.xwq.companyvxwhelper.utils.LogUtil
-import com.xwq.companyvxwhelper.bean.dataBindingBean.DialogHistoryMenuBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryDataBean
-import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.HistoryMenuDialog
-import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.LoadingDialog
 
-class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, HistoryModel>(){
+class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, HistoryModel>(), HistoryView{
 
     lateinit var mainSRFL : SmartRefreshLayout
     lateinit var mainRCY : RecyclerView
@@ -76,6 +74,26 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, Histor
     //请求数据
     fun requestHistoryDataInfo() {
 
+    }
+
+    override fun getHistoryDataSucc(data: HistoryResBean?) {
+
+    }
+
+    override fun getHistoryDataFail(data: String) {
+
+    }
+
+    override fun showToast(value: String) {
+        super.showToast(value)
+    }
+
+    override fun showLoading() {
+        super.showLoading()
+    }
+
+    override fun hideLoading() {
+        super.hideLoading()
     }
 
 }

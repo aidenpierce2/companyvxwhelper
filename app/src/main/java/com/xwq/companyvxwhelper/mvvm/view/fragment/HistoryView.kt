@@ -1,18 +1,11 @@
 package com.xwq.companyvxwhelper.mvvm.view.fragment
 
 import com.xwq.companyvxwhelper.base.IBaseView
+import com.xwq.companyvxwhelper.bean.ResponseBean.HistoryResBean
 
-class HistoryView : IBaseView{
+interface HistoryView : IBaseView{
 
-    override fun showToast(value: String) {
+   fun getHistoryDataSucc(data: HistoryResBean?)
 
-    }
-
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
-
-    }
+   fun getHistoryDataFail(data : String)
 }

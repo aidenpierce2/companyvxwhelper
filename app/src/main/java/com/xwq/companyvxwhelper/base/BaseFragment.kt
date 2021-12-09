@@ -14,10 +14,12 @@ import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.bean.dataBindingBean.LocationBean
 import com.xwq.companyvxwhelper.callbackListener.RetryListener
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
+import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.LoadingDialog
 import com.xwq.companyvxwhelper.utils.LogUtil
+import com.xwq.companyvxwhelper.utils.ToastUtil
 import java.util.*
 
-abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T>> : RxFragment() , NoDoubleClickListener, RetryListener {
+abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T>> : RxFragment() , NoDoubleClickListener, RetryListener ,IBaseView{
 
     var TAG : String = this::class.java.simpleName.toString()
 
@@ -155,6 +157,21 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T
 
     fun getBinding() : VB{
         return dataBinding!!
+    }
+
+    override fun showToast(value: String) {
+        // 不想实现父类的 之类可以自己实现
+        ToastUtil.showToast(value)
+    }
+
+    override fun showLoading() {
+        // 不想实现父类的 之类可以自己实现
+        LoadingDialog.getSingleton().build(mContext.supportFragmentManager, false)
+    }
+
+    override fun hideLoading() {
+        // 不想实现父类的 之类可以自己实现
+        LoadingDialog.getSingleton().disMiss()
     }
 
     inner class LocationObserver : Observer {

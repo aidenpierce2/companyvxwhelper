@@ -1,5 +1,7 @@
 package com.xwq.companyvxwhelper.api
 
+import retrofit2.http.GET
+
 class Urls {
     companion object {
         const val ALI_TIME_STAMP = "http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp"
@@ -24,5 +26,7 @@ class Urls {
         const val SUB_USER_HEADER = "/api/user/userheader"
         //保存个人信息
         const val SUB_USER_INFO = "/api/user/subpersioninfo"
+        //获取历史记录
+        const val GET_HISTORY_INFO = "/api/history/gethistorydata"
     }
 }

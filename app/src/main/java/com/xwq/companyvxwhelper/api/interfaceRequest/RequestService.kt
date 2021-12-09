@@ -40,4 +40,8 @@ interface RequestService {
     @GET
     fun getUserInfo(@retrofit2.http.Url requestUrl: String) : Observable<BaseNetworkResponse<UserInfoResBean>>
 
+    // 获取历史记录
+    @GET
+    fun getHistoryDate(@retrofit2.http.Url requestUrl: String, @FieldMap map : Map<String, String>) : Observable<BaseNetworkResponse<HistoryResBean>>
+
 }

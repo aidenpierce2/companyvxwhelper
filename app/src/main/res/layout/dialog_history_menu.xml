@@ -67,7 +67,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/dialog_history_menu_acbt_startTime"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin8"
+                android:layout_height="@dimen/margin7"
                 android:layout_marginLeft="@dimen/margin4"
                 android:text="@={DialogHistoryMenuBean.startTimeValue}"
                 android:textColor="@color/white"
@@ -93,7 +93,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/dialog_history_menu_acbt_endTime"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin8"
+                android:layout_height="@dimen/margin7"
                 android:text="@={DialogHistoryMenuBean.endTimeValue}"
                 android:textColor="@color/white"
                 android:onClick="@{() -> HistoryMenuDialog.selectTimeSchedule(false)}"
@@ -128,21 +128,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/margin3"
-                    android:text="@{DialogHistoryMenuBean.allStatus}" />
+                    android:text="@{DialogHistoryMenuBean.allStatus}"
+                    android:textColor="@color/contentColor"
+                    android:gravity="center"/>
 
                 <RadioButton
                     android:id="@+id/dialog_history_menu_rb_chooseensure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/margin3"
-                    android:text="@{DialogHistoryMenuBean.ensureStr}" />
+                    android:text="@{DialogHistoryMenuBean.ensureStr}"
+                    android:textColor="@color/contentColor"
+                    android:gravity="center"/>
 
                 <RadioButton
                     android:id="@+id/dialog_history_menu_rb_chooseserr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/margin3"
-                    android:text="@{DialogHistoryMenuBean.errStatus}" />
+                    android:text="@{DialogHistoryMenuBean.errStatus}"
+                    android:textColor="@color/contentColor"
+                    android:gravity="center"/>
             </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -183,6 +189,7 @@
                     android:layout_marginTop="@dimen/margin4"
                     android:layout_marginBottom="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.cancelStr}"
+                    android:textColor="@color/contentColor"
                     android:background="@color/cancelColor"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -196,6 +203,7 @@
                     android:layout_marginTop="@dimen/margin4"
                     android:layout_marginBottom="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.ensureStr}"
+                    android:textColor="@color/contentColor"
                     android:background="@color/ensureButtonColor"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
