@@ -6,8 +6,8 @@ data class HistoryResBean(var historyResDataBeanList : List<HistoryResDataBean>,
 
     }
 
-    data class HistoryResDataBean(var dateStr : String, var statusCode : Int, var tickAddress : String, var tickTimeStamp : String) {
-        constructor() : this("", 0, "", "") {
+    data class HistoryResDataBean(var yearStr : String, var monthStr : String, var dayStr : String, var statusCode : Int, var tickAddress : String, var tickTimeStamp : String) {
+        constructor() : this("","","", 0, "", "") {
 
         }
     }

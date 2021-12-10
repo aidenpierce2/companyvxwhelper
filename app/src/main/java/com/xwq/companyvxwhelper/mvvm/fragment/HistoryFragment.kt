@@ -8,6 +8,8 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseFragment
+import com.xwq.companyvxwhelper.bean.Enum.EncryOrDecryEnum
+import com.xwq.companyvxwhelper.bean.RequestBean.HistoryReqBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.HistoryResBean
 import com.xwq.companyvxwhelper.databinding.FragmentHistoryBinding
 import com.xwq.companyvxwhelper.mvvm.model.fragment.HistoryModel
@@ -15,12 +17,21 @@ import com.xwq.companyvxwhelper.mvvm.view.fragment.HistoryView
 import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryDataBean
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.HistoryMenuDialog
+import com.xwq.companyvxwhelper.utils.HistoryChooseTimeUtils
+import com.xwq.companyvxwhelper.utils.SignKeyUtils
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, HistoryModel>(), HistoryView{
 
+    val limitNum : Int = 10
     lateinit var mainSRFL : SmartRefreshLayout
     lateinit var mainRCY : RecyclerView
     lateinit var menuACIV : AppCompatImageView
+
+    var historyReqBean : HistoryReqBean = HistoryReqBean()
+    var startTimeStr : String = ""
+    var endTimeStr : String = ""
+    var chooStatus : Int = 0
+    var pageNum : Int = 1
 
     override fun onClick(p0: View?) {
 
@@ -42,6 +53,8 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, Histor
     }
 
     override fun init() {
+        startTimeStr = HistoryChooseTimeUtils.getStartDay()
+        endTimeStr = HistoryChooseTimeUtils.getEndDay()
         getBinding().setVariable(BR.HistoryFragment, this)
         getBinding().setVariable(BR.HistoryDataBean, HistoryDataBean(resources.getDrawable(R.mipmap.menu)))
     }
@@ -94,6 +107,18 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, Histor
 
     override fun hideLoading() {
         super.hideLoading()
+    }
+
+    fun makeHistoryReqBean(isDefault : Boolean) {
+        if (isDefault) {
+            historyReqBean.startTimeEncrypt = SignKeyUtils.encryOrDecryValue(startTimeStr, EncryOrDecryEnum.ENCRYPTION, "")
+            historyReqBean.endTimeEncrypt = SignKeyUtils.encryOrDecryValue(endTimeStr, EncryOrDecryEnum.ENCRYPTION, "")
+            historyReqBean.chooseStatus = chooStatus
+            historyReqBean.limit = limitNum
+            historyReqBean.page = pageNum
+        } else {
+
+        }
     }
 
 }
