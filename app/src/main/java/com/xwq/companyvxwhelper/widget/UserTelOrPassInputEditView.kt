@@ -16,6 +16,7 @@ import androidx.databinding.*
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.databinding.WidgetUserTelorpassBinding
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
+import com.xwq.companyvxwhelper.utils.LogUtil
 
 @InverseBindingMethods(
     InverseBindingMethod(
@@ -60,9 +61,11 @@ class UserTelOrPassInputEditView : ConstraintLayout {
     }
 
     companion object {
+        val TAG = UserTelOrPassInputEditView::class.java.simpleName
         @BindingAdapter("tHintText")
         @JvmStatic
         fun setTHintText(userTelOrPassInputEditView: UserTelOrPassInputEditView, hintText : String) {
+            LogUtil.log(TAG, "setTHintText: " + userTelOrPassInputEditView)
             if (!hintText.isNullOrEmpty()) {
                 userTelOrPassInputEditView.hintText = hintText
                 userTelOrPassInputEditView.editInput.hint = hintText
@@ -72,6 +75,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
         @BindingAdapter("tInputText")
         @JvmStatic
         fun setTInputText(userTelOrPassInputEditView: UserTelOrPassInputEditView, inputtext : String) {
+            LogUtil.log(TAG, "setTInputText: " + userTelOrPassInputEditView)
             if (!userTelOrPassInputEditView.editInput.text.toString().equals(inputtext)) {
                 userTelOrPassInputEditView.inputtext = inputtext
                 userTelOrPassInputEditView.editInput.setText(inputtext, BufferType.EDITABLE)
@@ -81,6 +85,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
         @InverseBindingAdapter(attribute = "tInputText", event = "tInputTextAttrChange")
         @JvmStatic
         fun getTInputText(userTelOrPassInputEditView: UserTelOrPassInputEditView) : String{
+            LogUtil.log(TAG, "getTInputText: " + userTelOrPassInputEditView)
             return userTelOrPassInputEditView.editInput.text.toString()
         }
 
@@ -88,6 +93,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
         @JvmStatic
         fun setTInputChangeListener(userTelOrPassInputEditView: UserTelOrPassInputEditView, onTInputTextChange : OnTInputTextChangeListener?,
             inverseBindingListener : InverseBindingListener) {
+            LogUtil.log(TAG, "setTInputChangeListener: " + userTelOrPassInputEditView)
             if(inverseBindingListener == null) {
                 userTelOrPassInputEditView.onTInputTextChange = onTInputTextChange
             } else {
@@ -124,13 +130,13 @@ class UserTelOrPassInputEditView : ConstraintLayout {
         showClear = array.getBoolean(R.styleable.UserTelOrPassView_tShowClear, false)
         array.recycle()
 
-        LayoutInflater.from(context).inflate(R.layout.widget_user_telorpass, this@UserTelOrPassInputEditView)
-        initView()
+        var viewDataBinding = DataBindingUtil.inflate<WidgetUserTelorpassBinding>(LayoutInflater.from(context), R.layout.widget_user_telorpass, this, true)
+        initView(viewDataBinding)
     }
 
-    private fun initView() {
-        editInput = WidgetUserTelorpassBinding.inflate(LayoutInflater.from(context)).widgetUserTelorpassAcetInput
-        clearIcon = WidgetUserTelorpassBinding.inflate(LayoutInflater.from(context)).widgetUserTelorpassAcivDelete
+    private fun initView(viewDataBinding : WidgetUserTelorpassBinding) {
+        editInput = viewDataBinding.widgetUserTelorpassAcetInput
+        clearIcon = viewDataBinding.widgetUserTelorpassAcivDelete
 
         editInput.setHintTextColor(resources.getColor(R.color.inputHint))
         editInput.setTextColor(resources.getColor(R.color.contentColor))
@@ -139,7 +145,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
                 InputFilter.LengthFilter(11))
             }
             1 -> {editInput.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD; editInput.transformationMethod = PasswordTransformationMethod();
-                editInput.inputType = InputType.TYPE_CLASS_NUMBER;editInput.filters = arrayOf(
+                editInput.filters = arrayOf(
                     InputFilter.LengthFilter(16))}
         }
         setTShowClear(this, showClear)
@@ -148,6 +154,7 @@ class UserTelOrPassInputEditView : ConstraintLayout {
     }
 
     private fun initListener() {
+        LogUtil.log(TAG, "initListener: " + this@UserTelOrPassInputEditView)
         editInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 

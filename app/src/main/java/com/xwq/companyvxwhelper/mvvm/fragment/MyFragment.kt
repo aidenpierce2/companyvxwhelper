@@ -12,6 +12,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
@@ -32,7 +33,7 @@ import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.widget.MineLocationPullView
 import com.xwq.companyvxwhelper.widget.RoundImageView
 
-class MyFragment : BaseFragment<FragmentMineBinding, MyView, MyModel>(), ObservableInterface{
+class MyFragment : BaseFragment<FragmentMineBinding, MyView, MyModel>(), ObservableInterface, MyView{
 
     lateinit private var myFragmentBean : MyFragmentBean
     lateinit private var mineMLPV : MineLocationPullView
@@ -113,7 +114,7 @@ class MyFragment : BaseFragment<FragmentMineBinding, MyView, MyModel>(), Observa
         dataList.add(FunctionItemBean(resources.getDrawable(R.mipmap.feedback), resources.getString(R.string.submit_feedback)))
         dataList.add(FunctionItemBean(resources.getDrawable(R.mipmap.aboutus), resources.getString(R.string.about_us)))
 
-        functionAdapter = FunctionAdapter(mContext)
+        functionAdapter = FunctionAdapter(context as RxAppCompatActivity)
         functionAdapter?.dataList = dataList
 
         functionRCY.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -123,8 +124,8 @@ class MyFragment : BaseFragment<FragmentMineBinding, MyView, MyModel>(), Observa
             override fun onChooseItem(data: FunctionItemBean, postion: Int) {
                 if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, true)) {
                     when (postion) {
-                        0 -> {startActivity(Intent().setClass(mContext, InformationSettingActivity::class.java))}
-                        1 -> {startActivity(Intent().setClass(mContext, InformationSettingActivity::class.java))}
+                        0 -> {startActivity(Intent().setClass(context as RxAppCompatActivity, InformationSettingActivity::class.java))}
+                        1 -> {startActivity(Intent().setClass(context as RxAppCompatActivity, InformationSettingActivity::class.java))}
                         2 -> {}
                         3 -> {}
                         4 -> {}
@@ -151,5 +152,9 @@ class MyFragment : BaseFragment<FragmentMineBinding, MyView, MyModel>(), Observa
 
     override fun getContentViewId(): Int {
         return R.layout.fragment_mine
+    }
+
+    override fun netWorkOperation() {
+
     }
 }

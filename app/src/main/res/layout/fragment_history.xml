@@ -29,6 +29,7 @@
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_history_cstl_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +38,6 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/fragment_history_aciv_menu"
                 android:layout_width="@dimen/margin8"
                 android:layout_height="@dimen/margin8"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,32 @@
                 android:onClick="@{() -> HistoryFragment.clickMenu()}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fragment_history_aciv_empty"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.5"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@mipmap/empty"
+            android:layout_marginBottom="@dimen/margin11"
+            android:visibility="gone"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_history_actv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_history_aciv_empty"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/no_more_data"
+            android:textSize="@dimen/middle_size"
+            android:textColor="@color/contentColor"
+            android:layout_marginTop="@dimen/margin3"
+            android:visibility="gone"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
     
 </layout>

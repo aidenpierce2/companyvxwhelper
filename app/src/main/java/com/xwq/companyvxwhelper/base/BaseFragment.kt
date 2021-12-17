@@ -1,12 +1,12 @@
 package com.xwq.companyvxwhelper.base
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.viewbinding.ViewBinding
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.components.support.RxFragment
@@ -17,23 +17,23 @@ import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.LoadingDialog
 import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.ToastUtil
+import java.lang.reflect.Constructor
+import java.lang.reflect.ParameterizedType
 import java.util.*
 
-abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T>> : RxFragment() , NoDoubleClickListener, RetryListener ,IBaseView{
+
+abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseFragmentModel<VB, T>> : RxFragment() , NoDoubleClickListener, RetryListener ,IBaseView{
 
     var TAG : String = this::class.java.simpleName.toString()
 
-    lateinit var mContext : RxAppCompatActivity
     lateinit var mFContainer : View
     lateinit var locationObserver : LocationObserver
     lateinit var locationObservable : MyApplication.LocationObservable
     lateinit var locationInterface : iLocationInterface
+    private var selfView : T? = null
     private lateinit var dataBinding: VB
-
-    override fun onAttach(activity: Activity) {
-        LogUtil.log(TAG, "onAttach execute!")
-        super.onAttach(activity)
-    }
+    private var selfModel : M? = null
+    private var isDefault : Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         LogUtil.log(TAG, "onCreate execute!")
@@ -46,15 +46,21 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T
         savedInstanceState: Bundle?
     ): View? {
         LogUtil.log(TAG, "onCreateView execute!")
-        dataBinding = DataBindingUtil.inflate(inflater, getContentViewId(), container,false)
+        dataBinding = DataBindingUtil.inflate(inflater, getContentViewId(), container, false)
         mFContainer = dataBinding!!.root
+        selfView = this as T
+        var tClass : Class<T> =
+            (javaClass.genericSuperclass as ParameterizedType).getActualTypeArguments().get(1) as (Class<T>)
+        var mClass : Class<M> =
+            (javaClass.genericSuperclass as ParameterizedType).getActualTypeArguments().get(2) as (Class<M>)
+        var constructor : Constructor<*> = mClass.getConstructor(tClass)
+        selfModel = constructor.newInstance(selfView) as M;
         return mFContainer
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         LogUtil.log(TAG, "onActivityCreated execute!")
         super.onActivityCreated(savedInstanceState)
-        mContext = (activity as RxAppCompatActivity?)!!
 
         initView(savedInstanceState)
         if (needLocation()) {
@@ -102,6 +108,16 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T
         super.onDetach()
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        LogUtil.log(TAG, "setUserVisibleHint: " + isVisibleToUser)
+        super.setUserVisibleHint(isVisibleToUser)
+        //这里开始操作网络服务
+        if (isVisibleToUser) {
+            netWorkOperation()
+            isDefault = false
+        }
+    }
+
     /**
      * 获取根布局id
      */
@@ -118,6 +134,11 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T
     abstract fun init()
 
     /**
+     *  网络服务
+     */
+    abstract fun netWorkOperation()
+
+    /**
      * 需不需要获取地址
      */
     abstract fun needLocation() : Boolean
@@ -126,7 +147,7 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T
      * 获取当前地址的接口
      */
     interface iLocationInterface{
-        fun notifyLocation(Lon : Double, Lat : Double)
+        fun notifyLocation(Lon: Double, Lat: Double)
     }
 
     fun preInitLocation() : Boolean {
@@ -164,9 +185,12 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T
         ToastUtil.showToast(value)
     }
 
+    fun getSelfModel() : M {
+        return selfModel!!
+    }
     override fun showLoading() {
         // 不想实现父类的 之类可以自己实现
-        LoadingDialog.getSingleton().build(mContext.supportFragmentManager, false)
+        LoadingDialog.getSingleton().build((context as RxAppCompatActivity).supportFragmentManager, false)
     }
 
     override fun hideLoading() {

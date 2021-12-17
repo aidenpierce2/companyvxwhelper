@@ -25,11 +25,11 @@ class Md5Util {
 
         // md5生成 (此方法仅第一次登陆 才能使用!!)
         fun makeSignKey() : String{
-            val signLength = 31
+            val signLength = 32
             var keyMap : String = "0123456789abcdef"
             var result = "";
-            for (i in  0..signLength) {
-                result += keyMap.get(Random(System.currentTimeMillis()).nextInt(keyMap.length - 1))
+            for (i in  0..signLength-1) {
+                result += keyMap.get(Random.nextInt(keyMap.length - 1))
             }
             return result
         }

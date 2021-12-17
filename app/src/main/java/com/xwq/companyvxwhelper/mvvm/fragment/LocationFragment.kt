@@ -25,6 +25,7 @@ import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
@@ -49,7 +50,7 @@ import com.xwq.companyvxwhelper.widget.HomeInputEditText
 
 
 class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, LocationModel>(),
-    BaseFragment.iLocationInterface,LocationSource, AMapLocationListener,PoiSearch.OnPoiSearchListener{
+    BaseFragment.iLocationInterface,LocationSource, AMapLocationListener,PoiSearch.OnPoiSearchListener, LocationView{
 
     val STROKE_COLOR = Color.argb(0, 255, 255, 255)
     val FILL_COLOR = Color.argb(0, 255, 255, 255);
@@ -153,7 +154,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, Loc
                             ensureCompanyLocation(itemBean)
                         }
                     })
-                    .build(mContext, true)
+                    .build(context as RxAppCompatActivity, true)
             }
         })
     }
@@ -310,7 +311,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, Loc
                 }
             })
             .allowCancelAble(false)
-            .show(mContext.supportFragmentManager, true)
+            .show((context as RxAppCompatActivity).supportFragmentManager, true)
     }
 
     // 跳转到外部链接
@@ -321,7 +322,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, Loc
         intent.data = content_url
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity")
-        mContext!!.startActivity(intent)
+        (context as RxAppCompatActivity).startActivity(intent)
     }
 
     // 初始化python
@@ -361,7 +362,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, Loc
                 }
             })
             .allowCancelAble(false)
-            .show(mContext.supportFragmentManager, true)
+            .show((context as RxAppCompatActivity).supportFragmentManager, true)
     }
 
     // 确定公司所在的地址
@@ -392,11 +393,15 @@ class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, Loc
                 }
             })
             .allowCancelAble(false)
-            .show(mContext.supportFragmentManager, true)
+            .show((context as RxAppCompatActivity).supportFragmentManager, true)
     }
 
     override fun getContentViewId(): Int {
         return R.layout.fragment_location
+    }
+
+    override fun netWorkOperation() {
+
     }
 
 }

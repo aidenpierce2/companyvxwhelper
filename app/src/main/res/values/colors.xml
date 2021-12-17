@@ -33,5 +33,6 @@
     <color name="linearColor">#FFEEEEEE</color>
     <color name="greyColor">#FFEFF0F2</color>
     <color name="cancelColor">#FFDCDDDF</color>
-    <color name="ensureButtonColor">#FFFFF143</color>
+    <color name="ensureButtonColor">#FFEF314C</color>
+    <color name="vpbgColor">#FFF5F5F5</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
@@ -9,6 +10,7 @@ import com.xwq.companyvxwhelper.databinding.ActivityBaseSettingBinding
 import com.xwq.companyvxwhelper.databinding.ActivitySplashBinding
 import com.xwq.companyvxwhelper.mvvm.model.activity.SplashModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.SplashView
+import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.utils.ToastUtil
 

@@ -41,12 +41,11 @@ class LoadingDialog : BaseDialog<DialogLoadingBinding>() {
     }
 
     override fun initView() {
-        loadingACIV
+        loadingACIV = getBinding().dialogLoadingAciv01
     }
 
     override fun initData() {
         // 启动animation
-
         var drawable : AnimationDrawable = loadingACIV!!.drawable as AnimationDrawable
         if (drawable != null) {
             drawable.start()

@@ -9,11 +9,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
-import com.xwq.companyvxwhelper.bean.ResponseBean.HistoryResBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryBaseBean
-import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryHeaderBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryItemBean
-import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryTitleBean
 import com.xwq.companyvxwhelper.databinding.AdapterHistoryHeaderBinding
 import com.xwq.companyvxwhelper.databinding.AdapterHistoryItemBinding
 import com.xwq.companyvxwhelper.databinding.AdapterHistorySecHeaderBinding
@@ -23,7 +20,7 @@ class HistoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>{
     val TAG = HistoryAdapter::class.java.simpleName
 
     var mContext : Context? = null
-    var data : List<HistoryBaseBean> = arrayListOf()
+    var data : List<HistoryItemBean> = arrayListOf()
 
     constructor( mContext : Context) {
         this.mContext = mContext
@@ -56,19 +53,13 @@ class HistoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>{
         var curHistoryBaseBean : HistoryBaseBean? = null
         if (holder is HeaderViewHolder) {
             curViewDataBinding = DataBindingUtil.getBinding<AdapterHistoryHeaderBinding>(holder.itemView)
-            if (curHistoryBaseBean is HistoryHeaderBean) {
-                curViewDataBinding?.setVariable(BR.HistoryHeaderBean, curHistoryBaseBean)
-            }
+            curViewDataBinding?.setVariable(BR.HistoryItemBean, curHistoryBaseBean)
         } else if (holder is TitleViewHolder){
             DataBindingUtil.getBinding<AdapterHistorySecHeaderBinding>(holder.itemView)
-            if (curHistoryBaseBean is HistoryTitleBean) {
-                curViewDataBinding?.setVariable(BR.HistoryTitleBean, curHistoryBaseBean)
-            }
+            curViewDataBinding?.setVariable(BR.HistoryItemBean, curHistoryBaseBean)
         } else if (holder is ContentViewHolder) {
             DataBindingUtil.getBinding<AdapterHistoryItemBinding>(holder.itemView)
-            if (curHistoryBaseBean is HistoryItemBean) {
-                curViewDataBinding?.setVariable(BR.HistoryItemBean, curHistoryBaseBean)
-            }
+            curViewDataBinding?.setVariable(BR.HistoryItemBean, curHistoryBaseBean)
         } else {
             return
         }

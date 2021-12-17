@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="HistoryTitleBean"
-            type="com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryTitleBean" />
+            name="HistoryItemBean"
+            type="com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryItemBean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +47,7 @@
             android:id="@+id/adapter_history_sec_header_actv_mouth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{HistoryTitleBean.dateStr}"
+            android:text="@{HistoryItemBean.dateStr}"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/adapter_history_sec_header_actv_horizontal_separator"
             app:layout_constraintTop_toTopOf="parent"

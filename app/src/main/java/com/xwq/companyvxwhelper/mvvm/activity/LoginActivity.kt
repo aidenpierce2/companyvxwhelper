@@ -11,6 +11,7 @@ import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.base.BaseActivity
 import com.xwq.companyvxwhelper.bean.Enum.EncryOrDecryEnum
+import com.xwq.companyvxwhelper.bean.Enum.PassWordErrEnum
 import com.xwq.companyvxwhelper.mvvm.model.activity.LoginModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.LoginView
 import com.xwq.companyvxwhelper.widget.UserTelOrPassInputEditView
@@ -107,6 +108,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginView, LoginModel>(
         getBinding().setVariable(BR.LoginActivityBean, loginActivityBean)
         getBinding().setVariable(BR.LoginActivity, this)
 
+        LogUtil.log(TAG, "login: " + userPhoneNumUTOIE)
+        LogUtil.log(TAG, "login: " + userPasswordUTOIE)
     }
 
     override fun initListener() {
@@ -156,34 +159,34 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginView, LoginModel>(
     }
 
     fun requestLogin() {
-        startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
-//        var preTelePhone = loginActivityBean?.userTelBean?.inputText
-//        var prePassWord = loginActivityBean?.userPassBean?.inputText
-//        if (!PhoneNumMatcherUtils.checkIsVaildPhoneNum(preTelePhone)) {
-//            ToastUtil.showToast(R.string.input_correct_phonenum)
-//            return
-//        }
-//        var checkPassWordValid = PassWordUtils.checkPassWordValid(prePassWord)
-//        when (checkPassWordValid) {
-//            PassWordErrEnum.EMPTYERR -> {
-//                ToastUtil.showToast(R.string.input_password)
-//                return
-//            }
-//            PassWordErrEnum.LENGTHERR -> {
-//                ToastUtil.showToast(R.string.password_length_err)
-//                return
-//            }
-//            PassWordErrEnum.NOCHARACTERERR -> {
-//                ToastUtil.showToast(R.string.password_no_character_err)
-//                return
-//            }
-//            PassWordErrEnum.NONUMBERERR -> {
-//                ToastUtil.showToast(R.string.password_no_number_err)
-//                return
-//            }
-//            PassWordErrEnum.NOERR -> {}
-//        }
-//        getSelfModel().login(createLoginReqBean(preTelePhone!!, prePassWord!!))
+//        startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+        var preTelePhone = loginActivityBean?.userTelBean?.inputText
+        var prePassWord = loginActivityBean?.userPassBean?.inputText
+        if (!PhoneNumMatcherUtils.checkIsVaildPhoneNum(preTelePhone)) {
+            ToastUtil.showToast(R.string.input_correct_phonenum)
+            return
+        }
+        var checkPassWordValid = PassWordUtils.checkPassWordValid(prePassWord)
+        when (checkPassWordValid) {
+            PassWordErrEnum.EMPTYERR -> {
+                ToastUtil.showToast(R.string.input_password)
+                return
+            }
+            PassWordErrEnum.LENGTHERR -> {
+                ToastUtil.showToast(R.string.password_length_err)
+                return
+            }
+            PassWordErrEnum.NOCHARACTERERR -> {
+                ToastUtil.showToast(R.string.password_no_character_err)
+                return
+            }
+            PassWordErrEnum.NONUMBERERR -> {
+                ToastUtil.showToast(R.string.password_no_number_err)
+                return
+            }
+            PassWordErrEnum.NOERR -> {}
+        }
+        getSelfModel().login(createLoginReqBean(preTelePhone!!, prePassWord!!))
     }
 
     inner class ForgetContract : ActivityResultContract<String, Array<String>>() {

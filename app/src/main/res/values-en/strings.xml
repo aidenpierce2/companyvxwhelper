@@ -69,6 +69,7 @@ You have not confirmed the company location, please set the company location fir
     //web
     <string name="get_sms_succ">get sms success,please pay attention to ckeck</string>
     <string name="web_err">Network exception, please try again later!</string>
+    <string name="no_more_data">no_more_data</string>
     //setting
     <string name="header">Header</string>
     <string name="nickName">Nick Name</string>
@@ -84,4 +85,7 @@ You have not confirmed the company location, please set the company location fir
     <string name="allStatus">All Status</string>
     <string name="succStatus">Success</string>
     <string name="failStatus">Fail</string>
+    <string name="year">year</string>
+    <string name="month">month</string>
+    <string name="day">day</string>
 </resources>

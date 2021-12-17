@@ -177,15 +177,16 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
                 userInputVerifyCodeEditView.onIHintTextChange = onIHintTextChange
             } else {
                 if (onIHintTextChange == null) {
-                    userInputVerifyCodeEditView.onIHintTextChange = object : OnIHintTextChangeListener {
-                        override fun onIHintTextChange() {
-                            if (onIHintTextChange != null) {
-                                onIHintTextChange.onIHintTextChange()
-                            } else {
-                                inverseBindingListener.onChange()
+                    userInputVerifyCodeEditView.onIHintTextChange =
+                        object : OnIHintTextChangeListener {
+                            override fun onIHintTextChange() {
+                                if (onIHintTextChange != null) {
+                                    onIHintTextChange.onIHintTextChange()
+                                } else {
+                                    inverseBindingListener.onChange()
+                                }
                             }
                         }
-                    }
                 }
             }
         }
@@ -265,7 +266,7 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
         clickAble = array.getBoolean(R.styleable.UserInputVertifyView_iClickAble, false)
         array.recycle()
 
-        LayoutInflater.from(context).inflate(R.layout.widget_user_input_verifycode, this@UserInputVerifyCodeEditView)
+        var viewDataBinding : WidgetUserInputVerifycodeBinding = DataBindingUtil.inflate<WidgetUserInputVerifycodeBinding>(LayoutInflater.from(context), R.layout.widget_user_input_verifycode, this, true)
         if (context is AppCompatActivity) {
             appCompatActivity = context as AppCompatActivity
         }
@@ -273,10 +274,10 @@ class UserInputVerifyCodeEditView : ConstraintLayout {
         if (!ServiceUtils.isTargetServiceRunning(TimeCutDownService::class.java.name)) {
             dispatchMessage(true)
         }
-        initView()
+        initView(viewDataBinding)
     }
 
-    private fun initView() {
+    private fun initView(viewDataBinding : WidgetUserInputVerifycodeBinding) {
         editInput = WidgetUserInputVerifycodeBinding.inflate(LayoutInflater.from(context)).widgetInputVerifyAcetInput
         showACTV = WidgetUserInputVerifycodeBinding.inflate(LayoutInflater.from(context)).widgetUserTelorpassActvInput
 

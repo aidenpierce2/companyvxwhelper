@@ -119,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin4"
-                android:layout_marginTop="@dimen/margin3"
+                android:layout_marginTop="@dimen/margin4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_actv_statusChoose">
 
@@ -127,28 +127,42 @@
                     android:id="@+id/dialog_history_menu_rb_chooseall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.allStatus}"
                     android:textColor="@color/contentColor"
-                    android:gravity="center"/>
+                    android:checked="@{DialogHistoryMenuBean.chooseAll}"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin3"
+                    android:textSize="@dimen/small_size"
+                    android:layout_marginLeft="@dimen/margin1"
+                    android:button="@drawable/adapter_history_rg_check_style" />
 
                 <RadioButton
                     android:id="@+id/dialog_history_menu_rb_chooseensure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/margin3"
+                    android:layout_marginTop="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.ensureStr}"
+                    android:checked="@{DialogHistoryMenuBean.chooseSucc}"
                     android:textColor="@color/contentColor"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin3"
+                    android:layout_marginLeft="@dimen/margin1"
+                    android:textSize="@dimen/small_size"
+                    android:button="@drawable/adapter_history_rg_check_style"/>
 
                 <RadioButton
                     android:id="@+id/dialog_history_menu_rb_chooseserr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/margin3"
+                    android:layout_marginTop="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.errStatus}"
+                    android:checked="@{DialogHistoryMenuBean.chooseErr}"
                     android:textColor="@color/contentColor"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/margin1"
+                    android:paddingLeft="@dimen/margin3"
+                    android:textSize="@dimen/small_size"
+                    android:button="@drawable/adapter_history_rg_check_style"/>
             </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -203,7 +217,7 @@
                     android:layout_marginTop="@dimen/margin4"
                     android:layout_marginBottom="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.ensureStr}"
-                    android:textColor="@color/contentColor"
+                    android:textColor="@color/white"
                     android:background="@color/ensureButtonColor"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
