@@ -8,11 +8,38 @@ import com.xwq.companyvxwhelper.base.BaseNetworkResponse
 import com.xwq.companyvxwhelper.base.BaseObserver
 import com.xwq.companyvxwhelper.bean.ResponseBean.CheckTokenResBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.LoginResBean
+import com.xwq.companyvxwhelper.bean.ResponseBean.PublicRsaResponse
 import com.xwq.companyvxwhelper.databinding.ActivitySplashBinding
 import com.xwq.companyvxwhelper.mvvm.view.activity.SplashView
+import retrofit2.http.Url
 
 class SplashModel(splashView: SplashView) : BaseModel<ActivitySplashBinding, SplashView>(splashView) {
     var url : String = ""
+
+    //获取rsa公钥
+    fun getPublicRsa() {
+        url = Urls.GET_PUBLIC_RSA
+        apiService().getPublicRsa(url)
+            .compose(RxTransformer.switchSchedulers(this))
+            .subscribe(object : BaseObserver<PublicRsaResponse>(curContext) {
+                override fun onFailure(e: Throwable?) {
+                    curView?.getPubcliRsaFail()
+                }
+
+                override fun onRequestStart() {
+
+                }
+
+                override fun onSuccess(msg: String?, data: PublicRsaResponse?) {
+                    curView?.getPublicRsaSucc(data)
+                }
+
+                override fun onFinally() {
+
+                }
+
+            })
+    }
 
     //检测token的有效性
     fun checkTokenValid(userToken : String) {
@@ -21,22 +48,19 @@ class SplashModel(splashView: SplashView) : BaseModel<ActivitySplashBinding, Spl
             .compose(RxTransformer.switchSchedulers(this))
             .subscribe(object : BaseObserver<CheckTokenResBean>(curContext) {
                 override fun onFailure(e: Throwable?) {
-                    curView?.hideLoading()
                     curView?.getTokenValidFail()
                 }
 
                 override fun onRequestStart() {
-                    curView?.showLoading()
 
                 }
 
                 override fun onSuccess(msg: String?, data: CheckTokenResBean?) {
-                    curView?.hideLoading()
                     curView?.getTokenValidSucc()
                 }
 
                 override fun onFinally() {
-                    curView?.hideLoading()
+
                 }
 
             })

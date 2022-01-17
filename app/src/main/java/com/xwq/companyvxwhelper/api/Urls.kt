@@ -6,6 +6,8 @@ class Urls {
     companion object {
         const val ALI_TIME_STAMP = "http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp"
 
+        // 获取rsa私钥
+        const val GET_PUBLIC_RSA = "/api/user/preLogin"
         //本地服务
         const val SEND_SMS = "/api/sendsms"
         // 判断token是否有效

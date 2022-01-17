@@ -2,7 +2,6 @@ package com.xwq.companyvxwhelper.mvvm.activity
 
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
@@ -24,7 +23,6 @@ import com.xwq.companyvxwhelper.databinding.ActivityLoginBinding
 import com.xwq.companyvxwhelper.utils.*
 import com.xwq.companyvxwhelper.utils.DevieTypeUtils.Companion.getDeviceTypeValue
 import com.xwq.companyvxwhelper.utils.PackageInfoUtils.Companion.getVersionName
-import com.xwq.companyvxwhelper.utils.SignKeyUtils.Companion.encryOrDecryValue
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginView, LoginModel>(),LoginView {
 
@@ -110,6 +108,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginView, LoginModel>(
 
         LogUtil.log(TAG, "login: " + userPhoneNumUTOIE)
         LogUtil.log(TAG, "login: " + userPasswordUTOIE)
+
+        RsaAndAesUtils.makeAesKey(Md5Util.makePrivatAes(true))
+        RsaAndAesUtils.makeAesIv(Md5Util.makePrivatAes(false))
     }
 
     override fun initListener() {
@@ -149,17 +150,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginView, LoginModel>(
 
     fun createLoginReqBean(preTelePhone : String, prePassWord : String) : LoginReqBean{
         var loginReqBean : LoginReqBean = LoginReqBean()
-        val tempSignKey = Md5Util.makeSignKey()
-        loginReqBean.encryptUserPhone = encryOrDecryValue(preTelePhone, EncryOrDecryEnum.ENCRYPTION, tempSignKey)
-        loginReqBean.encryptUserPassWord = encryOrDecryValue(prePassWord, EncryOrDecryEnum.ENCRYPTION, tempSignKey)
-        loginReqBean.signKey = tempSignKey
+        loginReqBean.encryptUserPhone = RsaAndAesUtils.encryptAES(preTelePhone)!!
+        loginReqBean.encryptUserPassWord = RsaAndAesUtils.encryptAES(prePassWord)!!
+        loginReqBean.signKey = RsaAndAesUtils.encryptRSA(RsaAndAesUtils.getAesKey(), SharePreferenceUtil.instance.getData(Const.KEY_UUID))
+        loginReqBean.keyUUID = SharePreferenceUtil.instance.getData(Const.KEY_UUID)
         loginReqBean.loginType = getDeviceTypeValue()
         loginReqBean.userDefaultSignKey = true
         return loginReqBean
     }
 
     fun requestLogin() {
-//        startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+        startActivity(Intent().setClass(this@LoginActivity, MainActivity::class.java))
+        return
+
         var preTelePhone = loginActivityBean?.userTelBean?.inputText
         var prePassWord = loginActivityBean?.userPassBean?.inputText
         if (!PhoneNumMatcherUtils.checkIsVaildPhoneNum(preTelePhone)) {

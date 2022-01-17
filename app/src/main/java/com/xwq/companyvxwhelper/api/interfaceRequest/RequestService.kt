@@ -8,6 +8,10 @@ import retrofit2.http.*
 
 interface RequestService {
 
+    // 获取rsa 公钥
+    @GET
+    fun getPublicRsa(@retrofit2.http.Url requestUrl: String) : Observable<BaseNetworkResponse<PublicRsaResponse>>
+
     // 获取时间戳
     @GET
     fun getTimeStamp(@retrofit2.http.Url requestUrl : String) : Observable<AliTimeStampResponse>

@@ -2,8 +2,15 @@ package com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment
 
 import android.app.Dialog
 import android.graphics.Color
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.view.View
 import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentManager
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
@@ -15,6 +22,7 @@ import com.xwq.companyvxwhelper.bean.dataBindingBean.DialogHistoryMenuBean
 import com.xwq.companyvxwhelper.databinding.DialogHistoryMenuBinding
 import com.xwq.companyvxwhelper.listener.NoDoubleClickListener
 import com.xwq.companyvxwhelper.utils.HistoryChooseTimeUtils
+import java.util.*
 
 
 class HistoryMenuDialog : BaseDialog<DialogHistoryMenuBinding>() {
@@ -22,6 +30,8 @@ class HistoryMenuDialog : BaseDialog<DialogHistoryMenuBinding>() {
     var preDialogHistoryMenuBean : DialogHistoryMenuBean? = null
     var dialogHistoryMenuBean : DialogHistoryMenuBean? = null
     private var allowShow : Boolean = true
+    lateinit var startACBT : AppCompatButton
+    lateinit var endACBT : AppCompatButton
     lateinit var cancelACBT : Button
     lateinit var ensureACBT : Button
     var viewClickListener : ViewClickListener? = null
@@ -53,6 +63,11 @@ class HistoryMenuDialog : BaseDialog<DialogHistoryMenuBinding>() {
     override fun initView() {
         cancelACBT = getBinding().dialogHistoryMenuAcbtCancel
         ensureACBT = getBinding().dialogHistoryMenuAcbtSure
+        startACBT = getBinding().dialogHistoryMenuAcbtStartTime
+        endACBT = getBinding().dialogHistoryMenuAcbtEndTime
+
+        startACBT.setTag(1, "start")
+        endACBT.setTag(1, "end")
     }
 
     override fun initData() {
@@ -130,28 +145,39 @@ class HistoryMenuDialog : BaseDialog<DialogHistoryMenuBinding>() {
         }
     }
 
+    fun translateToYMD(date: Date) : String{
+        if (date == null) {
+            return ""
+        }
+        return java.text.SimpleDateFormat("yyyy-MM-dd").format(date)
+    }
+
     fun selectTimeSchedule(startTime: Boolean) {
         var timePickView : TimePickerView = TimePickerBuilder(context, OnTimeSelectListener { date, v -> //选中事件回调
-
+            var tag = v.getTag(1)
+            when (tag) {
+                "start" -> dialogHistoryMenuBean?.startTime = translateToYMD(date)
+                "end" -> dialogHistoryMenuBean?.endTime = translateToYMD(date)
+            }
         })
             .setType(booleanArrayOf(true, true, true, false, false, false)) // 默认全部显示
-            .setCancelText("Cancel") //取消按钮文字
-            .setSubmitText("Sure") //确认按钮文字 //滚轮文字大小
+            .setCancelText(resources.getString(R.string.cancel)) //取消按钮文字
+            .setSubmitText(resources.getString(R.string.sure)) //确认按钮文字 //滚轮文字大小
             .setTitleSize(20) //标题文字大小
-            .setTitleText("请选择时间") //标题文字
+            .setTitleText(resources.getString(R.string.chooseTime)) //标题文字
             .setOutSideCancelable(false) //点击屏幕，点在控件外部范围时，是否取消显示
-            .isCyclic(true) //是否循环滚动
-            .setBgColor(Color.WHITE)
-            .setTitleColor(Color.BLACK) //标题文字颜色
-            .setSubmitColor(Color.BLUE) //确定按钮文字颜色
-            .setCancelColor(Color.parseColor("#FFF5F5F5")) //取消按钮文字颜色
-            .setTitleBgColor(-0x99999a) //标题背景颜色 Night mode
-            .setBgColor(-0xcccccd) //滚轮背景颜色 Night mode
+            .isCyclic(false) //是否循环滚动
+            .setTitleColor(resources.getColor(R.color.titleColor)) //标题文字颜色
+            .setSubmitColor(resources.getColor(R.color.input)) //确定按钮文字颜色
+            .setCancelColor(resources.getColor(R.color.input)) //取消按钮文字颜色
+            .setTitleBgColor(resources.getColor(R.color.white)) //标题背景颜色 Night mode
+            .setBgColor(resources.getColor(R.color.white)) //滚轮背景颜色 Night mode
             .setLabel("年", "月", "日", "时", "分", "秒") //默认设置为年月日时分秒
             .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-            .isDialog(true) //是否显示为对话框样式
+            .isDialog(true) //是否显示为对话框样
             .build()
         timePickView.show()
+
     }
 
     interface ViewClickListener {

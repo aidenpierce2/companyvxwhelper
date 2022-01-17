@@ -10,45 +10,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/loading_width">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/adapter_history_item_actv_vertical_separator"
-            android:layout_width="@dimen/stroke_width2"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_weight="1"
-            android:layout_marginLeft="@dimen/margin4"
-            android:background="@color/black" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/adapter_history_item_aciv_oval"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/adapter_history_item_actv_vertical_separator"
-            app:layout_constraintEnd_toEndOf="@+id/adapter_history_item_actv_vertical_separator"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/adapter_history_oval_style" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/adapter_history_item_actv_horizontal_separator"
-            android:layout_width="@dimen/margin9"
-            android:layout_height="@dimen/stroke_width2"
-            app:layout_constraintStart_toEndOf="@+id/adapter_history_item_aciv_oval"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="@dimen/loading_height">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/adapter_history_item_cstl_item"
             android:layout_width="0dp"
-            app:layout_constraintDimensionRatio="h, 5:16"
+            app:layout_constraintWidth_percent="@dimen/history_percent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/adapter_history_item_actv_horizontal_separator"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/style_adapter_history_item_style">
 
@@ -58,8 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:background="@{HistoryItemBean.bgDrawable}">
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/adapter_history_item_riv_status"
@@ -67,10 +37,19 @@
                     android:layout_height="@dimen/margin8"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     android:layout_marginLeft="@dimen/margin4"
                     android:src="@{HistoryItemBean.statusDrwable}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@+id/adapter_history_item_riv_status"
+                    app:layout_constraintTop_toBottomOf="@+id/adapter_history_item_riv_status"
+                    app:layout_constraintEnd_toEndOf="@+id/adapter_history_item_riv_status"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@{HistoryItemBean.statusStr}"
                     />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -81,16 +60,16 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/adapter_history_item_riv_status"
                     app:layout_constraintEnd_toStartOf="@+id/adapter_history_item_aciv_enter"
-                    android:layout_marginLeft="@dimen/margin4"
+                    android:layout_marginLeft="@dimen/margin5"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/adapter_history_item_actv_address"
+                        android:id="@+id/adapter_history_item_actv_timestamp"
                         android:layout_width="0dp"
                         app:layout_constraintHorizontal_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin1"
-                        app:layout_constraintBottom_toTopOf="@+id/adapter_history_item_actv_timestamp"
+                        app:layout_constraintBottom_toTopOf="@+id/adapter_history_item_actv_address"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -101,7 +80,7 @@
                         android:text="@{HistoryItemBean.tickAddress}"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/adapter_history_item_actv_timestamp"
+                        android:id="@+id/adapter_history_item_actv_address"
                         android:layout_width="0dp"
                         app:layout_constraintHorizontal_weight="1"
                         android:layout_height="wrap_content"
@@ -110,7 +89,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/adapter_history_item_actv_address"
+                        app:layout_constraintTop_toBottomOf="@+id/adapter_history_item_actv_timestamp"
                         android:gravity="left"
                         android:textColor="@color/contentColor"
                         android:ellipsize="end"
@@ -130,6 +109,8 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

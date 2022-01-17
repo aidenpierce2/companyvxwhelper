@@ -10,49 +10,23 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/adapter_history_sec_header_actv_vertical_separator"
-            android:layout_width="@dimen/stroke_width2"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_weight="1"
-            android:layout_marginLeft="@dimen/margin4"
-            android:background="@color/black" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/adapter_history_sec_header_aciv_oval"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/adapter_history_sec_header_actv_vertical_separator"
-            app:layout_constraintEnd_toEndOf="@+id/adapter_history_sec_header_actv_vertical_separator"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/adapter_history_oval_style" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/adapter_history_sec_header_actv_horizontal_separator"
-            android:layout_width="@dimen/margin9"
-            android:layout_height="@dimen/stroke_width2"
-            app:layout_constraintStart_toEndOf="@+id/adapter_history_sec_header_aciv_oval"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/adapter_history_sec_header_actv_mouth"
-            app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="@dimen/history_head_height">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/adapter_history_sec_header_actv_mouth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="@dimen/history_header_bias"
             android:text="@{HistoryItemBean.dateStr}"
             android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/adapter_history_sec_header_actv_horizontal_separator"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="@dimen/margin8"
+            android:textSize="@dimen/bigger_size"
+            android:elevation="@dimen/margin0"
             android:background="@drawable/style_adapter_history_sec_header_month_style" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

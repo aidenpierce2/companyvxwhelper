@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.xwq.companyvxwhelper.BR
 import com.xwq.companyvxwhelper.MyApplication
@@ -26,11 +24,11 @@ import com.xwq.companyvxwhelper.utils.LogUtil
 import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryDataBean
 import com.xwq.companyvxwhelper.mvvm.fragment.dialogFragment.HistoryMenuDialog
 import com.xwq.companyvxwhelper.utils.HistoryChooseTimeUtils
-import com.xwq.companyvxwhelper.utils.SignKeyUtils
 import com.xwq.companyvxwhelper.bean.dataBindingBean.DialogHistoryMenuBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryItemBean
 import com.xwq.companyvxwhelper.databinding.FragmentHistoryBinding
 import com.xwq.companyvxwhelper.mvvm.adapter.HistoryAdapter
+import com.xwq.companyvxwhelper.utils.RsaAndAesUtils
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, HistoryModel>(), HistoryView{
 
@@ -147,8 +145,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, Histor
 
     override fun getHistoryDataFail(data: String) {
         dispatchRefreshOrLoadMore(isRefresh)
-        showToast(resources.getString(R.string.web_err))
-        dispatchDataVisible(false)
+//        showToast(resources.getString(R.string.web_err))
+//        dispatchDataVisible(false)
+
+        dispatchDataVisible(true)
+        historyAdapter = HistoryAdapter(requireContext())
+        historyAdapter?.data = moniData()
+        mainRCY.adapter = historyAdapter
+        mainRCY.layoutManager = LinearLayoutManager(MyApplication.app, LinearLayoutManager.VERTICAL, false)
     }
 
     override fun showToast(value: String) {
@@ -167,12 +171,29 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, Histor
         historyReqBean.limit = limitNum
         historyReqBean.page = pageNum
         if (isDefault) {
-            historyReqBean.startTimeEncrypt = SignKeyUtils.encryOrDecryValue(startTimeStr, EncryOrDecryEnum.ENCRYPTION, "")
-            historyReqBean.endTimeEncrypt = SignKeyUtils.encryOrDecryValue(endTimeStr, EncryOrDecryEnum.ENCRYPTION, "")
+            historyReqBean.startTimeEncrypt = RsaAndAesUtils.encryptAES(startTimeStr)!!
+            historyReqBean.endTimeEncrypt = RsaAndAesUtils.encryptAES(endTimeStr)!!
             historyReqBean.chooseStatus = chooStatus
         } else {
-            historyReqBean.startTimeEncrypt = SignKeyUtils.encryOrDecryValue(dialogHistoryMenuBean!!.startTimeValue, EncryOrDecryEnum.ENCRYPTION, "")
-            historyReqBean.endTimeEncrypt = SignKeyUtils.encryOrDecryValue(dialogHistoryMenuBean!!.endTimeValue, EncryOrDecryEnum.ENCRYPTION, "")
+            var innerStartTime = ""
+            var innerEndTime = ""
+            if (dialogHistoryMenuBean == null) {
+                innerStartTime = startTimeStr
+                innerEndTime = endTimeStr
+            } else {
+                if (dialogHistoryMenuBean!!.startTimeValue.isNullOrEmpty()) {
+                    innerStartTime = startTimeStr
+                } else {
+                    innerStartTime = dialogHistoryMenuBean!!.startTimeValue
+                }
+                if (dialogHistoryMenuBean!!.endTimeValue.isNullOrEmpty()) {
+                    innerEndTime = endTimeStr
+                } else {
+                    innerEndTime = dialogHistoryMenuBean!!.endTimeValue
+                }
+            }
+            historyReqBean.startTimeEncrypt = RsaAndAesUtils.encryptAES(innerStartTime)!!
+            historyReqBean.endTimeEncrypt = RsaAndAesUtils.encryptAES(innerEndTime)!!
             historyReqBean.chooseStatus = chooStatus
         }
         getSelfModel().getHistoryData(historyReqBean)
@@ -223,5 +244,26 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryView, Histor
 
     override fun netWorkOperation() {
         requestHistoryReqBean(true)
+    }
+
+    public fun moniData() : ArrayList<HistoryItemBean>{
+        var data : ArrayList<HistoryItemBean> = arrayListOf()
+        data.add(HistoryItemBean("2021-09", "", null, "", "", true, true))
+        data.add(HistoryItemBean("09-31", "", null, "", "", true, true, 1))
+        data.add(HistoryItemBean("2021-09-31", "打卡成功", resources.getDrawable(R.mipmap.gotowork), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", true, true, 2))
+        data.add(HistoryItemBean("2021-09-31", "打卡失败", resources.getDrawable(R.mipmap.knockoff), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", false, true, 2))
+        data.add(HistoryItemBean("09-30", "", null, "", "", true, true, 1))
+        data.add(HistoryItemBean("2021-09-30", "打卡成功", resources.getDrawable(R.mipmap.gotowork), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", true, true, 2))
+        data.add(HistoryItemBean("2021-09-30", "打卡失败", resources.getDrawable(R.mipmap.knockoff), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", false, false, 2))
+        data.add(HistoryItemBean("09-29", "", null, "", "", true, true, 1))
+        data.add(HistoryItemBean("2021-09-29", "打卡失败", resources.getDrawable(R.mipmap.gotowork), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", true, false, 2))
+        data.add(HistoryItemBean("2021-09-29", "打卡成功", resources.getDrawable(R.mipmap.knockoff), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", false, true, 2))
+        data.add(HistoryItemBean("09-28", "", null, "", "", true, true, 1))
+        data.add(HistoryItemBean("2021-09-28", "打卡失败", resources.getDrawable(R.mipmap.gotowork), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", true, false, 2))
+        data.add(HistoryItemBean("2021-09-28", "打卡成功", resources.getDrawable(R.mipmap.knockoff), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", false, true, 2))
+        data.add(HistoryItemBean("09-27", "", null, "", "", true, true, 1))
+        data.add(HistoryItemBean("2021-09-27", "打卡成功", resources.getDrawable(R.mipmap.gotowork), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", true, true, 2))
+        data.add(HistoryItemBean("2021-09-27", "打卡成功", resources.getDrawable(R.mipmap.knockoff), "北京市通城区赵家巷路4组9号", "2021-09-31 18:42:21", false, true, 2))
+        return data
     }
 }

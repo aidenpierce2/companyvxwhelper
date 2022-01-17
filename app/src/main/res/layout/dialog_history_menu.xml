@@ -75,7 +75,7 @@
                 app:layout_constraintStart_toEndOf="@+id/dialog_history_menu_actv_startTime"
                 app:layout_constraintTop_toTopOf="@+id/dialog_history_menu_actv_startTime"
                 app:layout_constraintBottom_toBottomOf="@+id/dialog_history_menu_actv_startTime"
-                android:background="@color/ensureButtonColor"/>
+                android:background="@color/mainThemeColor"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dialog_history_menu_actv_endTime"
@@ -100,7 +100,7 @@
                 app:layout_constraintStart_toStartOf="@+id/dialog_history_menu_acbt_startTime"
                 app:layout_constraintTop_toBottomOf="@+id/dialog_history_menu_acbt_startTime"
                 android:layout_marginTop="@dimen/margin4"
-                android:background="@color/ensureButtonColor"/>
+                android:background="@color/mainThemeColor"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dialog_history_menu_actv_statusChoose"
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{DialogHistoryMenuBean.allStatus}"
                     android:textColor="@color/contentColor"
-                    android:checked="@{DialogHistoryMenuBean.chooseAll}"
+                    android:checked="false"
                     android:gravity="center"
                     android:paddingLeft="@dimen/margin3"
                     android:textSize="@dimen/small_size"
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.ensureStr}"
-                    android:checked="@{DialogHistoryMenuBean.chooseSucc}"
+                    android:checked="@={DialogHistoryMenuBean.chooseSucc}"
                     android:textColor="@color/contentColor"
                     android:gravity="center"
                     android:paddingLeft="@dimen/margin3"
@@ -156,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.errStatus}"
-                    android:checked="@{DialogHistoryMenuBean.chooseErr}"
+                    android:checked="@={DialogHistoryMenuBean.chooseErr}"
                     android:textColor="@color/contentColor"
                     android:gravity="center"
                     android:layout_marginLeft="@dimen/margin1"
@@ -218,7 +218,7 @@
                     android:layout_marginBottom="@dimen/margin3"
                     android:text="@{DialogHistoryMenuBean.ensureStr}"
                     android:textColor="@color/white"
-                    android:background="@color/ensureButtonColor"/>
+                    android:background="@color/mainThemeColor"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

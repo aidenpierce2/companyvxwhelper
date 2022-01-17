@@ -33,5 +33,44 @@ class Md5Util {
             }
             return result
         }
+
+        // aes 或者 iv生成 (此方法登录成功 就使用!!)
+        fun makePrivatAes(hasUseAes : Boolean) : String {
+            val signLength = 16
+            val priority = 9
+            var keyMapNum : String = "0123456789"
+            var keySmallLetter : String = "abcdefghijklmnopqrstuvwxyz"
+            var keyCapitalizeLetter : String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            var sbData : StringBuffer = StringBuffer()
+            for (i in 1..signLength) {
+                var priortyNum : Int = Random(System.currentTimeMillis()).nextInt(priority)
+                when (priortyNum) {
+                    0,1 -> {
+                        if (hasUseAes) {
+                            sbData.append(keyMapNum.get(Random(System.currentTimeMillis()).nextInt(keyMapNum.length)))
+                        } else {
+                            sbData.append(keySmallLetter.get(Random(System.currentTimeMillis()).nextInt(keySmallLetter.length)))
+                        }
+                    }
+                    2,3,4 -> {
+                        if (hasUseAes) {
+                            sbData.append(keySmallLetter.get(Random(System.currentTimeMillis()).nextInt(keySmallLetter.length)))
+                        } else {
+                            sbData.append(keyCapitalizeLetter.get(Random(System.currentTimeMillis()).nextInt(keyCapitalizeLetter.length)))
+                        }
+                    }
+                    5,6,7,8 -> {
+                        if (hasUseAes) {
+                            sbData.append(keyCapitalizeLetter.get(Random(System.currentTimeMillis()).nextInt(keyCapitalizeLetter.length)))
+                        } else {
+                            sbData.append(keyMapNum.get(Random(System.currentTimeMillis()).nextInt(keyMapNum.length)))
+                        }
+                    } else -> {
+                        sbData.append("")
+                    }
+                }
+            }
+            return sbData.toString()
+        }
     }
 }

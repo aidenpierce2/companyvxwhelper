@@ -32,7 +32,7 @@ class Api {
     }
 
     companion object {
-        private var baseUrl: String = BuildConfig.APIURL
+        private var baseUrl: String = BuildConfig.TEMPURL
         private var mRetrofit: Retrofit? = null
 
         /**
@@ -83,6 +83,7 @@ class Api {
                 val original = chain.request()
                 // Request customization: add request headers
                 val requestBuilder = original.newBuilder()
+
                     .addHeader("User-Agent", BuildConfig.USER_AGENT)
                 val request = requestBuilder.build()
                 chain.proceed(request)

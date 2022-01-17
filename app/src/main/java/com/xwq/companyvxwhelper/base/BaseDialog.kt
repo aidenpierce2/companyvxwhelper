@@ -79,6 +79,8 @@ abstract class BaseDialog<VB : ViewDataBinding> : DialogFragment(), NoDoubleClic
     override fun onDestroy() {
         LogUtil.log(TAG, "onDestroy")
         super.onDestroy()
+        binding.unbind()
+        destroy()
     }
 
     // 设置动画效果 可以要 可以不要
@@ -158,8 +160,6 @@ abstract class BaseDialog<VB : ViewDataBinding> : DialogFragment(), NoDoubleClic
     override fun onDestroyView() {
         LogUtil.log(TAG, "onDestroyView")
         super.onDestroyView()
-        binding.unbind()
-        destroy()
     }
 
     override fun onDismiss(dialog: DialogInterface) {

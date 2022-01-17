@@ -33,6 +33,7 @@ import com.xwq.companyvxwhelper.base.BaseFragment
 import com.xwq.companyvxwhelper.bean.DataBaseBean.CompanyDBBean
 import com.xwq.companyvxwhelper.bean.DataBaseBean.UserClockInDBBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.DialogMainGuideBean
+import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryItemBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.LocationFragmentBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.SearchDialogItemBean
 import com.xwq.companyvxwhelper.const.Const
@@ -88,10 +89,12 @@ class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, Loc
         if (!this::hiet.isInitialized) {
             hiet = getBinding().fragmentLocationHiet
         }
+
     }
 
     override fun init() {
         initPython()
+//        startPythonCode()
         initCurrentLocation()
 
         if (!hasQIYEWXInstalled()) {
@@ -132,7 +135,6 @@ class LocationFragment : BaseFragment<FragmentLocationBinding, LocationView, Loc
         }
 
         //存在 展示marker
-        startPythonCode()
     }
 
     override fun onResume() {

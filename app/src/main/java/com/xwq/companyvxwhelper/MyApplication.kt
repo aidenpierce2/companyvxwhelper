@@ -20,7 +20,7 @@ import kotlin.collections.HashMap
 
 class MyApplication : MultiDexApplication() {
 
-    private var store: Stack<Activity>? = Stack()
+    private var store: Stack<Activity> = Stack()
     private var locationClient: AMapLocationClient? = null
     private var locationOption: AMapLocationClientOption? = null
     private var locationObservable : LocationObservable = LocationObservable()
@@ -221,7 +221,7 @@ class MyApplication : MultiDexApplication() {
         }
     }
 
-    fun getStore () : Stack<Activity>? {
+    fun getStore () : Stack<Activity> {
         return store
     }
 
@@ -237,7 +237,7 @@ class MyApplication : MultiDexApplication() {
         try {
             val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
                 override fun getAcceptedIssuers(): Array<X509Certificate?> {
-                    return arrayOfNulls(0)
+                    return arrayOfNulls<X509Certificate?>(0)
                 }
 
                 override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}

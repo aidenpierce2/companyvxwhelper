@@ -118,7 +118,7 @@ class MainGuideDialog : BaseDialog<DialogMainGuideBinding>() {
     }
 
     @Synchronized fun show(manager: FragmentManager, allowStateLose : Boolean) {
-        if (MainGuideDialog.instance != null || manager == null) {
+        if (instance == null || manager == null) {
             LogUtil.log(TAG, "show function not execute!")
             return
         }

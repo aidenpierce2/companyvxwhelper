@@ -62,6 +62,8 @@ You have not confirmed the company location, please set the company location fir
     <string name="reset_password">Reset Password</string>
     <string name="forget_password">Forget Password</string>
     <string name="register_now">Regist now</string>
+    <string name="no_prepare">Not prepare</string>
+    <string name="prepare">Prepared</string>
     <string name="no_running">Not Running</string>
     <string name="running">Running</string>
     <string name="get_verifycode">Get verification code</string>
@@ -77,6 +79,7 @@ You have not confirmed the company location, please set the company location fir
     <string name="telephoneNum">Telephone</string>
     <string name="lonALat">Latitude And Longitude</string>
     //History
+    <string name="ticksuccess">tick success</string>
     <string name="historysearch">Search History</string>
     <string name="startAndEndTime">Start And End Time</string>
     <string name="startTime">Start Time</string>
@@ -85,6 +88,7 @@ You have not confirmed the company location, please set the company location fir
     <string name="allStatus">All Status</string>
     <string name="succStatus">Success</string>
     <string name="failStatus">Fail</string>
+    <string name="chooseTime">Choose Time</string>
     <string name="year">year</string>
     <string name="month">month</string>
     <string name="day">day</string>

@@ -14,7 +14,8 @@
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/fragment_history_srfl"
@@ -46,6 +47,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_margin="@dimen/margin3"
                 android:src="@mipmap/menu"
+                android:elevation="@dimen/margin0"
+                android:background="@color/transparent"
                 android:onClick="@{() -> HistoryFragment.clickMenu()}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

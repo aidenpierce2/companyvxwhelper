@@ -60,6 +60,8 @@
     <string name="reset_password">重置密码</string>
     <string name="forget_password">忘记密码</string>
     <string name="register_now">立即注册</string>
+    <string name="no_prepare">未就绪</string>
+    <string name="prepare">已就绪</string>
     <string name="no_running">未运行</string>
     <string name="running">运行</string>
     <string name="get_verifycode">获取验证码</string>
@@ -75,6 +77,7 @@
     <string name="telephoneNum">手机号码</string>
     <string name="lonALat">经纬度</string>
     //历史记录
+    <string name="ticksuccess">打卡成功</string>
     <string name="historysearch">查询记录</string>
     <string name="startAndEndTime">起止时间</string>
     <string name="startTime">开始时间</string>
@@ -83,6 +86,7 @@
     <string name="allStatus">所有状态</string>
     <string name="succStatus">成功状态</string>
     <string name="failStatus">失败状态</string>
+    <string name="chooseTime">请选择时间</string>
     <string name="year">年</string>
     <string name="month">月</string>
     <string name="day">日</string>

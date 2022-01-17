@@ -4,10 +4,8 @@ import com.xwq.companyvxwhelper.MyApplication
 import com.xwq.companyvxwhelper.R
 import com.xwq.companyvxwhelper.bean.Enum.EncryOrDecryEnum
 import com.xwq.companyvxwhelper.bean.ResponseBean.HistoryResBean
-import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryBaseBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.HistoryItemBean
-import com.xwq.companyvxwhelper.utils.SignKeyUtils
-import com.xwq.companyvxwhelper.utils.VerifyCodeUtils
+import com.xwq.companyvxwhelper.utils.RsaAndAesUtils
 
 // 此类仅在数据量不大的情况下 能够有效率的执行 数据量一旦过大 必定会非常消耗性能
 class HistoryDataBeanLinked {
@@ -132,17 +130,13 @@ class HistoryDataBeanLinked {
                     enqueData.add(preAddHistoryItemBean)
                 }
                 2 -> {
-                    if (preAddHistoryItemBean.startWork) {
-                        preAddHistoryItemBean.bgDrawable = MyApplication.app.resources.getDrawable(R.mipmap.startwork)
-                    } else {
-                        preAddHistoryItemBean.bgDrawable = MyApplication.app.resources.getDrawable(R.mipmap.knockoff)
-                    }
                     if (preAddHistoryItemBean.success) {
-                        preAddHistoryItemBean.statusDrwable = MyApplication.app.resources.getDrawable(R.mipmap.success)
+                        preAddHistoryItemBean.statusDrwable = MyApplication.app.resources.getDrawable(R.mipmap.startwork)
                     } else {
-                        preAddHistoryItemBean.statusDrwable = MyApplication.app.resources.getDrawable(R.mipmap.fail)
+                        preAddHistoryItemBean.statusDrwable = MyApplication.app.resources.getDrawable(R.mipmap.knockoff)
                     }
-                    preAddHistoryItemBean.tickAddress = SignKeyUtils.encryOrDecryValue(curHistoryResDataBean.tickAddressEncry, EncryOrDecryEnum.DECRYPTION)
+                    preAddHistoryItemBean.tickAddress =
+                        RsaAndAesUtils.encryptAES(curHistoryResDataBean.tickAddressEncry).toString()
                     preAddHistoryItemBean.timeStamp = curHistoryResDataBean.tickTimeStamp
                     preAddHistoryItemBean.itemType = curHistoryResDataBean.itemType
 

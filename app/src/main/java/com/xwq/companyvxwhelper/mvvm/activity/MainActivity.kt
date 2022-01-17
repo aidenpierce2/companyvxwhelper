@@ -1,5 +1,6 @@
 package com.xwq.companyvxwhelper.mvvm.activity
 
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,8 @@ import com.xwq.companyvxwhelper.mvvm.fragment.LocationFragment
 import com.xwq.companyvxwhelper.mvvm.fragment.MyFragment
 import com.xwq.companyvxwhelper.mvvm.model.activity.MainModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.MainView
+import com.xwq.companyvxwhelper.utils.Md5Util
+import com.xwq.companyvxwhelper.utils.RsaAndAesUtils
 import com.xwq.companyvxwhelper.utils.SharePreferenceUtil
 import com.xwq.companyvxwhelper.utils.ToastUtil
 import com.xwq.companyvxwhelper.widget.RedDotRadioButton
@@ -79,10 +82,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainView, MainModel>(),Ma
         var width = tv.width
         var measuredWidth = tv.measuredWidth
         var height = tv.height
+
+        RsaAndAesUtils.makeAesKey(Md5Util.makePrivatAes(true))
+        RsaAndAesUtils.makeAesIv(Md5Util.makePrivatAes(false))
     }
 
     override fun initListener() {
-        containerRG!!.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
+        containerRG!!.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
                 if (SharePreferenceUtil.instance.getData(Const.PULLDOWN_CAN_CLICK, true)) {
                     switchFragment(p1)

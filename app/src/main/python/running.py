@@ -6,20 +6,18 @@ import re
 import asyncio
 
 global device
-device = object
 packageName = "com.tencent.wework"
+launcherActivity = "com.tencent.wework.launch.LaunchSplashActivity"
 adbGetCurActivityName = "adb shell dumpsys window | findstr mCurrentFocus"
 global userTelePhone
 userTelePhone = "13671667643"
 qYWXTag = "登录企业微信"
 
 def startApp() :
-    global device
-    device = u2.connect_usb()
-    device.healthcheck()
-    device.app_stop(packageName)
+
+    openAppCmd = "adb shell am start -n " + packageName + "/" + launcherActivity
     time.sleep(5)
-    device.app_start(packageName)
+
     time.sleep(3)
 
 def getCurrentActivity() : 

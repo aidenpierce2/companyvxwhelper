@@ -13,10 +13,7 @@ import com.xwq.companyvxwhelper.bean.dataBindingBean.NoticeGetVerifyCodeBean
 import com.xwq.companyvxwhelper.databinding.ActivityForgetpasswordBinding
 import com.xwq.companyvxwhelper.mvvm.model.activity.ForgetPassWordModel
 import com.xwq.companyvxwhelper.mvvm.view.activity.ForgetPassWordView
-import com.xwq.companyvxwhelper.utils.PackageInfoUtils
-import com.xwq.companyvxwhelper.utils.PhoneNumMatcherUtils
-import com.xwq.companyvxwhelper.utils.ToastUtil
-import com.xwq.companyvxwhelper.utils.VerifyCodeUtils
+import com.xwq.companyvxwhelper.utils.*
 
 class ForgetPassWordActivity : BaseActivity<ActivityForgetpasswordBinding, ForgetPassWordView, ForgetPassWordModel>(), ForgetPassWordView {
 
@@ -64,6 +61,9 @@ class ForgetPassWordActivity : BaseActivity<ActivityForgetpasswordBinding, Forge
 
             getBinding().setVariable(BR.ForgetPasswordBean, it)
         }
+
+        RsaAndAesUtils.makeAesKey(Md5Util.makePrivatAes(true))
+        RsaAndAesUtils.makeAesIv(Md5Util.makePrivatAes(false))
     }
 
     override fun initListener() {

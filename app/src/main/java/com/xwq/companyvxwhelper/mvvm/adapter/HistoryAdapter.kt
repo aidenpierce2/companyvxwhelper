@@ -50,15 +50,15 @@ class HistoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var curViewDataBinding : ViewDataBinding? = null
-        var curHistoryBaseBean : HistoryBaseBean? = null
+        var curHistoryBaseBean : HistoryBaseBean = data.get(position)
         if (holder is HeaderViewHolder) {
             curViewDataBinding = DataBindingUtil.getBinding<AdapterHistoryHeaderBinding>(holder.itemView)
             curViewDataBinding?.setVariable(BR.HistoryItemBean, curHistoryBaseBean)
         } else if (holder is TitleViewHolder){
-            DataBindingUtil.getBinding<AdapterHistorySecHeaderBinding>(holder.itemView)
+            curViewDataBinding = DataBindingUtil.getBinding<AdapterHistorySecHeaderBinding>(holder.itemView)
             curViewDataBinding?.setVariable(BR.HistoryItemBean, curHistoryBaseBean)
         } else if (holder is ContentViewHolder) {
-            DataBindingUtil.getBinding<AdapterHistoryItemBinding>(holder.itemView)
+            curViewDataBinding = DataBindingUtil.getBinding<AdapterHistoryItemBinding>(holder.itemView)
             curViewDataBinding?.setVariable(BR.HistoryItemBean, curHistoryBaseBean)
         } else {
             return
@@ -76,20 +76,8 @@ class HistoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>{
     override fun getItemViewType(position: Int): Int {
         var curData : HistoryBaseBean = data.get(position)
         when (curData.itemType) {
-            0 -> {
-                // header
-                return 0
-            }
-            1 -> {
-                // title
-                return 1
-            }
-            2 -> {
-                // content
-                return 2
-            } else -> {
-                return 0
-            }
+            1,2-> return curData.itemType
+            else -> return super.getItemViewType(position)
         }
     }
 

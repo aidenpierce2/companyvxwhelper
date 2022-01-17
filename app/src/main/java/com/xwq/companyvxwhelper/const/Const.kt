@@ -1,5 +1,6 @@
 package com.xwq.companyvxwhelper.const
 
+import android.security.keystore.KeyNotYetValidException
 import com.xwq.companyvxwhelper.base.BaseEntity
 
 object Const : BaseEntity() {
@@ -12,6 +13,12 @@ object Const : BaseEntity() {
     const val TARGET_PACKAGE_NAME : String = "com.tencent.wework"
     // 目标app 下载地址
     const val DOWNLOAD_PATH : String = "https://work.weixin.qq.com/#indexDownload"
+    // 当前rsa公钥
+    const val PUBLIC_RSA : String = "public_rsa"
+    // 当前uuid
+    const val KEY_UUID : String = "key_uuid"
+    // 当前aes秘钥
+    const val PRIVATE_AES : String = "private_aes"
     // 用户手机号码
     const val USER_PHONENUM = "user_phonenum"
     // 用户密码

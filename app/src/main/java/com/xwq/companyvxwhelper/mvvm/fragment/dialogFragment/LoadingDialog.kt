@@ -84,7 +84,6 @@ class LoadingDialog : BaseDialog<DialogLoadingBinding>() {
         if (fragmentManager == null) {
             return
         }
-        instance?.allowShow = true
         if (instance != null && instance!!.dialog != null && instance!!.dialog!!.isShowing) {
             // 还有个dialog正在运行
             return

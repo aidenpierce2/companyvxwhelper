@@ -59,12 +59,14 @@ android {
             case "companyvxwhelper":
                 switch (variant.buildType.getName()) {
                     case "release":
-                        variant.buildConfigField "String", "APIURL", "\"xxxxxxxx\""
+                        variant.buildConfigField "String", "TEMPURL", "\"http://127.0.0.1:8000\""
+                        variant.buildConfigField "String", "ONLINEURL", "\"http://wxcompanyhelp-back\""
                         variant.buildConfigField "String", "AliURL", "\"http://api.m.taobao.com/\""
                         variant.buildConfigField "String", "H5NETURL", "\"xxxxxxxx\""
                         break
                     case "debug":
-                        variant.buildConfigField "String", "APIURL", "\"http://127.0.0.1:10000/\""
+                        variant.buildConfigField "String", "TEMPURL", "\"http://127.0.0.1:8000\""
+                        variant.buildConfigField "String", "ONLINEURL", "\"http://wxcompanyhelp-back\""
                         variant.buildConfigField "String", "AliURL", "\"http://api.m.taobao.com/\""
                         variant.buildConfigField "String", "H5NETURL", "\"xxxxxxxx\""
                         break

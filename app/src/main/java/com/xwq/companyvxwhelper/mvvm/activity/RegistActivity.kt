@@ -18,6 +18,7 @@ import com.xwq.companyvxwhelper.bean.RequestBean.RegisterReqBean
 import com.xwq.companyvxwhelper.bean.RequestBean.SendSmsReqBean
 import com.xwq.companyvxwhelper.bean.ResponseBean.RegisterResBean
 import com.xwq.companyvxwhelper.bean.dataBindingBean.RegisteActivityBean
+import com.xwq.companyvxwhelper.const.Const
 import com.xwq.companyvxwhelper.const.Const.USER_POLICY_CHECKED
 import com.xwq.companyvxwhelper.databinding.ActivityRegisterBinding
 import com.xwq.companyvxwhelper.mvvm.model.activity.RegisterModel
@@ -96,6 +97,9 @@ class RegistActivity  : BaseActivity<ActivityRegisterBinding, RegisterView, Regi
 
         getBinding().setVariable(BR.RegisteActivityBean, registeActivityBean)
         getBinding().setVariable(BR.RegistActivity, this)
+
+        RsaAndAesUtils.makeAesKey(Md5Util.makePrivatAes(true))
+        RsaAndAesUtils.makeAesIv(Md5Util.makePrivatAes(false))
     }
 
     override fun initListener() {
@@ -215,7 +219,12 @@ class RegistActivity  : BaseActivity<ActivityRegisterBinding, RegisterView, Regi
             }
             PassWordErrEnum.NOERR -> {}
         }
-        getModel().submitRegister(RegisterReqBean(userTelePhone!!, verifyCode!!, userPassWord, Md5Util.makeSignKey(), DevieTypeUtils.getDeviceTypeValue(),true))
+        // 加密
+        var encrtpyUserTelePhone = RsaAndAesUtils.encryptAES(userTelePhone!!)
+        var encryptUserPassWord = RsaAndAesUtils.encryptAES(userPassWord)
+        var singKey = RsaAndAesUtils.encryptRSA(RsaAndAesUtils.getAesKey(), SharePreferenceUtil.instance.getData(Const.PUBLIC_RSA))
+        var keyUUID = SharePreferenceUtil.instance.getData(Const.KEY_UUID)
+        getModel().submitRegister(RegisterReqBean(encrtpyUserTelePhone!!, verifyCode!!, encryptUserPassWord!!, singKey, keyUUID,"android"))
     }
 
     fun indexChooseRange(preSpannableString : String) : SparseArray<Int>{

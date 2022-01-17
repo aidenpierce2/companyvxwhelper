@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewbinding.ViewBinding
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.components.support.RxFragment
@@ -111,11 +112,17 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseFragmentMod
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         LogUtil.log(TAG, "setUserVisibleHint: " + isVisibleToUser)
         super.setUserVisibleHint(isVisibleToUser)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        LogUtil.log(TAG, "onHiddenChanged: " + hidden)
+        super.onHiddenChanged(hidden)
         //这里开始操作网络服务
-        if (isVisibleToUser) {
+        if (!hidden) {
             netWorkOperation()
             isDefault = false
         }
+
     }
 
     /**
@@ -180,6 +187,41 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseFragmentMod
         return dataBinding!!
     }
 
+    // 设置界面偏离状态栏指定高度
+    protected open fun forbidFullScreen() {
+        var statusBarHeight2 = -1
+        try {
+            val clazz = Class.forName("com.android.internal.R\$dimen")
+            var newInstance = clazz.newInstance()
+            val height = Integer.parseInt(clazz.getField("status_bar_height")
+                .get(newInstance).toString())
+            statusBarHeight2 = resources.getDimensionPixelSize(height)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        var contentView = (context as RxAppCompatActivity).window.decorView.findViewById<View>(android.R.id.content)
+        if (contentView != null) {
+            val childAt = (contentView as ViewGroup).getChildAt(0)
+            if (childAt is DrawerLayout) {
+                // 抽屉布局 寻找它的直接子类处理
+                val childAt1 = (childAt as ViewGroup).getChildAt(0)
+                childAt1.setPadding(0, statusBarHeight2, 0, 0)
+                return
+            }
+            childAt.setPadding(0, statusBarHeight2, 0, 0)
+        }
+    }
+
+    fun setAndroidNativeLightStatusBar(context: Context?, dark: Boolean) {
+        if (context == null) return
+        val decor = (context as RxAppCompatActivity).window.decorView
+        if (dark) {
+            decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        } else {
+            decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        }
+    }
+
     override fun showToast(value: String) {
         // 不想实现父类的 之类可以自己实现
         ToastUtil.showToast(value)
@@ -190,7 +232,7 @@ abstract class BaseFragment<VB : ViewBinding, T : IBaseView, M : BaseFragmentMod
     }
     override fun showLoading() {
         // 不想实现父类的 之类可以自己实现
-        LoadingDialog.getSingleton().build((context as RxAppCompatActivity).supportFragmentManager, false)
+        LoadingDialog.getSingleton().build(this.childFragmentManager, false)
     }
 
     override fun hideLoading() {

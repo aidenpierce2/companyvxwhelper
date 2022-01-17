@@ -54,6 +54,7 @@ class ChooseWorkCycleActivity : BaseActivity<ActivityBaseSettingBinding, ChooseW
         chooseWorkCycleAdapter.dataList = dataList
         mainRCY.layoutManager  = GridLayoutManager(this@ChooseWorkCycleActivity, 2)
         mainRCY.adapter = chooseWorkCycleAdapter
+
     }
 
     override fun initListener() {

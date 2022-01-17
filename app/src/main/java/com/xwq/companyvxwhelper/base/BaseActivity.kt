@@ -193,6 +193,31 @@ abstract class BaseActivity<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T
         }
     }
 
+    // 设置界面偏离状态栏指定高度
+    protected open fun forbidFullScreen() {
+        var statusBarHeight2 = -1
+        try {
+            val clazz = Class.forName("com.android.internal.R\$dimen")
+            var newInstance = clazz.newInstance()
+            val height = Integer.parseInt(clazz.getField("status_bar_height")
+                .get(newInstance).toString())
+            statusBarHeight2 = resources.getDimensionPixelSize(height)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        var contentView = this.window.decorView.findViewById<View>(android.R.id.content)
+        if (contentView != null) {
+            val childAt = (contentView as ViewGroup).getChildAt(0)
+            if (childAt is DrawerLayout) {
+                // 抽屉布局 寻找它的直接子类处理
+                val childAt1 = (childAt as ViewGroup).getChildAt(0)
+                childAt1.setPadding(0, statusBarHeight2, 0, 0)
+                return
+            }
+            childAt.setPadding(0, statusBarHeight2, 0, 0)
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -260,6 +285,10 @@ abstract class BaseActivity<VB : ViewBinding, T : IBaseView, M : BaseModel<VB, T
      */
     fun exit() {
         MyApplication.app!!.exit()
+        var activityStack : Stack<Activity> = MyApplication.app!!.getStore()
+        for(item in activityStack) {
+            item.finish();
+        }
         exitProcess(0)
     }
 
